@@ -1,0 +1,52 @@
+﻿<Page x:Class="CoinFlipper.LoginPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:CoinFlipper"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="500"
+      Title="LoginPage">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="21*"/>
+            <ColumnDefinition Width="4*"/>
+        </Grid.ColumnDefinitions>
+        <!-- Main Content Scroll-->
+        <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto" Grid.ColumnSpan="2">
+            <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center" TextBlock.TextAlignment="Center">
+                <!-- Login Main Content Box-->
+                <Border Background="{StaticResource GrayDarkBrush}" 
+                        BorderThickness="1"
+                        BorderBrush="{StaticResource GreenMediumBrush}"
+                        CornerRadius="10" 
+                        Padding="15 50 15 15" 
+                        Margin="50 50 50 0" 
+                        Width="330">
+                    <StackPanel>
+                        <!-- Sign Up Header -->
+                        <TextBlock Text="Sign Up" 
+                                   FontWeight="Bold"
+                                   FontSize="{StaticResource FontSizeLarge}" 
+                                   Foreground="{StaticResource GreenMediumBrush}"/>
+                        <!-- Sign Up Subtext -->
+                        <TextBlock Text="Add start flipping!" 
+                                   FontSize="{StaticResource FontSizeRegular}" 
+                                   Foreground="{StaticResource AlmostWhiteBrush}"
+                                   Margin="0 0 0 20"/>
+                        <!-- Email -->
+                        <TextBox Tag="Email"/>
+                        <!-- Password -->
+                        <TextBox Tag="Password" Margin="0 0 0 30"/>
+                        <!-- Login Button -->
+                        <Button Content="Login" HorizontalAlignment="Center"/>
+                    </StackPanel>
+                </Border>
+
+                <Button Style="{StaticResource TextButton}" 
+                        Content="I already have an account" 
+                        HorizontalAlignment="Center"/>
+            </StackPanel>
+        </ScrollViewer>
+    </Grid>
+</Page>

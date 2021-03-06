@@ -21,3 +21,5 @@ C:\Users\Maciej\Desktop\CoinFlipper\CoinFlipper\obj\Debug\CoinFlipper.csproj.Fod
 C:\Users\Maciej\Desktop\CoinFlipper\CoinFlipper\obj\Debug\CoinFlipper.exe
 C:\Users\Maciej\Desktop\CoinFlipper\CoinFlipper\obj\Debug\CoinFlipper.pdb
 C:\Users\Maciej\Desktop\CoinFlipper\CoinFlipper\obj\Debug\CoinFlipper.csprojAssemblyReference.cache
+C:\Users\Maciej\Desktop\CoinFlipper\CoinFlipper\obj\Debug\Pages\LoginPage.g.cs
+C:\Users\Maciej\Desktop\CoinFlipper\CoinFlipper\obj\Debug\Pages\LoginPage.baml

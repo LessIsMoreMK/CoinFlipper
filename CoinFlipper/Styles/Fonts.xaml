@@ -1,8 +1,10 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                    xmlns:local="clr-namespace:CoinFlipper">
+                    xmlns:local="clr-namespace:CoinFlipper" 
+                    xmlns:system="clr-namespace:System;assembly=mscorlib">
     
     <FontFamily x:Key="LatoRegular">pack://application;,,,/Fonts/#Lato Regular</FontFamily>
+    <FontFamily x:Key="BlackOpsOneRegular">pack://application;,,,/Fonts/#Black Ops One Regular</FontFamily>
 
     <Style TargetType="{x:Type Control}" x:Key="BaseStyle">
         <Setter Property="FontFamily" Value="{StaticResource LatoRegular}"/>
@@ -16,5 +18,11 @@
     <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource BaseStyle}"/>
     <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource TextBlockBaseStyle}"/>
     <Style TargetType="{x:Type ListView}" BasedOn="{StaticResource BaseStyle}"/>
+
+    <system:Double x:Key="FontSizeVerySmall">8</system:Double>
+    <system:Double x:Key="FontSizeSmall">14</system:Double>
+    <system:Double x:Key="FontSizeRegular">20</system:Double>
+    <system:Double x:Key="FontSizeLarge">30</system:Double>
+    <system:Double x:Key="FontSizeVeryLarge">40</system:Double>
     
 </ResourceDictionary>

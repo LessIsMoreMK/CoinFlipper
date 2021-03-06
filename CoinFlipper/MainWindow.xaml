@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:CoinFlipper"
         mc:Ignorable="d"
         x:Name="AppWindow"
-        Icon="Images/coin.png"
+        Icon="Images/logo.png"
         WindowStyle="None"
         AllowsTransparency="true"
         WindowStartupLocation="CenterScreen"
@@ -47,7 +47,7 @@
                                         
                                         <Grid.RowDefinitions>
                                             <!-- Title Bar-->
-                                            <RowDefinition Height="{Binding TitleHeightGridLength, FallbackValue=42}"/>
+                                            <RowDefinition Height="{Binding TitleHeightGridLength, FallbackValue=30}"/>
                                             <!-- Drop Shadow-->
                                             <RowDefinition Height="Auto"/>
                                             <!-- Window Content-->
@@ -68,13 +68,20 @@
                                             <!-- Icon -->
                                             <Button Command="{Binding MenuCommand}"
                                                     Style="{StaticResource SystemIconButton}"
-                                                    Padding="12">
-                                                <Image Source="/Images/coin.png"/>
+                                                    Padding="8">
+                                                <Image Source="/Images/logo.png"/>
                                             </Button>
                                             
                                             <!-- Title -->
-                                            <Viewbox Grid.Column="1" Margin="0">
-                                                <TextBlock Style="{StaticResource HeaderText}" Text="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Title, FallbackValue='Welcome'}"/>
+                                            <Viewbox Grid.Column="0" Grid.ColumnSpan="3" Margin="0">
+                                                <StackPanel>
+                                                    <TextBlock FontSize="{StaticResource FontSizeRegular}" 
+                                                               FontFamily="{StaticResource BlackOpsOneRegular}" 
+                                                               Margin="0 3 0 3"
+                                                               FontWeight="Bold">
+                                                        <Run Text="Co" Foreground="{StaticResource GreenLightBrush}"/><Run Text="in" Foreground="{StaticResource GreenMediumBrush}"/> <Run Text="Fl" Foreground="{StaticResource GreenDarkBrush}"/><Run Text="ip" Foreground="{StaticResource GreenMediumBrush}"/><Run Text="er" Foreground="{StaticResource GreenLightBrush}"/>
+                                                    </TextBlock>
+                                                </StackPanel>
                                             </Viewbox>
                                             
                                             <!-- Window Buttons -->
@@ -112,8 +119,13 @@
                                         </Border>
 
                                         <!-- Page Content -->
-                                        <Border Grid.Row="2" Padding="{Binding InnerContentPadding}">
-                                            <ContentPresenter Content="{TemplateBinding Content}"/>
+                                        <Border Grid.Row="2" Padding="{Binding InnerContentPadding}"  Background="Transparent">
+                                            <Border>
+                                            <Border.Background>
+                                                    <ImageBrush TileMode="Tile" ViewportUnits="Absolute" Viewport="0 0 500 500" ImageSource="images/background.png"/>
+                                                </Border.Background>
+                                                <ContentPresenter Content="{TemplateBinding Content}"/>
+                                            </Border>
                                         </Border>
                                         
                                     </Grid>
@@ -134,6 +146,7 @@
                       CornerRadius="0"/>
     </WindowChrome.WindowChrome>
 
-    <Grid  Background="{StaticResource GrayMediumBrush}">
+    <Grid>
+        <Frame x:Name="MainFrame" Content="{Binding CurrentPage, Converter={local:ApplicationPageValueConverter}}"/>
     </Grid>
 </Window>
