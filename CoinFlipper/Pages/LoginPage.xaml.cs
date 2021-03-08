@@ -1,11 +1,9 @@
-﻿using System.Windows.Controls;
-
-namespace CoinFlipper
+﻿namespace CoinFlipper
 {
     /// <summary>
     /// Interaction logic for LoginPage.xaml
     /// </summary>
-    public partial class LoginPage : Page
+    public partial class LoginPage : BasePage
     {
         public LoginPage()
         {

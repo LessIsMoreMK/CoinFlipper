@@ -59,15 +59,22 @@
                     </Grid>
 
                     <ControlTemplate.Triggers>
-                        <Trigger Property="IsEnabled" Value="False">
-                            <Setter Property="Opacity" TargetName="border" Value="0.56"/>
-                        </Trigger>
-                        <Trigger Property="IsMouseOver" Value="True">
-                            <Setter Property="BorderBrush" TargetName="border" Value="#FF7EB4EA"/>
-                        </Trigger>
-                        <Trigger Property="IsKeyboardFocused" Value="True">
-                            <Setter Property="BorderBrush" TargetName="border" Value="#FF569DE5"/>
-                        </Trigger>
+                        <EventTrigger RoutedEvent="MouseEnter">
+                            <BeginStoryboard>
+                                <Storyboard>
+                                    <ColorAnimation To="{StaticResource GreenLight}" Duration="0:0:0.3" Storyboard.TargetName="border" Storyboard.TargetProperty="BorderBrush.Color"/>
+                                    <ColorAnimation To="{StaticResource GreenLight}" Duration="0:0:0.3" Storyboard.TargetName="placeholder" Storyboard.TargetProperty="Foreground.Color"/>
+                                </Storyboard>
+                            </BeginStoryboard>
+                        </EventTrigger>
+                        <EventTrigger RoutedEvent="MouseLeave">
+                            <BeginStoryboard>
+                                <Storyboard>
+                                    <ColorAnimation To="{StaticResource GreenMedium}" Duration="0:0:0.3" Storyboard.TargetName="border" Storyboard.TargetProperty="BorderBrush.Color"/>
+                                    <ColorAnimation To="{StaticResource GreenMedium}" Duration="0:0:0.3" Storyboard.TargetName="placeholder" Storyboard.TargetProperty="Foreground.Color"/>
+                                </Storyboard>
+                            </BeginStoryboard>
+                        </EventTrigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
             </Setter.Value>
@@ -114,15 +121,22 @@
                     </Grid>
 
                     <ControlTemplate.Triggers>
-                        <Trigger Property="IsEnabled" Value="False">
-                            <Setter Property="Opacity" TargetName="border" Value="0.56"/>
-                        </Trigger>
-                        <Trigger Property="IsMouseOver" Value="True">
-                            <Setter Property="BorderBrush" TargetName="border" Value="#FF7EB4EA"/>
-                        </Trigger>
-                        <Trigger Property="IsKeyboardFocused" Value="True">
-                            <Setter Property="BorderBrush" TargetName="border" Value="#FF569DE5"/>
-                        </Trigger>
+                        <EventTrigger RoutedEvent="MouseEnter">
+                            <BeginStoryboard>
+                                <Storyboard>
+                                    <ColorAnimation To="{StaticResource GreenLight}" Duration="0:0:0.3" Storyboard.TargetName="border" Storyboard.TargetProperty="BorderBrush.Color"/>
+                                    <ColorAnimation To="{StaticResource GreenLight}" Duration="0:0:0.3" Storyboard.TargetName="placeholder" Storyboard.TargetProperty="Foreground.Color"/>
+                                </Storyboard>
+                            </BeginStoryboard>
+                        </EventTrigger>
+                        <EventTrigger RoutedEvent="MouseLeave">
+                            <BeginStoryboard>
+                                <Storyboard>
+                                    <ColorAnimation To="{StaticResource GreenMedium}" Duration="0:0:0.3" Storyboard.TargetName="border" Storyboard.TargetProperty="BorderBrush.Color"/>
+                                    <ColorAnimation To="{StaticResource GreenMedium}" Duration="0:0:0.3" Storyboard.TargetName="placeholder" Storyboard.TargetProperty="Foreground.Color"/>
+                                </Storyboard>
+                            </BeginStoryboard>
+                        </EventTrigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
             </Setter.Value>
