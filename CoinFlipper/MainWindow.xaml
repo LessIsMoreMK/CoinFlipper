@@ -79,7 +79,7 @@
                                                                FontFamily="{StaticResource BlackOpsOneRegular}" 
                                                                Margin="0 3 0 3"
                                                                FontWeight="Bold">
-                                                        <Run Text="Co" Foreground="{StaticResource GreenLightBrush}"/><Run Text="in" Foreground="{StaticResource GreenMediumBrush}"/> <Run Text="Fl" Foreground="{StaticResource GreenDarkBrush}"/><Run Text="ip" Foreground="{StaticResource GreenMediumBrush}"/><Run Text="er" Foreground="{StaticResource GreenLightBrush}"/>
+                                                        <Run Text="Co" Foreground="{StaticResource GreenLightBrush}"/><Run Text="in" Foreground="{StaticResource GreenMediumBrush}"/> <Run Text="Fli" Foreground="{StaticResource GreenDarkBrush}"/><Run Text="pp" Foreground="{StaticResource GreenMediumBrush}"/><Run Text="er" Foreground="{StaticResource GreenLightBrush}"/>
                                                     </TextBlock>
                                                 </StackPanel>
                                             </Viewbox>
