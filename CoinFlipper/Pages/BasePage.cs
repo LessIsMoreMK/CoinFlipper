@@ -1,8 +1,6 @@
-﻿using System;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Media.Animation;
 
 namespace CoinFlipper
 {
@@ -66,7 +64,7 @@ namespace CoinFlipper
             if (this.PageLoadAnimation == PageAnimation.None)
                 return;
 
-            switch(this.PageLoadAnimation)
+            switch (this.PageLoadAnimation)
             {
                 case PageAnimation.SlideAndFadeInFromRight:
                     // Start the animation
@@ -75,6 +73,45 @@ namespace CoinFlipper
             }
         }
 
+        #endregion
+    }
+
+    /// <summary>
+    /// A base page with VieModel support
+    /// </summary>
+    public class BasePage<VM> : BasePage
+        where VM : BaseViewModel, new()
+    {
+        #region Private Member
+
+        private VM mViewModel;
+
+        #endregion
+
+        #region Public Properties
+        public VM ViewModel
+        {
+            get => mViewModel;
+            set
+            {
+                // If nothing has changed, return
+                if (mViewModel == value)
+                    return;
+
+                // Update the value
+                mViewModel = value;
+
+                // Set the data context for this page
+                DataContext = mViewModel;
+            }
+        }
+        #endregion
+
+        #region Constructor
+        public BasePage() : base()
+        {
+            this.ViewModel = new VM();
+        }
         #endregion
     }
 }

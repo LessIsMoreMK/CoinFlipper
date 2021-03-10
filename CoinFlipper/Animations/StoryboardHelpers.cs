@@ -16,7 +16,7 @@ namespace CoinFlipper
         /// <param name="seconds">The time the animation will take</param>
         /// <param name="offset">The distance to the right to start from</param>
         /// <param name="decelerationRaion">The rate of deceleration</param>
-        public static void AddSlideFromRight(this Storyboard storyboard, float seconds, double offset, float decelerationRaion = 0.9f)
+        public static void AddSlideFromRight(this Storyboard storyboard, float seconds, double offset, float decelerationRation = 0.9f)
         {
             // Create the margin animate form right
             var animation = new ThicknessAnimation
@@ -24,7 +24,6 @@ namespace CoinFlipper
                 Duration = new Duration(TimeSpan.FromSeconds(seconds)),
                 From = new Thickness(offset, 0, -offset, 0),
                 To = new Thickness(0),
-                DecelerationRatio = 0.9f,
             };
             // Set the target property name
             Storyboard.SetTargetProperty(animation, new PropertyPath("Margin"));
@@ -40,7 +39,7 @@ namespace CoinFlipper
         /// <param name="seconds">The time the animation will take</param>
         /// <param name="offset">The distance to the right to start from</param>
         /// <param name="decelerationRaion">The rate of deceleration</param>
-        public static void AddSlideToLeft(this Storyboard storyboard, float seconds, double offset, float decelerationRaion = 0.9f)
+        public static void AddSlideToLeft(this Storyboard storyboard, float seconds, double offset, float decelerationRatio = 0.9f)
         {
             // Create the margin animate form right
             var animation = new ThicknessAnimation
@@ -48,7 +47,6 @@ namespace CoinFlipper
                 Duration = new Duration(TimeSpan.FromSeconds(seconds)),
                 From = new Thickness(0),
                 To = new Thickness(-offset, 0, offset, 0),
-                DecelerationRatio = 0.9f,
             };
             // Set the target property name
             Storyboard.SetTargetProperty(animation, new PropertyPath("Margin"));

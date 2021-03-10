@@ -158,12 +158,16 @@ namespace CoinFlipper
             };
 
             // Initialize commands
-            MinimizeCommand = new RelayCommand(() => mWindow.WindowState = WindowState.Minimized);
+            MinimizeCommand = new RelayCommand(Method);
             MaximizeCommand = new RelayCommand(() => mWindow.WindowState ^= WindowState.Maximized);
             CloseCommand = new RelayCommand(() => mWindow.Close());
             MenuCommand = new RelayCommand(() => SystemCommands.ShowSystemMenu(mWindow, GetMousePosition()));
         }
 
+        void Method()
+        {
+
+        }
         #endregion
 
         #region Private Helpers
