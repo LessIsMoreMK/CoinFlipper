@@ -86,14 +86,15 @@
                                             
                                             <!-- Window Buttons -->
                                             <StackPanel Grid.Column="2" Orientation="Horizontal">
-                                                <Button Content="_" 
+                                                <Button Content="{StaticResource FontAwesomeMinimize}" 
                                                         Style="{StaticResource WindowControlButton}"
-                                                        Command="{Binding MinimizeCommand}"/>
-                                                <Button Content="[ ]" 
+                                                        Command="{Binding MinimizeCommand}"
+                                                        FontFamily="{StaticResource FontAwesome}"/>
+                                                <Button Content="{StaticResource FontAwesomeMaximize}"
                                                         Style="{StaticResource WindowControlButton}"
                                                         Command="{Binding MaximizeCommand}"/>
-                                                <Button Content="X" 
-                                                        Style="{StaticResource WindowControlButton}"
+                                                <Button Content="{StaticResource FontAwesomeClose}" 
+                                                        Style="{StaticResource WindowCloseButton}"
                                                         Command="{Binding CloseCommand}"/>
                                             </StackPanel>
                                         </Grid>
@@ -121,9 +122,14 @@
                                         <!-- Page Content -->
                                         <Border Grid.Row="2" Padding="{Binding InnerContentPadding}"  Background="Transparent">
                                             <Border>
-                                            <Border.Background>
-                                                    <ImageBrush TileMode="Tile" ViewportUnits="Absolute" Viewport="0 0 500 500" ImageSource="images/background.png"/>
+                                                <!-- Background -->
+                                                <Border.Background>
+                                                        <ImageBrush TileMode="Tile" 
+                                                                    ViewportUnits="Absolute" 
+                                                                    Viewport="0 0 500 500" 
+                                                                    ImageSource="images/background.png"/>
                                                 </Border.Background>
+                                                <!-- Content -->
                                                 <ContentPresenter Content="{TemplateBinding Content}"/>
                                             </Border>
                                         </Border>
@@ -147,6 +153,13 @@
     </WindowChrome.WindowChrome>
 
     <Grid>
-        <Frame x:Name="MainFrame" Content="{Binding CurrentPage, Converter={local:ApplicationPageValueConverter}}"/>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="2*" MinWidth="250"/>
+            <ColumnDefinition Width="5*"/>
+        </Grid.ColumnDefinitions>
+
+        <Frame Grid.Column="1" x:Name="MainFrame" Content="{Binding CurrentPage, Converter={local:ApplicationPageValueConverter}}"/>
+
+        <local:SideMenuControl Grid.Column="0"/>
     </Grid>
 </Window>

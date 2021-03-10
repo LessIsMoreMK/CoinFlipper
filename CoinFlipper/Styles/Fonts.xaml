@@ -3,6 +3,7 @@
                     xmlns:local="clr-namespace:CoinFlipper" 
                     xmlns:system="clr-namespace:System;assembly=mscorlib">
     
+    <!-- Font Family-->
     <FontFamily x:Key="LatoRegular">pack://application;,,,/Fonts/#Lato Regular</FontFamily>
     <FontFamily x:Key="BlackOpsOneRegular">pack://application;,,,/Fonts/#Black Ops One Regular</FontFamily>
     <FontFamily x:Key="FontAwesome">pack://application;,,,/Fonts/#FontAwesome</FontFamily>
@@ -19,10 +20,22 @@
     <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource BaseStyle}"/>
     <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource TextBlockBaseStyle}"/>
 
+    <!-- Font Size -->
     <system:Double x:Key="FontSizeVerySmall">8</system:Double>
     <system:Double x:Key="FontSizeSmall">14</system:Double>
     <system:Double x:Key="FontSizeRegular">20</system:Double>
     <system:Double x:Key="FontSizeLarge">30</system:Double>
     <system:Double x:Key="FontSizeVeryLarge">40</system:Double>
-    
+
+    <!-- Font Awesome Icons-->
+    <system:String x:Key="FontAwesomeMinimize">&#xf2d1;</system:String>
+    <system:String x:Key="FontAwesomeMaximize">&#xf2d0;</system:String>
+    <system:String x:Key="FontAwesomeRestore">&#xf2d2;</system:String>
+    <system:String x:Key="FontAwesomeClose">&#xf00d;</system:String>
+
+    <system:String x:Key="FontAwesomeChatIcon">&#xf086;</system:String>
+    <system:String x:Key="FontAwesomeUserIcon">&#xf007;</system:String>
+    <system:String x:Key="FontAwesomePictureIcon">&#xf1c5;</system:String>
+    <system:String x:Key="FontAwesomeCogIcon">&#xf013;</system:String>
+
 </ResourceDictionary>
