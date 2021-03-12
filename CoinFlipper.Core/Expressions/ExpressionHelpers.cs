@@ -2,7 +2,7 @@
 using System.Linq.Expressions;
 using System.Reflection;
 
-namespace CoinFlipper
+namespace CoinFlipper.Core
 {
     /// <summary>
     /// A helper for expressions

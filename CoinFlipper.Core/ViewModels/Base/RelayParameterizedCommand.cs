@@ -1,13 +1,13 @@
 ﻿using System;
 using System.Windows.Input;
 
-namespace CoinFlipper
+namespace CoinFlipper.Core
 {
-    public class RelayCommand : ICommand
+    public class RelayParameterizedCommand : ICommand
     {
         #region Private Members
 
-        private readonly Action mAction;
+        private readonly Action<object> mAction;
 
         #endregion
 
@@ -22,7 +22,7 @@ namespace CoinFlipper
 
         #region Constructor
 
-        public RelayCommand(Action action)
+        public RelayParameterizedCommand(Action<object> action)
         {
             mAction = action;
         }
@@ -38,7 +38,7 @@ namespace CoinFlipper
 
         public void Execute(object parameter)
         {
-            mAction();
+            mAction(parameter);
         }
 
         #endregion

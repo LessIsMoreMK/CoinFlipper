@@ -4,6 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:CoinFlipper"
+        xmlns:core="clr-namespace:CoinFlipper.Core;assembly=CoinFlipper.Core"
         mc:Ignorable="d"
         x:Name="AppWindow"
         Icon="Images/logo.png"
@@ -158,7 +159,7 @@
             <ColumnDefinition Width="5*"/>
         </Grid.ColumnDefinitions>
 
-        <Frame Grid.Column="1" x:Name="MainFrame" Content="{Binding CurrentPage, Converter={local:ApplicationPageValueConverter}}"/>
+        <Frame Grid.Column="1" x:Name="MainFrame" Content="{Binding ApplicationViewModel.CurrentPage, ElementName=AppWindow, Converter={local:ApplicationPageValueConverter}}"/>
 
         <local:SideMenuControl Grid.Column="0">
             <local:ChatListControl/>

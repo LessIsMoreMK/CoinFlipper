@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using CoinFlipper.Core;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -13,7 +14,7 @@ namespace CoinFlipper
 
         /// <summary>
         /// The animation to play when the page is first loaded
-        /// </summary>
+        /// </summary> 
         public PageAnimation PageLoadAnimation { get; set; } = PageAnimation.SlideAndFadeInFromRight;
 
         /// <summary>
@@ -40,7 +41,7 @@ namespace CoinFlipper
                 this.Visibility = Visibility.Collapsed;
 
             // Listen out for the page loading
-            this.Loaded += BasePage_Loaded;
+            this.Loaded += BasePage_LoadedAsync;
         }
 
         #endregion
@@ -52,13 +53,13 @@ namespace CoinFlipper
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private async void BasePage_Loaded(object sender, RoutedEventArgs e)
+        private async void BasePage_LoadedAsync(object sender, RoutedEventArgs e)
         {
             // Animate the page in
-            await AnimateIn();
+            await AnimateInAsync();
         }
 
-        public async Task AnimateIn()
+        public async Task AnimateInAsync()
         {
             // Make sure we have something to do
             if (this.PageLoadAnimation == PageAnimation.None)
@@ -68,7 +69,7 @@ namespace CoinFlipper
             {
                 case PageAnimation.SlideAndFadeInFromRight:
                     // Start the animation
-                    await this.SlideAndFadeInFromRight(this.SlideSeconds);
+                    await this.SlideAndFadeInFromRightAsync(SlideSeconds);
                     break;
             }
         }
@@ -108,10 +109,13 @@ namespace CoinFlipper
         #endregion
 
         #region Constructor
+
+        
         public BasePage() : base()
         {
             this.ViewModel = new VM();
         }
+
         #endregion
     }
 }

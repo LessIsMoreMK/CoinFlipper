@@ -1,4 +1,4 @@
-﻿namespace CoinFlipper
+﻿ namespace CoinFlipper
 {
     /// <summary>
     /// Styles of page animation for appearing/disappearing

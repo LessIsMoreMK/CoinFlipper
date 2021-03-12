@@ -1,8 +1,9 @@
 ﻿using System.Security;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Input;
 
-namespace CoinFlipper
+namespace CoinFlipper.Core
 {
     /// <summary>
     /// The View Model for a login screen
@@ -30,6 +31,9 @@ namespace CoinFlipper
         /// </summary>
         public ICommand LoginCommand { get; set; }
 
+        /// <summary>
+        /// The command to register for a new account
+        /// </summary>
         public ICommand RegisterCommand { get; set; }
 
         #endregion
@@ -43,7 +47,6 @@ namespace CoinFlipper
         {
             // Initialize commands
             LoginCommand = new RelayParameterizedCommand(async (parameter) => await LoginAsync(parameter));
-
             RegisterCommand = new RelayCommand(async () => await RegisterAsync());
         }
 
@@ -66,13 +69,16 @@ namespace CoinFlipper
                 //var email = this.Email;
                 //var pass = (parameter as IHavePassword).SecurePassword.Unsecure();
             });
-
-            
         }
 
+        /// <summary>
+        /// Takes the user to the register page
+        /// </summary>
+        /// <returns></returns>
         public async Task RegisterAsync()
         {
             await Task.Delay(1);
+            //((WindowViewModel)((MainWindow)Application.Current.MainWindow).DataContext).CurrentPage = ApplicationPage.Register;
         }
 
         #endregion

@@ -1,6 +1,6 @@
 ﻿using System.Security;
 
-namespace CoinFlipper
+namespace CoinFlipper.Core
 {
     /// <summary>
     /// An interface for a class that can provide a secure password

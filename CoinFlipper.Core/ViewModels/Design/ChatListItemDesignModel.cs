@@ -1,4 +1,4 @@
-﻿namespace CoinFlipper
+﻿namespace CoinFlipper.Core
 {
     /// <summary>
     /// The design-time data for a <see cref="ChatListItemViewModel"/>

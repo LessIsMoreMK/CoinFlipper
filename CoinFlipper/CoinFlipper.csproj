@@ -65,8 +65,8 @@
     <Compile Include="Animations\PageAnimations.cs" />
     <Compile Include="Animations\StoryboardHelpers.cs" />
     <Compile Include="AttachedProperties\BaseAttachedProperty.cs" />
-    <Compile Include="AttachedProperties\StringRGBToBrushConverterConverter.cs" />
-    <Compile Include="AttachedProperties\BooleanToVisibilityConverter.cs" />
+    <Compile Include="ValueConverters\StringRGBToBrushConverterConverter.cs" />
+    <Compile Include="ValueConverters\BooleanToVisibilityConverter.cs" />
     <Compile Include="AttachedProperties\ButtonAttachedProperties.cs" />
     <Compile Include="AttachedProperties\PasswordBoxAttachedProperties.cs" />
     <Compile Include="Controls\Chat\ChatListControl.xaml.cs">
@@ -75,13 +75,12 @@
     <Compile Include="Controls\Chat\ChatListItemUserControl.xaml.cs">
       <DependentUpon>ChatListItemUserControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="ViewModels\Design\ChatListDesignModel.cs" />
-    <Compile Include="ViewModels\Design\ChatListItemDesignModel.cs" />
+    <Compile Include="Pages\RegisterPage.xaml.cs">
+      <DependentUpon>RegisterPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\SideMenuControl.xaml.cs">
       <DependentUpon>SideMenuControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="DataModels\ApplicationPage.cs" />
-    <Compile Include="Expressions\ExpressionHelpers.cs" />
     <Compile Include="Pages\BasePage.cs" />
     <Compile Include="Pages\ChatPage.xaml.cs">
       <DependentUpon>ChatPage.xaml</DependentUpon>
@@ -89,17 +88,9 @@
     <Compile Include="Pages\LoginPage.xaml.cs">
       <DependentUpon>LoginPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Security\SecureStringHelpers.cs" />
     <Compile Include="ValueConverters\ApplicationPageValueConverter.cs" />
     <Compile Include="ValueConverters\BaseValueConverter.cs" />
-    <Compile Include="ViewModels\Base\BaseViewModel.cs" />
-    <Compile Include="ViewModels\Base\IHavePassword.cs" />
-    <Compile Include="ViewModels\Base\RelayParameterizedCommand.cs" />
-    <Compile Include="ViewModels\Base\RelayCommand.cs" />
-    <Compile Include="ViewModels\Chat\ChatListViewModel.cs" />
-    <Compile Include="ViewModels\Chat\ChatListItemViewModel.cs" />
-    <Compile Include="ViewModels\Pages\LoginViewModel.cs" />
-    <Compile Include="ViewModels\WindowViewModel.cs" />
+    <Compile Include="ViewModel\WindowViewModel.cs" />
     <Compile Include="Window\WindowResizer.cs" />
     <Page Include="Controls\Chat\ChatListControl.xaml">
       <SubType>Designer</SubType>
@@ -129,13 +120,13 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="Pages\RegisterPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Pages\LoginPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Styles\Windows.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
     </Page>
     <Page Include="Styles\Texts.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -186,10 +177,7 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Models\" />
-    <Folder Include="Views\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Resource Include="FodyWeavers.xml" />
   </ItemGroup>
@@ -198,6 +186,12 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Images\background.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\CoinFlipper.Core\CoinFlipper.Core.csproj">
+      <Project>{0b20ad92-16b3-48db-b680-995295c2fa68}</Project>
+      <Name>CoinFlipper.Core</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\packages\Fody.6.3.0\build\Fody.targets" Condition="Exists('..\packages\Fody.6.3.0\build\Fody.targets')" />

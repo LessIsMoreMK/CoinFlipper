@@ -1,4 +1,4 @@
-﻿namespace CoinFlipper
+﻿namespace CoinFlipper.Core
 {
     /// <summary>
     /// A page of the application
@@ -7,5 +7,6 @@
     {
         Login = 0,
         Chat = 1,
+        Register = 2,
     }
 }

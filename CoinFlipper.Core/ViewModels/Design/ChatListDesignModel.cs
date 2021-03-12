@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace CoinFlipper
+namespace CoinFlipper.Core
 {
     /// <summary>
     /// The design-time data for a <see cref="ChatListViewModel"/>
@@ -85,7 +85,7 @@ namespace CoinFlipper
                },
             };
         }
-
+        
         #endregion
     }
 }

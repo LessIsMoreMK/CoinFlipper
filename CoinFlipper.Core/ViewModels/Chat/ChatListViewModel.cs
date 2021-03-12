@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace CoinFlipper
+namespace CoinFlipper.Core
 {
     /// <summary>
     /// A view model for the overview chat list
