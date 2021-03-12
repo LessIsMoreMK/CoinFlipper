@@ -5,7 +5,6 @@
     /// </summary>
     public class ApplicationViewModel : BaseViewModel
     {
-
         /// <summary>
         /// The current page of the application
         /// </summary>

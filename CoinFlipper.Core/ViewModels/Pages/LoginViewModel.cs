@@ -79,6 +79,7 @@ namespace CoinFlipper.Core
         {
             await Task.Delay(1);
             //((WindowViewModel)((MainWindow)Application.Current.MainWindow).DataContext).CurrentPage = ApplicationPage.Register;
+            IoC.Get<ApplicationViewModel>().CurrentPage = ApplicationPage.Register;
         }
 
         #endregion

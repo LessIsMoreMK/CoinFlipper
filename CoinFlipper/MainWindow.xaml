@@ -159,7 +159,12 @@
             <ColumnDefinition Width="5*"/>
         </Grid.ColumnDefinitions>
 
-        <Frame Grid.Column="1" x:Name="MainFrame" Content="{Binding ApplicationViewModel.CurrentPage, ElementName=AppWindow, Converter={local:ApplicationPageValueConverter}}"/>
+        <Frame Grid.Column="1" 
+                   x:Name="MainFrame" 
+                   Content="{Binding ApplicationViewModel.CurrentPage, 
+                                     Source={x:Static local:ViewModelLocator.Instance},  
+                                     Converter={local:ApplicationPageValueConverter}}"
+                   Background="Transparent" />
 
         <local:SideMenuControl Grid.Column="0">
             <local:ChatListControl/>
