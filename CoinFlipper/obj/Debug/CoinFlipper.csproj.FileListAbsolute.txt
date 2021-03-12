@@ -22,8 +22,11 @@ C:\Users\Maciej\Desktop\CoinFlipper\CoinFlipper\obj\Debug\CoinFlipper.csproj.Cor
 C:\Users\Maciej\Desktop\CoinFlipper\CoinFlipper\obj\Debug\CoinFlipper.csproj.Fody.CopyLocal.cache
 C:\Users\Maciej\Desktop\CoinFlipper\CoinFlipper\obj\Debug\CoinFlipper.exe
 C:\Users\Maciej\Desktop\CoinFlipper\CoinFlipper\obj\Debug\CoinFlipper.pdb
-C:\Users\Maciej\Desktop\CoinFlipper\CoinFlipper\obj\Debug\CoinFlipper.csprojAssemblyReference.cache
 C:\Users\Maciej\Desktop\CoinFlipper\CoinFlipper\obj\Debug\Pages\ChatPage.g.cs
 C:\Users\Maciej\Desktop\CoinFlipper\CoinFlipper\obj\Debug\Pages\ChatPage.baml
 C:\Users\Maciej\Desktop\CoinFlipper\CoinFlipper\obj\Debug\Controls\SideMenuControl.g.cs
 C:\Users\Maciej\Desktop\CoinFlipper\CoinFlipper\obj\Debug\Controls\SideMenuControl.baml
+C:\Users\Maciej\Desktop\CoinFlipper\CoinFlipper\obj\Debug\Controls\Chat\ChatListItemUserControl.g.cs
+C:\Users\Maciej\Desktop\CoinFlipper\CoinFlipper\obj\Debug\Controls\Chat\ChatListItemUserControl.baml
+C:\Users\Maciej\Desktop\CoinFlipper\CoinFlipper\obj\Debug\Controls\Chat\ChatListControl.g.cs
+C:\Users\Maciej\Desktop\CoinFlipper\CoinFlipper\obj\Debug\Controls\Chat\ChatListControl.baml

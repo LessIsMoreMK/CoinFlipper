@@ -65,9 +65,18 @@
     <Compile Include="Animations\PageAnimations.cs" />
     <Compile Include="Animations\StoryboardHelpers.cs" />
     <Compile Include="AttachedProperties\BaseAttachedProperty.cs" />
+    <Compile Include="AttachedProperties\StringRGBToBrushConverterConverter.cs" />
     <Compile Include="AttachedProperties\BooleanToVisibilityConverter.cs" />
     <Compile Include="AttachedProperties\ButtonAttachedProperties.cs" />
     <Compile Include="AttachedProperties\PasswordBoxAttachedProperties.cs" />
+    <Compile Include="Controls\Chat\ChatListControl.xaml.cs">
+      <DependentUpon>ChatListControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\Chat\ChatListItemUserControl.xaml.cs">
+      <DependentUpon>ChatListItemUserControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ViewModels\Design\ChatListDesignModel.cs" />
+    <Compile Include="ViewModels\Design\ChatListItemDesignModel.cs" />
     <Compile Include="Controls\SideMenuControl.xaml.cs">
       <DependentUpon>SideMenuControl.xaml</DependentUpon>
     </Compile>
@@ -87,9 +96,19 @@
     <Compile Include="ViewModels\Base\IHavePassword.cs" />
     <Compile Include="ViewModels\Base\RelayParameterizedCommand.cs" />
     <Compile Include="ViewModels\Base\RelayCommand.cs" />
+    <Compile Include="ViewModels\Chat\ChatListViewModel.cs" />
+    <Compile Include="ViewModels\Chat\ChatListItemViewModel.cs" />
     <Compile Include="ViewModels\Pages\LoginViewModel.cs" />
     <Compile Include="ViewModels\WindowViewModel.cs" />
     <Compile Include="Window\WindowResizer.cs" />
+    <Page Include="Controls\Chat\ChatListControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\Chat\ChatListItemUserControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Controls\SideMenuControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
