@@ -7,7 +7,6 @@
       xmlns:core="clr-namespace:CoinFlipper.Core;assembly=CoinFlipper.Core"
       mc:Ignorable="d" 
       d:DesignHeight="500" d:DesignWidth="500"
-      Title="Register"
       x:Name="Page">
     <Grid>
         <Grid.ColumnDefinitions>

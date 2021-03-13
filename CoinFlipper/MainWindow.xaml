@@ -158,14 +158,12 @@
             <ColumnDefinition Width="5*"/>
         </Grid.ColumnDefinitions>
 
-        <Frame Grid.Column="1" 
-               x:Name="MainFrame" 
-               Background="Transparent" 
-               d:DataContext=""
-               DataContext="{Binding ApplicationViewModel.CurrentPage, 
-                                     Source={x:Static local:ViewModelLocator.Instance},  
-                                     Converter={local:ApplicationPageValueConverter}}"
-               Content="{Binding}"/>
+        <local:PageHost Grid.Column="1" 
+                        d:DataContext=""
+                        DataContext="{Binding ApplicationViewModel.CurrentPage, 
+                                             Source={x:Static local:ViewModelLocator.Instance},  
+                                             Converter={local:ApplicationPageValueConverter}}"
+                        CurrentPage="{Binding}"/>
 
         <local:SideMenuControl
                 Grid.Column="0"

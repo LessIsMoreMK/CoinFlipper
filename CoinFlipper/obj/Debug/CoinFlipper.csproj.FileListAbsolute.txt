@@ -37,3 +37,5 @@ C:\Users\Maciej\Desktop\CoinFlipper\CoinFlipper\bin\Debug\CoinFlipper.Core.pdb
 C:\Users\Maciej\Desktop\CoinFlipper\CoinFlipper\obj\Debug\CoinFlipper.csproj.CopyComplete
 C:\Users\Maciej\Desktop\CoinFlipper\CoinFlipper\bin\Debug\Ninject.dll
 C:\Users\Maciej\Desktop\CoinFlipper\CoinFlipper\bin\Debug\Ninject.xml
+C:\Users\Maciej\Desktop\CoinFlipper\CoinFlipper\obj\Debug\Controls\PageHost.g.cs
+C:\Users\Maciej\Desktop\CoinFlipper\CoinFlipper\obj\Debug\Controls\PageHost.baml

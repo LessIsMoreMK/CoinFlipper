@@ -63,13 +63,12 @@ namespace CoinFlipper.Core
         {
             await RunCommand(() => this.LoginIsRunning, async() =>
             {
-                await Task.Delay(1000);
-
-                IoC.Get<ApplicationViewModel>().CurrentPage = ApplicationPage.Register;
+                await Task.Delay(500);
 
                 //var email = this.Email;
                 //var pass = (parameter as IHavePassword).SecurePassword.Unsecure();
             });
+            IoC.Get<ApplicationViewModel>().CurrentPage = ApplicationPage.Register;
         }
 
         /// <summary>
