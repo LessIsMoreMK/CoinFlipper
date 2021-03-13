@@ -4,7 +4,17 @@
                     xmlns:system="clr-namespace:System;assembly=mscorlib">
     
     <!-- Font Family-->
+    <FontFamily x:Key="LatoThinItalic">pack://application;,,,/Fonts/#Lato-HairlineItalic</FontFamily>
+    <FontFamily x:Key="LatoThin">pack://application;,,,/Fonts/#Lato-Hairline</FontFamily>
+    <FontFamily x:Key="LatoLightItalic">pack://application;,,,/Fonts/#Lato-LightItalic</FontFamily>
+    <FontFamily x:Key="LatoLight">pack://application;,,,/Fonts/#Lato-Light</FontFamily>
+    <FontFamily x:Key="LatoItalic">pack://application;,,,/Fonts/#Lato Italic</FontFamily>
     <FontFamily x:Key="LatoRegular">pack://application;,,,/Fonts/#Lato Regular</FontFamily>
+    <FontFamily x:Key="LatoBoldItalic">pack://application;,,,/Fonts/#Lato Bold Italic</FontFamily>
+    <FontFamily x:Key="LatoBold">pack://application;,,,/Fonts/#Lato Bold</FontFamily>
+    <FontFamily x:Key="LatoBlackItalic">pack://application;,,,/Fonts/#Lato Black Italic</FontFamily>
+    <FontFamily x:Key="LatoBlack">pack://application;,,,/Fonts/#Lato Black</FontFamily>
+    
     <FontFamily x:Key="BlackOpsOneRegular">pack://application;,,,/Fonts/#Black Ops One Regular</FontFamily>
     <FontFamily x:Key="FontAwesome">pack://application;,,,/Fonts/#FontAwesome</FontFamily>
 

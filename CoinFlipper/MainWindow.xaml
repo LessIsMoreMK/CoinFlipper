@@ -23,7 +23,7 @@
                     <ControlTemplate TargetType="{x:Type Window}">
                         
                         <!-- Outer border with the drop shadow margin -->
-                        <Border Padding="{Binding OuterMarginSizeThickness, FallbackValue=10}">
+                        <Border Margin="{Binding OuterMarginSizeThickness, FallbackValue=10}">
                             
                             <!-- Main window outline -->
                             <Grid>
@@ -78,9 +78,8 @@
                                                 <StackPanel>
                                                     <TextBlock FontSize="{StaticResource FontSizeRegular}" 
                                                                FontFamily="{StaticResource BlackOpsOneRegular}" 
-                                                               Margin="0 3 0 3"
-                                                               FontWeight="Bold">
-                                                        <Run Text="Co" Foreground="{StaticResource GreenLightBrush}"/><Run Text="in" Foreground="{StaticResource GreenMediumBrush}"/> <Run Text="Fli" Foreground="{StaticResource GreenDarkBrush}"/><Run Text="pp" Foreground="{StaticResource GreenMediumBrush}"/><Run Text="er" Foreground="{StaticResource GreenLightBrush}"/>
+                                                               Margin="0 3 0 3">
+                                                    <Run Text="Co" Foreground="{StaticResource GreenLightBrush}"/><Run Text="in" Foreground="{StaticResource GreenMediumBrush}"/> <Run Text="Fli" Foreground="{StaticResource GreenDarkBrush}"/><Run Text="pp" Foreground="{StaticResource GreenMediumBrush}"/><Run Text="er" Foreground="{StaticResource GreenLightBrush}"/>
                                                     </TextBlock>
                                                 </StackPanel>
                                             </Viewbox>
@@ -121,7 +120,7 @@
                                         </Border>
 
                                         <!-- Page Content -->
-                                        <Border Grid.Row="2" Padding="{Binding InnerContentPadding}"  Background="Transparent">
+                                        <Border Grid.Row="2" Padding="{Binding InnerContentPadding}"  Background="Transparent" ClipToBounds="True">
                                             <Border>
                                                 <!-- Background -->
                                                 <Border.Background>
@@ -155,19 +154,27 @@
 
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="250"/>
+            <ColumnDefinition Width="Auto"/>
             <ColumnDefinition Width="5*"/>
         </Grid.ColumnDefinitions>
 
         <Frame Grid.Column="1" 
-                   x:Name="MainFrame" 
-                   Content="{Binding ApplicationViewModel.CurrentPage, 
+               x:Name="MainFrame" 
+               Background="Transparent" 
+               d:DataContext=""
+               DataContext="{Binding ApplicationViewModel.CurrentPage, 
                                      Source={x:Static local:ViewModelLocator.Instance},  
                                      Converter={local:ApplicationPageValueConverter}}"
-                   Background="Transparent" />
+               Content="{Binding}"/>
 
-        <local:SideMenuControl Grid.Column="0">
+        <local:SideMenuControl
+                Grid.Column="0"
+                Width="220" 
+                local:AnimateSlideInFromLeftProperty.Value="{Binding ApplicationViewModel.SideMenuVisible, 
+                                     Source={x:Static local:ViewModelLocator.Instance}}">
             <local:ChatListControl/>
         </local:SideMenuControl>
+    
+    
     </Grid>
 </Window>

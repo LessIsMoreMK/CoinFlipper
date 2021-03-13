@@ -65,6 +65,7 @@ namespace CoinFlipper.Core
             {
                 await Task.Delay(1000);
 
+                IoC.Get<ApplicationViewModel>().CurrentPage = ApplicationPage.Register;
 
                 //var email = this.Email;
                 //var pass = (parameter as IHavePassword).SecurePassword.Unsecure();
@@ -77,6 +78,9 @@ namespace CoinFlipper.Core
         /// <returns></returns>
         public async Task RegisterAsync()
         {
+            IoC.Get<ApplicationViewModel>().SideMenuVisible ^= true;
+            return;
+
             await Task.Delay(1);
             //((WindowViewModel)((MainWindow)Application.Current.MainWindow).DataContext).CurrentPage = ApplicationPage.Register;
             IoC.Get<ApplicationViewModel>().CurrentPage = ApplicationPage.Register;

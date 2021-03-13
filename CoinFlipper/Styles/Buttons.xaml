@@ -80,7 +80,7 @@
         <Setter Property="FontSize" Value="{StaticResource FontSizeLarge}"/>
         <Setter Property="Padding" Value="50 10"/>
         <Setter Property="Margin" Value="0 10"/>
-        <Setter Property="FontWeight" Value="Bold"/>
+        <Setter Property="FontFamily" Value="{StaticResource LatoBold}"/>
 
         <Setter Property="local:IsBusyProperty.Value" Value="False"/>
 
@@ -141,7 +141,7 @@
         <Setter Property="FontSize" Value="{StaticResource FontSizeRegular}"/>
         <Setter Property="Padding" Value="50 10"/>
         <Setter Property="Margin" Value="0 10"/>
-        <Setter Property="FontWeight" Value="Bold"/>
+        <Setter Property="FontFamily" Value="{StaticResource LatoBold}"/>
 
         <Setter Property="Template">
             <Setter.Value>
@@ -159,7 +159,7 @@
                                    Margin="{TemplateBinding Padding}" 
                                    SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" 
                                    VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
-                                   FontWeight="{TemplateBinding FontWeight}"
+                                   FontFamily="{TemplateBinding FontFamily}"
                                    Foreground="{StaticResource GreenMediumBrush}"/>
                     </Border>
                     <ControlTemplate.Triggers>
@@ -192,7 +192,7 @@
         <Setter Property="FontFamily" Value="{StaticResource FontAwesome}"/>
         <Setter Property="Padding" Value="20"/>
         <Setter Property="Margin" Value="0"/>
-        <Setter Property="FontWeight" Value="Bold"/>
+        <Setter Property="FontFamily" Value="{StaticResource LatoBold}"/>
         <Setter Property="Width" Value="{Binding ActualHeight, RelativeSource={RelativeSource Self}}"/>
 
         <Setter Property="Template">
@@ -211,7 +211,6 @@
                                            Margin="{TemplateBinding Padding}" 
                                            SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"  
                                            VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
-                                           FontWeight="{TemplateBinding FontWeight}"
                                            FontSize="{TemplateBinding FontSize}"
                                            FontFamily="{StaticResource FontAwesome}"/>
                             </Viewbox>

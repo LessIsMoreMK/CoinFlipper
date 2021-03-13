@@ -42,7 +42,7 @@
                                                    HorizontalAlignment="Center"
                                                    Foreground="{StaticResource YellowBrush}"
                                                    FontSize="{StaticResource FontSizeSmall}"
-                                                   FontWeight="Bold"/>
+                                                   FontFamily="{StaticResource LatoBold}"/>
                                     </Border>
                                 </Border>
 
@@ -51,7 +51,7 @@
                                     <StackPanel  VerticalAlignment="Center">
                                         <!-- Name -->
                                         <TextBlock Text="{Binding Name}" 
-                                                   FontWeight="Bold"
+                                                   FontFamily="{StaticResource LatoBold}"
                                                    Foreground="{StaticResource YellowBrush}"/>
                                         <!-- Message-->
                                         <TextBlock Text="{Binding Message}"

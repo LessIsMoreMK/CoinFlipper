@@ -27,7 +27,7 @@
                     <StackPanel>
                         <!-- Sign Up Header -->
                         <TextBlock Text="Sign In" 
-                                   FontWeight="Bold"
+                                   FontFamily="{StaticResource LatoBold}"
                                    FontSize="{StaticResource FontSizeLarge}" 
                                    Foreground="{StaticResource GreenMediumBrush}"/>
                         <!-- Sign Up Subtext -->
@@ -49,7 +49,7 @@
                 </Border>
 
                 <Button Style="{StaticResource TextButton}" 
-                        Content="Or, create a free account" 
+                        Content="Create a free account" 
                         HorizontalAlignment="Center"
                         Command="{Binding RegisterCommand}"/>
             </StackPanel>
