@@ -23,7 +23,7 @@
                     <ControlTemplate TargetType="{x:Type Window}">
                         
                         <!-- Outer border with the drop shadow margin -->
-                        <Border Margin="{Binding OuterMarginSizeThickness, FallbackValue=10}">
+                        <Border Padding="{Binding OuterMarginSizeThickness, FallbackValue=10}">
                             
                             <!-- Main window outline -->
                             <Grid>
@@ -167,7 +167,7 @@
 
         <local:SideMenuControl
                 Grid.Column="0"
-                Width="220" 
+                Width="250" 
                 local:AnimateSlideInFromLeftProperty.Value="{Binding ApplicationViewModel.SideMenuVisible, 
                                      Source={x:Static local:ViewModelLocator.Instance}}">
             <local:ChatListControl/>

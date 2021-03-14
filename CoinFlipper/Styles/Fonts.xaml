@@ -20,9 +20,11 @@
 
     <Style TargetType="{x:Type Control}" x:Key="BaseStyle">
         <Setter Property="FontFamily" Value="{StaticResource LatoRegular}"/>
+        <Setter Property="FontSize" Value="{StaticResource FontSizeRegular}"/>
     </Style>
     <Style TargetType="{x:Type TextBlock}" x:Key="TextBlockBaseStyle">
         <Setter Property="FontFamily" Value="{StaticResource LatoRegular}"/>
+        <Setter Property="FontSize" Value="{StaticResource FontSizeRegular}"/>
     </Style>
 
     <Style TargetType="{x:Type Button}" BasedOn="{StaticResource BaseStyle}"/>
@@ -32,10 +34,12 @@
 
     <!-- Font Size -->
     <system:Double x:Key="FontSizeVerySmall">8</system:Double>
-    <system:Double x:Key="FontSizeSmall">14</system:Double>
-    <system:Double x:Key="FontSizeRegular">20</system:Double>
-    <system:Double x:Key="FontSizeLarge">30</system:Double>
-    <system:Double x:Key="FontSizeVeryLarge">40</system:Double>
+    <system:Double x:Key="FontSizeSmaller">10</system:Double>
+    <system:Double x:Key="FontSizeSmall">12</system:Double>
+    <system:Double x:Key="FontSizeRegular">14</system:Double>
+    <system:Double x:Key="FontSizeLarge">20</system:Double>
+    <system:Double x:Key="FontSizeLarger">24</system:Double>
+    <system:Double x:Key="FontSizeVeryLarge">30</system:Double>
 
     <!-- Font Awesome Icons-->
     <system:String x:Key="FontAwesomeMinimize">&#xf2d1;</system:String>

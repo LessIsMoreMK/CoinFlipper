@@ -14,7 +14,7 @@
     <Style TargetType="{x:Type TextBox}">
         <Setter Property="BorderBrush" Value="{StaticResource GreenMediumBrush}"/>
         <Setter Property="BorderThickness" Value="0 0 0 1"/>
-        <Setter Property="FontSize" Value="{StaticResource FontSizeLarge}"/>
+        <Setter Property="FontSize" Value="{StaticResource FontSizeVeryLarge}"/>
         <Setter Property="FontFamily" Value="{StaticResource LatoBold}"/>
         <Setter Property="Padding" Value="10"/>
         <Setter Property="Margin" Value="0 5 0 5"/>
@@ -85,7 +85,7 @@
     <Style TargetType="{x:Type PasswordBox}">
         <Setter Property="BorderBrush" Value="{StaticResource GreenMediumBrush}"/>
         <Setter Property="BorderThickness" Value="0 0 0 1"/>
-        <Setter Property="FontSize" Value="{StaticResource FontSizeLarge}"/>
+        <Setter Property="FontSize" Value="{StaticResource FontSizeVeryLarge}"/>
         <Setter Property="FontFamily" Value="{StaticResource LatoBold}"/>
         <Setter Property="Padding" Value="10"/>
         <Setter Property="Margin" Value="0 5 0 5"/>
@@ -116,6 +116,7 @@
                                    HorizontalAlignment="{TemplateBinding HorizontalAlignment}"
                                    Foreground="{StaticResource GreenMediumBrush}"
                                    FontFamily="{StaticResource LatoRegular}"
+                                   FontSize="{TemplateBinding FontSize}"
                                    Visibility="{TemplateBinding local:HasTextProperty.Value, Converter={local:BooleanToVisibilityConverter}}">
                         </TextBlock>
                     </Grid>

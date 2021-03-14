@@ -77,7 +77,7 @@
         <Setter Property="Background" Value="{StaticResource GreenMediumBrush}"/>
         <Setter Property="Foreground" Value="{StaticResource WhiteBrush}"/>
         <Setter Property="BorderThickness" Value="0"/>
-        <Setter Property="FontSize" Value="{StaticResource FontSizeLarge}"/>
+        <Setter Property="FontSize" Value="{StaticResource FontSizeLarger}"/>
         <Setter Property="Padding" Value="50 10"/>
         <Setter Property="Margin" Value="0 10"/>
         <Setter Property="FontFamily" Value="{StaticResource LatoBold}"/>
@@ -100,10 +100,12 @@
                                        Margin="{TemplateBinding Padding}" 
                                        SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"  
                                        VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
-                                       FontWeight="{TemplateBinding FontWeight}"
+                                       FontFamily="{TemplateBinding FontFamily}"
+                                       FontSize="{TemplateBinding FontSize}"
                                        Visibility="{TemplateBinding local:IsBusyProperty.Value, Converter={local:BooleanToVisibilityConverter}}"/>
                             <TextBlock Style="{StaticResource SpinningText}"
                                        FontFamily="{StaticResource FontAwesome}"
+                                       FontSize="{TemplateBinding FontSize}"
                                        HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" 
                                        VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
                                        Visibility="{TemplateBinding local:IsBusyProperty.Value, Converter={local:BooleanToVisibilityConverter}, ConverterParameter=True}"
@@ -138,7 +140,7 @@
         <Setter Property="Background" Value="Transparent"/>
         <Setter Property="Foreground" Value="{StaticResource GreenMediumBrush}"/>
         <Setter Property="BorderThickness" Value="0"/>
-        <Setter Property="FontSize" Value="{StaticResource FontSizeRegular}"/>
+        <Setter Property="FontSize" Value="{StaticResource FontSizeLarge}"/>
         <Setter Property="Padding" Value="50 10"/>
         <Setter Property="Margin" Value="0 10"/>
         <Setter Property="FontFamily" Value="{StaticResource LatoBold}"/>
@@ -160,6 +162,7 @@
                                    SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" 
                                    VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
                                    FontFamily="{TemplateBinding FontFamily}"
+                                   FontSize="{TemplateBinding FontSize}"
                                    Foreground="{StaticResource GreenMediumBrush}"/>
                     </Border>
                     <ControlTemplate.Triggers>
@@ -188,7 +191,7 @@
         <Setter Property="Background" Value="Transparent"/>
         <Setter Property="Foreground" Value="{StaticResource GreenMediumBrush}"/>
         <Setter Property="BorderThickness" Value="0"/>
-        <Setter Property="FontSize" Value="{StaticResource FontSizeLarge}"/>
+        <Setter Property="FontSize" Value="{StaticResource FontSizeLarger}"/>
         <Setter Property="FontFamily" Value="{StaticResource FontAwesome}"/>
         <Setter Property="Padding" Value="20"/>
         <Setter Property="Margin" Value="0"/>

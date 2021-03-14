@@ -1,4 +1,4 @@
-﻿<local:BasePage x:TypeArguments="core:LoginViewModel" x:Class="CoinFlipper.RegisterPage"
+﻿<local:BasePage x:TypeArguments="core:RegisterViewModel" x:Class="CoinFlipper.RegisterPage"
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
@@ -27,7 +27,7 @@
                         <!-- Sign Up Header -->
                         <TextBlock Text="Sign Up" 
                                    FontFamily="{StaticResource LatoBold}"
-                                   FontSize="{StaticResource FontSizeLarge}" 
+                                   FontSize="{StaticResource FontSizeVeryLarge}" 
                                    Foreground="{StaticResource GreenMediumBrush}"/>
                         <!-- Sign Up Subtext -->
                         <TextBlock Text="Add start flipping!" 

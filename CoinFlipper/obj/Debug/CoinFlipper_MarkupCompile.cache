@@ -10,11 +10,11 @@ none
 false
 DEBUG;TRACE
 C:\Users\Maciej\Desktop\CoinFlipper\CoinFlipper\App.xaml
-12270938542
+14-540747838
 
-31-547779764
+33-765054157
 16-1190761330
-Controls\Chat\ChatListControl.xaml;Controls\Chat\ChatListItemUserControl.xaml;Controls\PageHost.xaml;Controls\SideMenuControl.xaml;MainWindow.xaml;Pages\ChatPage.xaml;Pages\RegisterPage.xaml;Pages\LoginPage.xaml;Styles\Texts.xaml;Styles\Buttons.xaml;Styles\Colors.xaml;Styles\Fonts.xaml;
+Controls\Message\ChatMessageListControl.xaml;Controls\Chat\ChatListControl.xaml;Controls\Chat\ChatListItemControl.xaml;Controls\Message\ChatMessageListItemControl.xaml;Controls\PageHost.xaml;Controls\SideMenuControl.xaml;MainWindow.xaml;Pages\ChatPage.xaml;Pages\RegisterPage.xaml;Pages\LoginPage.xaml;Styles\Texts.xaml;Styles\Buttons.xaml;Styles\Colors.xaml;Styles\Fonts.xaml;
 
 False
 

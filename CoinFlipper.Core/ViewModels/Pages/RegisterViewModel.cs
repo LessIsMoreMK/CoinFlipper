@@ -6,9 +6,9 @@ using System.Windows.Input;
 namespace CoinFlipper.Core
 {
     /// <summary>
-    /// The View Model for a register screen
+    /// The View Model for a login screen
     /// </summary>
-    public class LoginViewModel : BaseViewModel
+    public class RegisterViewModel : BaseViewModel
     {
         #region Public Properties
 
@@ -18,9 +18,9 @@ namespace CoinFlipper.Core
         public string Email { get; set; }
 
         /// <summary>
-        /// A flag indicating if the register command is running
+        /// A flag indicating if the login command is running
         /// </summary>
-        public bool RegisterIsRunning { get; set; }
+        public bool LoginIsRunning { get; set; }
 
         #endregion
 
@@ -43,11 +43,11 @@ namespace CoinFlipper.Core
         /// <summary>
         /// Default constructor
         /// </summary>
-        public LoginViewModel()
+        public RegisterViewModel()
         {
             // Initialize commands
-            RegisterCommand = new RelayParameterizedCommand(async (parameter) => await RegisterAsync(parameter));
-            LoginCommand = new RelayCommand(async () => await LoginAsync());
+            LoginCommand = new RelayParameterizedCommand(async (parameter) => await LoginAsync(parameter));
+            RegisterCommand = new RelayCommand(async () => await RegisterAsync());
         }
 
         #endregion
@@ -55,24 +55,33 @@ namespace CoinFlipper.Core
         #region Commands Methods
 
         /// <summary>
-        /// Attempts to register a new user
+        /// Attempts to log the user in
         /// </summary>
         /// <param name="parameter">The <see cref="SecureString"/>passed in from the view for the users password</param>
         /// <returns></returns>
-        public async Task RegisterAsync(object parameter)
+        public async Task LoginAsync(object parameter)
         {
-            await RunCommand(() => this.RegisterIsRunning, async() =>
+            await RunCommand(() => this.LoginIsRunning, async() =>
             {
                 await Task.Delay(500);
+
+                //var email = this.Email;
+                //var pass = (parameter as IHavePassword).SecurePassword.Unsecure();
             });
+            IoC.Get<ApplicationViewModel>().GoToPage(ApplicationPage.Login);
         }
 
         /// <summary>
-        /// Takes the user to the login page
+        /// Takes the user to the register page
         /// </summary>
         /// <returns></returns>
-        public async Task LoginAsync()
+        public async Task RegisterAsync()
         {
+            IoC.Get<ApplicationViewModel>().SideMenuVisible ^= true;
+            return;
+
+            await Task.Delay(1);
+            //((WindowViewModel)((MainWindow)Application.Current.MainWindow).DataContext).CurrentPage = ApplicationPage.Register;
             IoC.Get<ApplicationViewModel>().GoToPage(ApplicationPage.Register);
         }
 

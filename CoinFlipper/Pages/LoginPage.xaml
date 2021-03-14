@@ -27,7 +27,7 @@
                         <!-- Sign Up Header -->
                         <TextBlock Text="Sign In" 
                                    FontFamily="{StaticResource LatoBold}"
-                                   FontSize="{StaticResource FontSizeLarge}" 
+                                   FontSize="{StaticResource FontSizeVeryLarge}" 
                                    Foreground="{StaticResource GreenMediumBrush}"/>
                         <!-- Sign Up Subtext -->
                         <TextBlock Text="Add start flipping!" 

@@ -12,8 +12,8 @@
         <Grid.ColumnDefinitions>
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
-        
-        <TextBlock>C</TextBlock>
+
+        <local:ChatMessageListControl></local:ChatMessageListControl>
         
     </Grid>
 </local:BasePage>
