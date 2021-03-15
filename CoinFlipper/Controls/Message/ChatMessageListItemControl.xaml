@@ -4,10 +4,13 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:CoinFlipper"
+             xmlns:core="clr-namespace:CoinFlipper.Core;assembly=CoinFlipper.Core"
              mc:Ignorable="d"
              d:DesignWidth="300">
-    <Border Padding="5">
+    <Border Padding="5"
+            d:DataContext="{x:Static core:ChatMessageListItemDesignModel.Instance}">
         <Grid>
+            
             <!-- Profile Picture -->
             <Border VerticalAlignment="Top"
                     HorizontalAlignment="Left"
@@ -16,17 +19,40 @@
                     Background="{StaticResource GreenDarkBrush}"
                     BorderBrush="{StaticResource YellowBrush}"
                     BorderThickness="1"
+                    Visibility="{Binding SentByMe, Converter={local:BooleanToVisibilityConverter}}"
                     CornerRadius="{Binding ActualWidth, RelativeSource={RelativeSource Self}}"
                     Height="{Binding ActualWidth, RelativeSource={RelativeSource Self}}">
-                <TextBlock Text="MK"
+                
+                <TextBlock Text="{Binding Initials}"
                            VerticalAlignment="Center"
                            HorizontalAlignment="Center"
                            Foreground="{StaticResource YellowBrush}"
                            FontFamily="{StaticResource LatoRegular}"/>
+                
             </Border>
 
-            <!-- Chat Message container-->
-            <Grid Margin="25 0 0 0" HorizontalAlignment="Left">
+            <!-- Chat Message Container-->
+            <Grid Margin="25 0 25 0" 
+                  HorizontalAlignment="{Binding SentByMe, Converter={local:SentByMeToAllignmentConverter}}">
+
+                <Grid.Triggers>
+                    <EventTrigger RoutedEvent="MouseEnter">
+                        <BeginStoryboard>
+                            <Storyboard Storyboard.TargetName="ExtraDetails" Storyboard.TargetProperty="Opacity">
+                                <DoubleAnimation To="1" Duration="00:00:00.5"/>
+                            </Storyboard>
+                        </BeginStoryboard>
+                    </EventTrigger>
+
+                    <EventTrigger RoutedEvent="MouseLeave">
+                        <BeginStoryboard>
+                            <Storyboard Storyboard.TargetName="ExtraDetails" Storyboard.TargetProperty="Opacity">
+                                <DoubleAnimation To="0" Duration="00:00:00.5"/>
+                            </Storyboard>
+                        </BeginStoryboard>
+                    </EventTrigger>
+                </Grid.Triggers>
+                
                 <Grid.RowDefinitions>
                     <RowDefinition Height="*"/>
                     <RowDefinition Height="Auto"/>
@@ -37,28 +63,46 @@
                 <Border CornerRadius="10" 
                         Padding="15"
                         HorizontalAlignment="Left"
-                        Background="{StaticResource AlmostWhiteBrush}">
+                        Background="{Binding SentByMe, Converter={local:SentByMeToBackgroundConverter}}">
                     
                     <!-- Message Text -->
                     <TextBlock VerticalAlignment="Center" 
                                TextWrapping="Wrap" 
                                FontFamily="{StaticResource LatoRegular}"
-                               Text="This text is for testing message text text text"/>
+                               Text="{Binding Message}"/>
 
                 </Border>
 
                 <!-- Chat Bubble Anchor-->
                 <Path Grid.Row="1" 
                       Panel.ZIndex="1"
-                      Fill="{StaticResource AlmostWhiteBrush}"
+                      Fill="{Binding SentByMe, Converter={local:SentByMeToBackgroundConverter}}"
+                      HorizontalAlignment="{Binding SentByMe, Converter={local:SentByMeToAllignmentConverter}}"
                       Margin="15 -1 15 0"
                       Data="M 0,0 L 10,10 L 20, 0"/>
 
-                <TextBlock Grid.Row="2"
-                           HorizontalAlignment="Right"
-                           FontSize="{StaticResource FontSizeVerySmall}"
-                           Text="10:53"
-                           Foreground="{StaticResource AlmostWhiteBrush}"/>
+                <!-- Time Containers -->
+                <StackPanel Grid.Row="2" 
+                            Orientation="Horizontal"
+                            Name="ExtraDetails"
+                            Opacity="0">
+                    
+                    <!-- Sent Time-->
+                    <TextBlock HorizontalAlignment="Right"
+                               Margin="0 0 15 0"
+                               FontSize="{StaticResource FontSizeVerySmall}"
+                               FontFamily="{StaticResource LatoBold}"
+                               Text="{Binding MessageSentTime, Converter={local:TimeToDisplayTimeConverter}}"
+                               Foreground="{StaticResource AlmostWhiteBrush}"/>
+
+                    <!-- Read Time-->
+                    <TextBlock HorizontalAlignment="Right"
+                               FontSize="{StaticResource FontSizeVerySmall}"
+                               FontFamily="{StaticResource LatoBold}"
+                               Text="{Binding MessageReadTime, Converter={local:TimeToReadTimeConverter}}"
+                               Foreground="{StaticResource GrayLightBrush}"/>
+                    
+                </StackPanel>
             </Grid>
         </Grid>
             

@@ -8,6 +8,8 @@
     <SolidColorBrush x:Key="GrayMediumBrush" Color="{StaticResource GrayMedium}"/>
     <Color x:Key="GrayLight">#808080</Color>
     <SolidColorBrush x:Key="GrayLightBrush" Color="{StaticResource GrayLight}"/>
+    <Color x:Key="GrayVeryLight">#C0C0C0</Color>
+    <SolidColorBrush x:Key="GrayVeryLightBrush" Color="{StaticResource GrayVeryLight}"/>
 
     <Color x:Key="GreenDark">#004F3A</Color>
     <SolidColorBrush x:Key="GreenDarkBrush" Color="{StaticResource GreenDark}"/>

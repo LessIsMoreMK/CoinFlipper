@@ -81,6 +81,10 @@
     <Compile Include="Controls\PageHost.xaml.cs">
       <DependentUpon>PageHost.xaml</DependentUpon>
     </Compile>
+    <Compile Include="ValueConverters\SentByMeToBackgroundConverter.cs" />
+    <Compile Include="ValueConverters\SentByMeToAllignmentConverter.cs" />
+    <Compile Include="ValueConverters\TimeToReadTimeConverter.cs" />
+    <Compile Include="ValueConverters\TimeToDisplayTimeConverter.cs" />
     <Compile Include="ValueConverters\IoCConverter.cs" />
     <Compile Include="ValueConverters\StringRGBToBrushConverterConverter.cs" />
     <Compile Include="ValueConverters\BooleanToVisibilityConverter.cs" />
