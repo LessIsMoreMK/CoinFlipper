@@ -9,11 +9,42 @@
       d:DesignHeight="500" d:DesignWidth="500"
       x:Name="Page">
     <Grid>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition/>
-        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <!-- Title Bar -->
+            <RowDefinition Height="Auto"/>
+            <!-- Chat List -->
+            <RowDefinition Height="*"/>
+            <!-- Message Send Text Box -->
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
 
-        <local:ChatMessageListControl></local:ChatMessageListControl>
+        <!-- Title Bar -->
+        <Grid Height="50">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+            
+            <!-- Title Text -->
+            <TextBlock Text="Alice"
+                        Grid.ColumnSpan="2"
+                       Foreground="{StaticResource GreenLightBrush}"
+                       FontSize="{StaticResource FontSizeLarge}"
+                       HorizontalAlignment="Center"
+                       VerticalAlignment="Center"
+                       FontFamily="{StaticResource LatoBold}"/>
+
+            <!-- Buttons -->
+            <StackPanel Grid.Column="1" Orientation="Horizontal">
+                <Button Content="{StaticResource FontAwesomeSearchIcon}" 
+                                    Style="{StaticResource IconButton}"/>
+                <Button Content="{StaticResource FontAwesomeElipsisVerticalIcon}" 
+                                    Style="{StaticResource IconButton}"/>
+            </StackPanel>
+        </Grid>
+        
+        <!-- Chat List -->
+        <local:ChatMessageListControl Grid.Row="1"/>
         
     </Grid>
 </local:BasePage>

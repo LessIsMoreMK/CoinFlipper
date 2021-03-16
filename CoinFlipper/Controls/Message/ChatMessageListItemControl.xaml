@@ -85,19 +85,18 @@
                 <StackPanel Grid.Row="2" 
                             Orientation="Horizontal"
                             Name="ExtraDetails"
-                            Opacity="0">
+                            Opacity="0"
+                            HorizontalAlignment="{Binding SentByMe, Converter={local:SentByMeToAllignmentConverter}, ConverterParameter=True}">
                     
                     <!-- Sent Time-->
-                    <TextBlock HorizontalAlignment="Right"
-                               Margin="0 0 15 0"
+                    <TextBlock Margin="0 0 15 0"
                                FontSize="{StaticResource FontSizeVerySmall}"
                                FontFamily="{StaticResource LatoBold}"
                                Text="{Binding MessageSentTime, Converter={local:TimeToDisplayTimeConverter}}"
                                Foreground="{StaticResource AlmostWhiteBrush}"/>
 
                     <!-- Read Time-->
-                    <TextBlock HorizontalAlignment="Right"
-                               FontSize="{StaticResource FontSizeVerySmall}"
+                    <TextBlock FontSize="{StaticResource FontSizeVerySmall}"
                                FontFamily="{StaticResource LatoBold}"
                                Text="{Binding MessageReadTime, Converter={local:TimeToReadTimeConverter}}"
                                Foreground="{StaticResource GrayLightBrush}"/>

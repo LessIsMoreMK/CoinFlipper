@@ -209,6 +209,7 @@
                         <Grid>
                             <Viewbox>
                                 <TextBlock Text="{TemplateBinding Content}" 
+                                           x:Name="text"
                                            Focusable="False" 
                                            HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" 
                                            Margin="{TemplateBinding Padding}" 
@@ -223,14 +224,14 @@
                         <EventTrigger RoutedEvent="MouseEnter">
                             <BeginStoryboard>
                                 <Storyboard>
-                                    <ColorAnimation To="{StaticResource GrayMedium}" Duration="0:0:0.3" Storyboard.TargetName="border" Storyboard.TargetProperty="Background.Color" />
+                                    <ColorAnimation To="{StaticResource GreenLight}" Duration="0:0:0.3" Storyboard.TargetName="text" Storyboard.TargetProperty="Foreground.Color" />
                                 </Storyboard>
                             </BeginStoryboard>
                         </EventTrigger>
                         <EventTrigger RoutedEvent="MouseLeave">
                             <BeginStoryboard>
                                 <Storyboard>
-                                    <ColorAnimation To="{StaticResource GrayDark}" Duration="0:0:0.3" Storyboard.TargetName="border" Storyboard.TargetProperty="Background.Color" />
+                                    <ColorAnimation To="{StaticResource GreenMedium}" Duration="0:0:0.3" Storyboard.TargetName="text" Storyboard.TargetProperty="Foreground.Color" />
                                 </Storyboard>
                             </BeginStoryboard>
                         </EventTrigger>

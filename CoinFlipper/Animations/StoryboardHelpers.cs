@@ -1,4 +1,4 @@
-﻿ using System;
+﻿using System;
 using System.Windows;
 using System.Windows.Media.Animation;
 
@@ -283,6 +283,7 @@ namespace CoinFlipper
 
         #endregion
 
+        #region Marquee
 
         /// <summary>
         /// Adds a marquee scrolling right to left animation to the storyboard
@@ -308,5 +309,7 @@ namespace CoinFlipper
             // Add this to the storyboard
             storyboard.Children.Add(animation);
         }
+
+        #endregion
     }
 }

@@ -29,18 +29,24 @@
                                    FontFamily="{StaticResource LatoBold}"
                                    FontSize="{StaticResource FontSizeVeryLarge}" 
                                    Foreground="{StaticResource GreenMediumBrush}"/>
+                        
                         <!-- Sign Up Subtext -->
                         <TextBlock Text="Add start flipping!" 
                                    FontSize="{StaticResource FontSizeRegular}" 
                                    Foreground="{StaticResource AlmostWhiteBrush}"
                                    Margin="0 0 0 20"/>
+                        
                         <!-- Email -->
-                        <TextBox Text="{Binding Email}" Tag="Email"/>
+                        <TextBox Text="{Binding Email}" Tag="Email"
+                                 local:IsFocusedProperty.Value="True"/>
+                        
                         <!-- Password -->
                         <PasswordBox x:Name="PasswordText" Tag="Password" Margin="0 0 0 30"/>
-                        <!-- Login Button -->
+                        
+                        <!-- Register Button -->
                         <Button Content="Register" 
                                 HorizontalAlignment="Center"
+                                IsDefault="True"
                                 Command="{Binding LoginCommand}"
                                 CommandParameter="{Binding ElementName=Page}"
                                 local:IsBusyProperty.Value="{Binding LoginIsRunning}"/>

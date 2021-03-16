@@ -12,7 +12,7 @@
         AllowsTransparency="true"
         WindowStartupLocation="CenterScreen"
         Title="Coin Flipper" 
-        Height="450" Width="800"
+        Height="600" Width="800"
         MinHeight="{Binding WindowMinimumHeight}"
         MinWidth="{Binding WindowMinimumWidth}">
 
@@ -122,13 +122,6 @@
                                         <!-- Page Content -->
                                         <Border Grid.Row="2" Padding="{Binding InnerContentPadding}"  Background="Transparent" ClipToBounds="True">
                                             <Border>
-                                                <!-- Background -->
-                                                <Border.Background>
-                                                        <ImageBrush TileMode="Tile" 
-                                                                    ViewportUnits="Absolute" 
-                                                                    Viewport="0 0 500 500" 
-                                                                    ImageSource="images/background.png"/>
-                                                </Border.Background>
                                                 <!-- Content -->
                                                 <ContentPresenter Content="{TemplateBinding Content}"/>
                                             </Border>
@@ -155,9 +148,19 @@
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="Auto"/>
-            <ColumnDefinition Width="5*"/>
+            <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
 
+
+        <!-- Background -->
+        <Grid.Background>
+            <ImageBrush TileMode="Tile" 
+                        ViewportUnits="Absolute" 
+                        Viewport="0 0 500 500" 
+                        ImageSource="images/background.png"/>
+        </Grid.Background>
+        
+        <!-- Main Content -->
         <local:PageHost Grid.Column="1" 
                         d:DataContext=""
                         DataContext="{Binding ApplicationViewModel.CurrentPage, 
@@ -165,9 +168,10 @@
                                              Converter={local:ApplicationPageValueConverter}}"
                         CurrentPage="{Binding}"/>
 
+        <!-- Side Menu -->
         <local:SideMenuControl
                 Grid.Column="0"
-                Width="250" 
+                Width="300" 
                 local:AnimateSlideInFromLeftProperty.Value="{Binding ApplicationViewModel.SideMenuVisible, 
                                      Source={x:Static local:ViewModelLocator.Instance}}">
             <local:ChatListControl/>

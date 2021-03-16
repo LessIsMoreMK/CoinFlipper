@@ -77,9 +77,6 @@ namespace CoinFlipper.Core
         /// <returns></returns>
         public async Task RegisterAsync()
         {
-            IoC.Get<ApplicationViewModel>().SideMenuVisible ^= true;
-            return;
-
             await Task.Delay(1);
             //((WindowViewModel)((MainWindow)Application.Current.MainWindow).DataContext).CurrentPage = ApplicationPage.Register;
             IoC.Get<ApplicationViewModel>().GoToPage(ApplicationPage.Register);

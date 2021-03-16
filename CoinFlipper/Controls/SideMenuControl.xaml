@@ -10,7 +10,7 @@
     <UserControl.Template>
         <ControlTemplate TargetType="UserControl">
             
-            <Border Grid.Column="0" Background="{StaticResource GrayDarkBrush}">
+            <Border Grid.Column="0">
                 
                 <!-- Content -->
                 <Grid>
@@ -44,10 +44,12 @@
                                 Style="{StaticResource IconButton}"
                                 Foreground="{StaticResource GreenLightBrush}"/>
                     </Grid>
+
                     
                     <!-- The User Content -->
-                    <ContentPresenter Grid.Row="1"/>
-                    
+                    <Border Grid.Row="1"  Background="{StaticResource GrayDarkBrush}">
+                        <ContentPresenter/>
+                    </Border>
                 </Grid>
             </Border>
         </ControlTemplate>
