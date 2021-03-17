@@ -41,8 +41,7 @@
                         <!-- Setting Button-->
                         <Button Grid.Column="2" 
                                 Content="{StaticResource FontAwesomeCogIcon}" 
-                                Style="{StaticResource IconButton}"
-                                Foreground="{StaticResource GreenLightBrush}"/>
+                                Style="{StaticResource IconButton}"/>
                     </Grid>
 
                     

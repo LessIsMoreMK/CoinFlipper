@@ -69,7 +69,7 @@
                                             <!-- Icon -->
                                             <Button Command="{Binding MenuCommand}"
                                                     Style="{StaticResource SystemIconButton}"
-                                                    Padding="8">
+                                                    Padding="6">
                                                 <Image Source="/Images/logo.png"/>
                                             </Button>
                                             
