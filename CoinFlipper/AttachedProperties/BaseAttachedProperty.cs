@@ -55,6 +55,7 @@ namespace CoinFlipper
             // Call event listeners
             (Instance as BaseAttachedProperty<Parent, Property>)?.ValueChanged(d, e);
         }
+
         /// <summary>
         /// The callback event when the <see cref="ValueProperty"/> is changed, even with the same value
         /// </summary>
@@ -70,6 +71,7 @@ namespace CoinFlipper
 
             return value;
         }
+
         /// <summary>
         /// Gets the attached property
         /// </summary>

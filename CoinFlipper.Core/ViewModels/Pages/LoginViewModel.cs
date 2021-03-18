@@ -1,12 +1,11 @@
 ﻿using System.Security;
 using System.Threading.Tasks;
-using System.Windows;
 using System.Windows.Input;
 
 namespace CoinFlipper.Core
 {
     /// <summary>
-    /// The View Model for a register screen
+    /// The View Model for a login screen
     /// </summary>
     public class LoginViewModel : BaseViewModel
     {

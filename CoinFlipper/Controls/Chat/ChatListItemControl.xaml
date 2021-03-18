@@ -33,7 +33,7 @@
                                 <Border Grid.Column="0" Padding="8 15">
                                     
                                     <!-- Profile Picture Background-->
-                                    <Border Background="{Binding ProfilePictureRGB, Converter={local:StringRGBToBrushConverterConverter}}"
+                                    <Border Background="{Binding ProfilePictureRGB, Converter={local:StringRGBToBrushConverter}}"
                                             Height="40"
                                             Width="{Binding ActualHeight, RelativeSource={RelativeSource Self}}"
                                             CornerRadius="{Binding ActualHeight, RelativeSource={RelativeSource Self}}">
