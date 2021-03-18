@@ -7,7 +7,8 @@
       xmlns:core="clr-namespace:CoinFlipper.Core;assembly=CoinFlipper.Core"
       mc:Ignorable="d" 
       d:DesignHeight="500" d:DesignWidth="500"
-      x:Name="Page">
+      x:Name="Page"
+      d:DataContext="{x:Static core:ChatMessageListDesignModel.Instance}">
     <Grid>
         <Grid.RowDefinitions>
             <!-- Title Bar -->
@@ -17,6 +18,16 @@
             <!-- Message Send Text Box -->
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
+
+        <!-- Popup Overlay -->
+        <Border Background="Transparent" 
+                Grid.RowSpan="2"
+                Panel.ZIndex="1"
+                Visibility="{Binding AnyPopupVisible, Converter={local:BooleanToVisibilityConverter}, ConverterParameter=True}">
+            <Border.InputBindings>
+                <MouseBinding MouseAction="LeftClick" Command="{Binding PopupClickawayCommand}" />
+            </Border.InputBindings>
+        </Border>
 
         <!-- Title Bar -->
         <Grid Height="50">
@@ -59,6 +70,7 @@
         
         <!-- Message Send Text Box -->
         <Grid Grid.Row="2"
+              Panel.ZIndex="3"
               MinHeight="50"
               MaxHeight="100"
               Background="{StaticResource AlmostWhiteBrush}">

@@ -1,16 +1,16 @@
 ﻿namespace CoinFlipper.Core
 {
     /// <summary>
-    /// The design-time data for a <see cref="ChatAttachmentPopupMenuViewModel"/>
+    /// The design-item data for a <see cref="MenuItemViewModel"/>
     /// </summary>
-    public class ChatAttachmentPopupMenuDesignModel : ChatAttachmentPopupMenuViewModel
+    public class MenuItemDesignModel : MenuItemViewModel
     {
         #region Singleton
 
         /// <summary>
         /// A single instance of the design model
         /// </summary>
-        public static ChatAttachmentPopupMenuDesignModel Instance => new ChatAttachmentPopupMenuDesignModel();
+        public static MenuItemDesignModel Instance => new MenuItemDesignModel();
 
         #endregion
 
@@ -19,8 +19,10 @@
         /// <summary>
         /// Default constructor
         /// </summary>
-        public ChatAttachmentPopupMenuDesignModel()
+        public MenuItemDesignModel()
         {
+            Text = "Hello";
+            Icon = IconType.File;
         }
 
         #endregion

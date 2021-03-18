@@ -6,23 +6,16 @@
     public enum MenuItemType
     {
         /// <summary>
-        /// No icon
+        /// Shows the menu text and an icon
         /// </summary>
-        None = 0,
-
-        /// <summary>
-        /// Show the menu text and an icon
-        /// </summary>
-        TextAndIcon = 1,
-
+        TextAndIcon = 0,
         /// <summary>
         /// Shows a simple divider between the menu items
         /// </summary>
-        Divider = 2,
-
+        Divider = 1,
         /// <summary>
-        /// Shows a menu text as header
+        /// Shows the menu text as a header
         /// </summary>
-        Header = 3,
+        Header = 2
     }
 }

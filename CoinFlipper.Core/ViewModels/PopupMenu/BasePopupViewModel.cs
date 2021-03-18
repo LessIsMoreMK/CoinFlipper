@@ -3,8 +3,9 @@
     /// <summary>
     /// A view model for any popup menu
     /// </summary>
-    public class BasePopupMenuViewModel : BaseViewModel
+    public class BasePopupViewModel : BaseViewModel
     {
+
         #region Public Properties
 
         /// <summary>
@@ -13,9 +14,14 @@
         public string BubbleBackground { get; set; }
 
         /// <summary>
-        /// The alignment of the bubble
+        /// The alignment of the bubble arrow
         /// </summary>
         public ElementHorizontalAlignment ArrowAlignment { get; set; }
+
+        /// <summary>
+        /// The content inside of this popup menu
+        /// </summary>
+        public BaseViewModel Content { get; set; }
 
         #endregion
 
@@ -24,11 +30,11 @@
         /// <summary>
         /// Default constructor
         /// </summary>
-        public BasePopupMenuViewModel()
+        public BasePopupViewModel()
         {
             // Set default values
             BubbleBackground = "DBDBDB";
-            ArrowAlignment = ElementHorizontalAlignment.Right;
+            ArrowAlignment = ElementHorizontalAlignment.Left;
         }
 
         #endregion

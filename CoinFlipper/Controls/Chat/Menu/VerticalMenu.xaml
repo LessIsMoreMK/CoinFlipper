@@ -4,9 +4,109 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:CoinFlipper"
-             mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="400">
-    <Grid>
-            
-    </Grid>
+             xmlns:core="clr-namespace:CoinFlipper.Core;assembly=CoinFlipper.Core"
+             mc:Ignorable="d">
+    <ItemsControl d:DataContext="{x:Static core:MenuDesignModel.Instance}"
+                  Background="{StaticResource AlmostWhiteBrush}"
+                  ItemsSource="{Binding Items}">
+        
+        <!-- Item Template -->
+        <ItemsControl.ItemTemplate>
+            <DataTemplate>
+                <Grid>
+
+                    <!-- Header -->
+                    <Grid Visibility="{Binding Type, Converter={local:MenuItemTypeVisibilityConverter}, ConverterParameter=Header}">
+                        
+                        <!-- Header Line -->
+                        <Border Height="1" Background="{StaticResource GreenMediumBrush}"/>
+                        
+                        <!-- Header Text -->
+                        <TextBlock Text="{Binding Text}"
+                                   FontFamily="{StaticResource LatoBold}"
+                                   FontSize="{StaticResource FontSizeSmall}"
+                                   Padding="0 5 10 5"
+                                   Background="{StaticResource AlmostWhiteBrush}"
+                                   Foreground="{StaticResource GreenMediumBrush}"
+                                   HorizontalAlignment="Left"/>
+
+                    </Grid>
+                    
+                    <!-- Menu Item -->
+                    <Border Background="{StaticResource AlmostWhiteBrush}"
+                            CornerRadius="8"
+                            Padding="5"
+                            Visibility="{Binding Type, Converter={local:MenuItemTypeVisibilityConverter}, ConverterParameter=TextAndIcon}">
+
+                        <Border.Triggers>
+                            <!-- Hover Over Blue -->
+                            <EventTrigger RoutedEvent="MouseEnter">
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <ColorAnimation To="{StaticResource GreenMedium}" 
+                                                        Duration="0:0:0.2"
+                                                        Storyboard.TargetProperty="Background.Color"/>
+                                        <ColorAnimation To="Black" 
+                                                        Duration="0:0:0.2"
+                                                        Storyboard.TargetProperty="Foreground.Color"
+                                                        Storyboard.TargetName="icon"/>
+                                        <ColorAnimation To="Black" 
+                                                        Duration="0:0:0.2"
+                                                        Storyboard.TargetProperty="Foreground.Color"
+                                                        Storyboard.TargetName="text"/>
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </EventTrigger>
+
+                            <!-- Hover Out Revert -->
+                            <EventTrigger RoutedEvent="MouseLeave">
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <ColorAnimation To="{StaticResource AlmostWhite}" 
+                                                        Duration="0:0:0.2"
+                                                        Storyboard.TargetProperty="Background.Color"/>
+                                        <ColorAnimation To="{StaticResource GreenMedium}" 
+                                                        Duration="0:0:0.2"
+                                                        Storyboard.TargetProperty="Foreground.Color"
+                                                        Storyboard.TargetName="icon"/>
+                                        <ColorAnimation To="Black" 
+                                                        Duration="0:0:0.2"
+                                                        Storyboard.TargetProperty="Foreground.Color"
+                                                        Storyboard.TargetName="text"/>
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </EventTrigger>
+                        </Border.Triggers>
+                        
+                        <!-- Grid Container For Text And Icon-->
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <!-- Icon -->
+                                <ColumnDefinition Width="Auto"/>
+                                <!-- Text -->
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+
+                            <!-- Icon -->
+                            <TextBlock Name="icon"
+                                       Padding="5"
+                                       FontFamily="{StaticResource FontAwesome}"
+                                       Text="{Binding Icon, Converter={local:IconTypeToFontAwesomeConverter}}"
+                                       Foreground="{StaticResource GreenMediumBrush}"/>
+
+                            <!-- Text -->
+                            <TextBlock Name="text"
+                                       Grid.Column="1"
+                                       Margin="5 0 5 0"
+                                       VerticalAlignment="Center"
+                                       Foreground="Black"
+                                       FontFamily="{StaticResource LatoBold}"
+                                       Text="{Binding Text}"/>
+                        </Grid>
+                    </Border>
+                </Grid>
+            </DataTemplate>
+        </ItemsControl.ItemTemplate>
+    </ItemsControl>
+    
 </UserControl>

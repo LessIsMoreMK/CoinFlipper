@@ -88,6 +88,9 @@
     <Compile Include="Controls\PageHost.xaml.cs">
       <DependentUpon>PageHost.xaml</DependentUpon>
     </Compile>
+    <Compile Include="ValueConverters\IconTypeToFontAwesomeConverter.cs" />
+    <Compile Include="ValueConverters\MenuItemTypeVisibilityConverter.cs" />
+    <Compile Include="ValueConverters\PopupContentConverter.cs" />
     <Compile Include="ValueConverters\SentByMeToBackgroundConverter.cs" />
     <Compile Include="ValueConverters\SentByMeToAllignmentConverter.cs" />
     <Compile Include="ValueConverters\HorizontalAlignmentConverter.cs" />
