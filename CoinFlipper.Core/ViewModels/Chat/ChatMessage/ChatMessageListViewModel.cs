@@ -53,6 +53,9 @@ namespace CoinFlipper.Core
 
         #region Constructor
 
+        /// <summary>
+        /// Default constructor
+        /// </summary>
         public ChatMessageListViewModel()
         {
             //Create Commands

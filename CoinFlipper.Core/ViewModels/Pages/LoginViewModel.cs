@@ -65,8 +65,8 @@ namespace CoinFlipper.Core
                 await Task.Delay(500);
             });
 
-            IoC.Get<ApplicationViewModel>().SideMenuVisible ^= true;
-            IoC.Get<ApplicationViewModel>().GoToPage(ApplicationPage.Chat);
+            IoC.Application.SideMenuVisible ^= true;
+            IoC.Application.GoToPage(ApplicationPage.Chat);
 
         }
 
@@ -76,7 +76,7 @@ namespace CoinFlipper.Core
         /// <returns></returns>
         public async Task LoginAsync()
         {
-            IoC.Get<ApplicationViewModel>().GoToPage(ApplicationPage.Register);
+            IoC.Application.GoToPage(ApplicationPage.Register);
 
             await Task.Delay(1);
         }

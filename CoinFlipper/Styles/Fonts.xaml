@@ -57,5 +57,8 @@
     <system:String x:Key="FontAwesomePaperClipIcon">&#xf0c6;</system:String>
     <system:String x:Key="FontAwesomeEmojiIcon">&#xf118;</system:String>
     <system:String x:Key="FontAwesomeSendIcon">&#xf124;</system:String>
-   
+
+    <system:String x:Key="FontAwesomeArrowRight">&#xf0a9;</system:String>
+    <system:String x:Key="FontAwesomeArrowLeft">&#xf0a8;</system:String>
+
 </ResourceDictionary>
