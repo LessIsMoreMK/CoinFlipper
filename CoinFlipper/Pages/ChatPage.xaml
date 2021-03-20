@@ -119,7 +119,8 @@
                         FontFamily="{StaticResource FontAwesome}"
                         Background="{StaticResource GreenDarkBrush}"
                         Padding="10"
-                        FontSize="{StaticResource FontSizeSmall}"/>
+                        FontSize="{StaticResource FontSizeSmall}"
+                        Command="{Binding SendCommand}"/>
             </StackPanel>
 
         </Grid>

@@ -1,4 +1,4 @@
-﻿<Window x:Class="CoinFlipper.MainWindow"
+﻿<Window x:Class="CoinFlipper.DialogWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -6,20 +6,18 @@
         xmlns:local="clr-namespace:CoinFlipper"
         xmlns:core="clr-namespace:CoinFlipper.Core;assembly=CoinFlipper.Core"
         mc:Ignorable="d"
-        x:Name="AppWindow"
         Icon="Images/logo.png"
         WindowStyle="None"
-        AllowsTransparency="true"
+        AllowsTransparency="true" 
         WindowStartupLocation="CenterScreen"
-        Title="Coin Flipper" 
-        Height="600" Width="800"
+        ResizeMode="NoResize"
+        SizeToContent="WidthAndHeight"
+        Title="{Binding Title}" 
         MinHeight="{Binding WindowMinimumHeight}"
-        MinWidth="{Binding WindowMinimumWidth}"
-        Activated="AppWindow_Activated"
-        Deactivated="AppWindow_Deactivated">
+        MinWidth="{Binding WindowMinimumWidth}">
 
     <Window.Resources>
-        <Style TargetType="{x:Type local:MainWindow}">
+        <Style TargetType="{x:Type local:DialogWindow}">
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="{x:Type Window}">
@@ -36,7 +34,9 @@
 
                                 <!-- Window border and drop shadow -->
                                 <Border CornerRadius="{Binding WindowCornerRadius, FallbackValue=10}"
-                                        Background="{StaticResource GrayDarkBrush}">
+                                        Background="{StaticResource GrayDarkBrush}"
+                                        BorderThickness="1" 
+                                        BorderBrush="{StaticResource GreenMediumBrush}" >
                                     <Border.Effect>
                                         <DropShadowEffect ShadowDepth="0" Opacity="0.8"/>
                                     </Border.Effect>
@@ -76,25 +76,25 @@
                                             </Button>
                                             
                                             <!-- Title -->
-                                            <Viewbox Grid.Column="0" Grid.ColumnSpan="3" Margin="0">
-                                                <StackPanel>
-                                                    <TextBlock FontSize="{StaticResource FontSizeRegular}" 
-                                                               FontFamily="{StaticResource BlackOpsOneRegular}" 
-                                                               Margin="0 3 0 3">
-                                                    <Run Text="Co" Foreground="{StaticResource GreenLightBrush}"/><Run Text="in" Foreground="{StaticResource GreenMediumBrush}"/> <Run Text="Fli" Foreground="{StaticResource GreenDarkBrush}"/><Run Text="pp" Foreground="{StaticResource GreenMediumBrush}"/><Run Text="er" Foreground="{StaticResource GreenLightBrush}"/>
-                                                    </TextBlock>
-                                                </StackPanel>
-                                            </Viewbox>
-                                            
+                                            <TextBlock Grid.Column="1" 
+                                                       Text="{Binding Title}"
+                                                       VerticalAlignment="Center"
+                                                       HorizontalAlignment="Center"
+                                                       FontSize="{StaticResource FontSizeLarge}"
+                                                       FontFamily="{StaticResource LatoBold}"
+                                                       Foreground="{StaticResource GreenMediumBrush}"/>
+
                                             <!-- Window Buttons -->
                                             <StackPanel Grid.Column="2" Orientation="Horizontal">
                                                 <Button Content="{StaticResource FontAwesomeMinimize}" 
                                                         Style="{StaticResource WindowControlButton}"
                                                         Command="{Binding MinimizeCommand}"
-                                                        FontFamily="{StaticResource FontAwesome}"/>
+                                                        FontFamily="{StaticResource FontAwesome}"
+                                                        Visibility="Collapsed"/>
                                                 <Button Content="{StaticResource FontAwesomeMaximize}"
                                                         Style="{StaticResource WindowControlButton}"
-                                                        Command="{Binding MaximizeCommand}"/>
+                                                        Command="{Binding MaximizeCommand}"
+                                                        Visibility="Collapsed"/>
                                                 <Button Content="{StaticResource FontAwesomeClose}" 
                                                         Style="{StaticResource WindowCloseButton}"
                                                         Command="{Binding CloseCommand}"/>
@@ -147,46 +147,20 @@
                       CornerRadius="0"/>
     </WindowChrome.WindowChrome>
 
-    <Grid>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="Auto"/>
-            <ColumnDefinition Width="*"/>
-        </Grid.ColumnDefinitions>
+    <Border>
+        <Grid>
+            <!-- Background image -->
+            <Grid.Background>
+                <ImageBrush TileMode="Tile" 
+                            ViewportUnits="Absolute" 
+                            Viewport="0 0 500 500" 
+                            ImageSource="/Images/background.png"/>
+            </Grid.Background>
+            <Border Padding="15">
 
+                <ContentControl Content="{Binding Content}"/>
 
-        <!-- Background -->
-        <Grid.Background>
-            <ImageBrush TileMode="Tile" 
-                        ViewportUnits="Absolute" 
-                        Viewport="0 0 500 500" 
-                        ImageSource="images/background.png"/>
-        </Grid.Background>
-        
-        <!-- Dimmed Overlay -->
-        <Border Grid.ColumnSpan="2"
-                Opacity="0.2"
-                Panel.ZIndex="10">
-            <Border Background="Black"
-                    local:AnimateFadeInProperty.Value="{Binding DimmableOverlayVisible}"/>
-        </Border>
-
-            <!-- Main Content -->
-        <local:PageHost Grid.Column="1" 
-                        d:DataContext=""
-                        DataContext="{Binding ApplicationViewModel.CurrentPage, 
-                                             Source={x:Static local:ViewModelLocator.Instance},  
-                                             Converter={local:ApplicationPageValueConverter}}"
-                        CurrentPage="{Binding}"/>
-
-        <!-- Side Menu -->
-        <local:SideMenuControl
-                Grid.Column="0"
-                Width="300" 
-                local:AnimateSlideInFromLeftProperty.Value="{Binding ApplicationViewModel.SideMenuVisible, 
-                                     Source={x:Static local:ViewModelLocator.Instance}}">
-            <local:ChatListControl/>
-        </local:SideMenuControl>
-    
-    
-    </Grid>
+            </Border>
+        </Grid>
+    </Border>
 </Window>

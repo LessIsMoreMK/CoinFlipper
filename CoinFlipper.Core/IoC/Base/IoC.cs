@@ -15,6 +15,11 @@ namespace CoinFlipper.Core
         /// </summary>
         public static IKernel Kernel { get; private set; } = new StandardKernel();
 
+        /// <summary>
+        /// A shortcut to access the <see cref="IUIManager"/>
+        /// </summary>
+        public static IUIManager UI => IoC.Get<IUIManager>();
+
         #endregion
 
         #region Construction 
@@ -47,7 +52,6 @@ namespace CoinFlipper.Core
         public static T Get<T>()
         {
             return Kernel.Get<T>();
-        }
-
+        } 
     }
 }

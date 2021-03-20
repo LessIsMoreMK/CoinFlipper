@@ -31,6 +31,12 @@ namespace CoinFlipper
         /// </summary>
         private WindowDockPosition mDockPosition = WindowDockPosition.Undocked;
 
+        /// <summary>
+        /// True if we should have a dimmed overlay in the window
+        /// such as when a popup is visible or the window is note focused
+        /// </summary>
+        public bool DimmableOverlayVisible { get; set; }
+
         #endregion
 
         #region Public Properties
