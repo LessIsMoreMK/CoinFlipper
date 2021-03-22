@@ -6,13 +6,18 @@
              xmlns:local="clr-namespace:CoinFlipper"
              xmlns:core="clr-namespace:CoinFlipper.Core;assembly=CoinFlipper.Core"
              mc:Ignorable="d" 
-             DataContext="{x:Static core:TextEntryDesignModel.Instance}">
+             d:DataContext="{x:Static core:TextEntryDesignModel.Instance}">
     <!-- Underline -->
     <Border BorderBrush="{StaticResource GrayMediumBrush}"
             BorderThickness="0 0 0 1">
 
         <!-- Label - Name - Buttons -->
         <Grid Background="Transparent">
+
+            <!-- Double Click To Edit-->
+            <Grid.InputBindings>
+                <MouseBinding MouseAction="LeftDoubleClick" Command="{Binding EditCommand}"/>
+            </Grid.InputBindings>
             
             <!-- Hover Over To Show Edit Button -->
             <Grid.Triggers>
@@ -39,21 +44,24 @@
             </Grid.Triggers>
             
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition x:Name="LabelColumnDefinition" Width="Auto"/>
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="Auto"/>
             </Grid.ColumnDefinitions>
 
             <!-- Label -->
             <TextBlock Text="{Binding Label}"
+                       Name="Label"
                        Margin="15 12"
+                       HorizontalAlignment="Left"
                        VerticalAlignment="Center"
                        Foreground="{StaticResource GreenMediumBrush}"
                        FontFamily="{StaticResource LatoBold}"/>
 
             <!-- Edit Content -->
-            <TextBox Text="{Binding EditedText}"
+            <TextBox Text="{Binding EditedText, UpdateSourceTrigger=PropertyChanged}"
                      Grid.Column="1"
+                     Opacity="0"
                      Padding="2"
                      Margin="10 10 15 8"
                      Foreground="{StaticResource GreenLightBrush}"
@@ -71,7 +79,7 @@
 
             <!-- Edit Button Container -->
             <Grid Grid.Column="2"
-                  local:AnimateFadeInProperty.Value="{Binding Editing,Converter={local:BooleanInvertConverter}}">
+                  local:AnimateFadeInProperty.Value="{Binding Editing, Converter={local:BooleanInvertConverter}}">
                 
                 <!-- Edit Button -->
                 <Button Padding="8 5"

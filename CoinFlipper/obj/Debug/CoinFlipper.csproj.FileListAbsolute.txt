@@ -12,7 +12,9 @@ C:\Users\Maciej\Desktop\CoinFlipper\CoinFlipper\obj\Debug\Controls\Chat\Message\
 C:\Users\Maciej\Desktop\CoinFlipper\CoinFlipper\obj\Debug\Controls\Chat\ChatListControl.g.cs
 C:\Users\Maciej\Desktop\CoinFlipper\CoinFlipper\obj\Debug\Controls\Chat\ChatListItemControl.g.cs
 C:\Users\Maciej\Desktop\CoinFlipper\CoinFlipper\obj\Debug\Controls\Chat\Message\ChatMessageListItemControl.g.cs
+C:\Users\Maciej\Desktop\CoinFlipper\CoinFlipper\obj\Debug\Controls\Input\TextEntryControl.g.cs
 C:\Users\Maciej\Desktop\CoinFlipper\CoinFlipper\obj\Debug\Controls\PageHost.g.cs
+C:\Users\Maciej\Desktop\CoinFlipper\CoinFlipper\obj\Debug\Controls\SettingsControl.g.cs
 C:\Users\Maciej\Desktop\CoinFlipper\CoinFlipper\obj\Debug\Controls\SideMenuControl.g.cs
 C:\Users\Maciej\Desktop\CoinFlipper\CoinFlipper\obj\Debug\Dialogs\DialogMessageBox.g.cs
 C:\Users\Maciej\Desktop\CoinFlipper\CoinFlipper\obj\Debug\DialogWindow.g.cs
@@ -31,7 +33,9 @@ C:\Users\Maciej\Desktop\CoinFlipper\CoinFlipper\obj\Debug\Controls\Chat\Message\
 C:\Users\Maciej\Desktop\CoinFlipper\CoinFlipper\obj\Debug\Controls\Chat\ChatListControl.baml
 C:\Users\Maciej\Desktop\CoinFlipper\CoinFlipper\obj\Debug\Controls\Chat\ChatListItemControl.baml
 C:\Users\Maciej\Desktop\CoinFlipper\CoinFlipper\obj\Debug\Controls\Chat\Message\ChatMessageListItemControl.baml
+C:\Users\Maciej\Desktop\CoinFlipper\CoinFlipper\obj\Debug\Controls\Input\TextEntryControl.baml
 C:\Users\Maciej\Desktop\CoinFlipper\CoinFlipper\obj\Debug\Controls\PageHost.baml
+C:\Users\Maciej\Desktop\CoinFlipper\CoinFlipper\obj\Debug\Controls\SettingsControl.baml
 C:\Users\Maciej\Desktop\CoinFlipper\CoinFlipper\obj\Debug\Controls\SideMenuControl.baml
 C:\Users\Maciej\Desktop\CoinFlipper\CoinFlipper\obj\Debug\Dialogs\DialogMessageBox.baml
 C:\Users\Maciej\Desktop\CoinFlipper\CoinFlipper\obj\Debug\DialogWindow.baml
@@ -52,7 +56,3 @@ C:\Users\Maciej\Desktop\CoinFlipper\CoinFlipper\obj\Debug\CoinFlipper.csproj.Fod
 C:\Users\Maciej\Desktop\CoinFlipper\CoinFlipper\obj\Debug\CoinFlipper.csproj.CopyComplete
 C:\Users\Maciej\Desktop\CoinFlipper\CoinFlipper\obj\Debug\CoinFlipper.exe
 C:\Users\Maciej\Desktop\CoinFlipper\CoinFlipper\obj\Debug\CoinFlipper.pdb
-C:\Users\Maciej\Desktop\CoinFlipper\CoinFlipper\obj\Debug\Controls\SettingsControl.g.cs
-C:\Users\Maciej\Desktop\CoinFlipper\CoinFlipper\obj\Debug\Controls\SettingsControl.baml
-C:\Users\Maciej\Desktop\CoinFlipper\CoinFlipper\obj\Debug\Controls\Input\TextEntryControl.g.cs
-C:\Users\Maciej\Desktop\CoinFlipper\CoinFlipper\obj\Debug\Controls\Input\TextEntryControl.baml

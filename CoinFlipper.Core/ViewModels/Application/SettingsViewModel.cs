@@ -52,6 +52,12 @@ namespace CoinFlipper.Core
             // Create commnads
             CloseCommand = new RelayCommand(Close);
             OpenCommand = new RelayCommand(Open);
+
+            //TODO: remove this
+            Name = new TextEntryViewModel { Label = "Name", OriginalText = "Maciej Kulaszewiccz" };
+            Username = new TextEntryViewModel { Label = "Username", OriginalText = "Lessi" };
+            Password = new TextEntryViewModel { Label = "Password", OriginalText = "********" };
+            Email = new TextEntryViewModel { Label = "Email", OriginalText = "maciej8kz@gmail.com" };
         }
 
         #endregion

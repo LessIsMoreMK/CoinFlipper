@@ -15,7 +15,7 @@ namespace CoinFlipper
             var panel = (sender as Panel);
 
             // Wait for panel to load
-            panel.Loaded += (s, e3) =>
+            panel.Loaded += (s, ee) =>
             {
                 // Loop each child
                 foreach(var child in panel.Children)
