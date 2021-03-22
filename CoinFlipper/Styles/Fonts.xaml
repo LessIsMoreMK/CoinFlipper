@@ -42,10 +42,10 @@
     <system:Double x:Key="FontSizeVeryLarge">30</system:Double>
 
     <!-- Font Awesome Icons-->
-    <system:String x:Key="FontAwesomeMinimize">&#xf2d1;</system:String>
-    <system:String x:Key="FontAwesomeMaximize">&#xf2d0;</system:String>
-    <system:String x:Key="FontAwesomeRestore">&#xf2d2;</system:String>
-    <system:String x:Key="FontAwesomeClose">&#xf00d;</system:String>
+    <system:String x:Key="FontAwesomeMinimizeIcon">&#xf2d1;</system:String>
+    <system:String x:Key="FontAwesomeMaximizeIcon">&#xf2d0;</system:String>
+    <system:String x:Key="FontAwesomeRestoreIcon">&#xf2d2;</system:String>
+    <system:String x:Key="FontAwesomeCloseIcon">&#xf00d;</system:String>
 
     <system:String x:Key="FontAwesomeChatIcon">&#xf086;</system:String>
     <system:String x:Key="FontAwesomeUserIcon">&#xf007;</system:String>
@@ -58,7 +58,10 @@
     <system:String x:Key="FontAwesomeEmojiIcon">&#xf118;</system:String>
     <system:String x:Key="FontAwesomeSendIcon">&#xf124;</system:String>
 
-    <system:String x:Key="FontAwesomeArrowRight">&#xf0a9;</system:String>
-    <system:String x:Key="FontAwesomeArrowLeft">&#xf0a8;</system:String>
+    <system:String x:Key="FontAwesomeArrowRightIcon">&#xf0a9;</system:String>
+    <system:String x:Key="FontAwesomeArrowLeftIcon">&#xf0a8;</system:String>
+    
+    <system:String x:Key="FontAwesomeTickIcon">&#xf00c;</system:String>
+    <system:String x:Key="FontAwesomeElipsisHorizontalIcon">&#xf141;</system:String>
 
 </ResourceDictionary>

@@ -88,14 +88,14 @@
                                             
                                             <!-- Window Buttons -->
                                             <StackPanel Grid.Column="2" Orientation="Horizontal">
-                                                <Button Content="{StaticResource FontAwesomeMinimize}" 
+                                                <Button Content="{StaticResource FontAwesomeMinimizeIcon}" 
                                                         Style="{StaticResource WindowControlButton}"
                                                         Command="{Binding MinimizeCommand}"
                                                         FontFamily="{StaticResource FontAwesome}"/>
-                                                <Button Content="{StaticResource FontAwesomeMaximize}"
+                                                <Button Content="{StaticResource FontAwesomeMaximizeIcon}"
                                                         Style="{StaticResource WindowControlButton}"
                                                         Command="{Binding MaximizeCommand}"/>
-                                                <Button Content="{StaticResource FontAwesomeClose}" 
+                                                <Button Content="{StaticResource FontAwesomeCloseIcon}" 
                                                         Style="{StaticResource WindowCloseButton}"
                                                         Command="{Binding CloseCommand}"/>
                                             </StackPanel>

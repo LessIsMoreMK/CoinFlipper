@@ -19,11 +19,11 @@
                 <!-- Back Button -->
                 <Button HorizontalAlignment="Left"
                         VerticalAlignment="Center"
-                        Height="35"
-                        Padding="10"
+                        Height="40"
+                        Padding="5"
                         Command="{Binding CloseCommand}"
                         Style="{StaticResource IconGrowButton}"
-                        Content="{StaticResource FontAwesomeArrowLeft}"
+                        Content="{StaticResource FontAwesomeArrowLeftIcon}"
                         FontFamily="{StaticResource FontAwesome}"/>
 
                 <!-- Setting Header -->
@@ -75,34 +75,12 @@
                 </Grid>
 
                 <!-- Profile Details-->
-                <Grid Grid.Column="1"
-                      local:PanelChildMarginProperty.Value="15 8">
-                    
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="Auto"/>
-                        <ColumnDefinition Width="*"/>
-                    </Grid.ColumnDefinitions>
-                    
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto"/> 
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="*"/>
-                    </Grid.RowDefinitions>
-
-                    <!-- Labels -->
-                    <TextBlock Text="Name" Grid.Column="0" Grid.Row="0"/>
-                    <TextBlock Text="Username" Grid.Column="0" Grid.Row="1"/>
-                    <TextBlock Text="Passvord" Grid.Column="0" Grid.Row="2"/>
-                    <TextBlock Text="Email" Grid.Column="0" Grid.Row="3"/>
-
-                    <!-- Content -->
-                    <TextBlock Text="Maciej Kulaszewicz" Grid.Column="1" Grid.Row="0"/>
-                    <TextBlock Text="LessIsMoreMK" Grid.Column="1" Grid.Row="1"/>
-                    <TextBlock Text="********" Grid.Column="1" Grid.Row="2"/>
-                    <TextBlock Text="maciej8kz@gmail.com" Grid.Column="1" Grid.Row="3"/>
-                </Grid>
+                <StackPanel Grid.Column="1">
+                    <local:TextEntryControl/>
+                    <local:TextEntryControl/>
+                    <local:TextEntryControl/>
+                    <local:TextEntryControl/>
+                </StackPanel>
                 
             </Grid>
         </Grid>

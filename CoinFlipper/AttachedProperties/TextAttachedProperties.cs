@@ -1,10 +1,11 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Controls.Primitives;
 
 namespace CoinFlipper
 {
     /// <summary>
-    /// The IsBusy attached property for a anything that wants to flag if the control is busy
+    /// Focuses (keyboard focus) this element on load
     /// </summary>
     public class IsFocusedProperty : BaseAttachedProperty<IsFocusedProperty, bool>
     {
@@ -16,6 +17,45 @@ namespace CoinFlipper
 
             // Focus this control once loaded
             control.Loaded += (s, se) => control.Focus();
+        }
+    }
+
+    /// <summary>
+    /// Focuses (keyboard focus) this element if true
+    /// </summary>
+    public class FocusProperty : BaseAttachedProperty<FocusProperty, bool>
+    {
+        public override void OnValueChanged(DependencyObject sender, DependencyPropertyChangedEventArgs e)
+        {
+            // If we don't have a control, return
+            if (!(sender is Control control))
+                return;
+
+            if((bool)e.NewValue)
+                // Focus this control once loaded
+                control.Focus();
+        }
+    }
+
+    /// <summary>
+    /// Focuses (keyboard focus) and selects all text in this element if true
+    /// </summary>
+    public class FocusAndSelectProperty : BaseAttachedProperty<FocusAndSelectProperty, bool>
+    {
+        public override void OnValueChanged(DependencyObject sender, DependencyPropertyChangedEventArgs e)
+        {
+            // If we don't have a control, return
+            if (!(sender is TextBoxBase control))
+                return;
+
+            if ((bool)e.NewValue)
+            {
+                // Focus this control once loaded
+                control.Focus();
+
+                // Select all text
+                control.SelectAll();
+            }
         }
     }
 }

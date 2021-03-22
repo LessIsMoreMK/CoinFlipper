@@ -27,5 +27,7 @@
     <SolidColorBrush x:Key="YellowBrush" Color="{StaticResource Yellow}"/>
     <Color x:Key="Red">#FF4747</Color>
     <SolidColorBrush x:Key="RedBrush" Color="{StaticResource Red}"/>
+    <Color x:Key="Green">#00c541</Color>
+    <SolidColorBrush x:Key="GreenBrush" Color="{StaticResource Green}" />
 
 </ResourceDictionary>
