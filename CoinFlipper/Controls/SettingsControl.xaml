@@ -4,8 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:CoinFlipper"
-             mc:Ignorable="d" 
-             d:DesignHeight="300" d:DesignWidth="300">
+             mc:Ignorable="d">
     <Border  Background="{StaticResource GrayDarkBrush}"
              Padding="15">
         <Grid>
@@ -13,13 +12,14 @@
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
-        
+
             <!-- Settings Title -->
             <Grid Margin="0 0 0 10">
+
                 <!-- Back Button -->
                 <Button HorizontalAlignment="Left"
                         VerticalAlignment="Center"
-                        Height="40"
+                        Height="35"
                         Padding="10"
                         Command="{Binding CloseCommand}"
                         Style="{StaticResource IconGrowButton}"
@@ -29,7 +29,8 @@
                 <!-- Setting Header -->
                 <TextBlock HorizontalAlignment="Center"
                            VerticalAlignment="Center"
-                           FontSize="{StaticResource FontSizeLarge}">
+                           Foreground="{StaticResource AlmostWhiteBrush}"
+                           FontSize="{StaticResource FontSizeVeryLarge}">
                     <!-- Cog Icon -->
                     <Run FontFamily="{StaticResource FontAwesome}"
                          Text="{StaticResource FontAwesomeCogIcon}"
@@ -38,14 +39,73 @@
                     <Run Text="Settings"
                          FontFamily="{StaticResource LatoBold}"/>
                 </TextBlock>
-            
+
             </Grid>
-        
-        
+
+
             <!-- Main Content -->
+            <Grid Grid.Row="1"
+                  Width="600"
+                  VerticalAlignment="Top">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="250"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
 
+                <!-- Profile Picture -->
+                <Grid Margin="0 0 30 0"
+                      VerticalAlignment="Top"
+                      Height="{Binding ActualWidth, RelativeSource={RelativeSource Self}}">
 
-        </Grid> 
+                    <!-- Mask for rounded corners-->
+                    <Border CornerRadius="8"
+                            Name="Mask"
+                            Background="White"
+                            />
+
+                    <!-- Image -->
+                    <Grid>
+                        <Grid.OpacityMask>
+                            <VisualBrush Visual="{Binding ElementName=Mask}" />
+                        </Grid.OpacityMask>
+
+                        <Image Source="/Images/nobody.jpg" Stretch="UniformToFill" />
+                    </Grid>
+
+                </Grid>
+
+                <!-- Profile Details-->
+                <Grid Grid.Column="1"
+                      local:PanelChildMarginProperty.Value="15 8">
+                    
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/> 
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+
+                    <!-- Labels -->
+                    <TextBlock Text="Name" Grid.Column="0" Grid.Row="0"/>
+                    <TextBlock Text="Username" Grid.Column="0" Grid.Row="1"/>
+                    <TextBlock Text="Passvord" Grid.Column="0" Grid.Row="2"/>
+                    <TextBlock Text="Email" Grid.Column="0" Grid.Row="3"/>
+
+                    <!-- Content -->
+                    <TextBlock Text="Maciej Kulaszewicz" Grid.Column="1" Grid.Row="0"/>
+                    <TextBlock Text="LessIsMoreMK" Grid.Column="1" Grid.Row="1"/>
+                    <TextBlock Text="********" Grid.Column="1" Grid.Row="2"/>
+                    <TextBlock Text="maciej8kz@gmail.com" Grid.Column="1" Grid.Row="3"/>
+                </Grid>
+                
+            </Grid>
+        </Grid>
     </Border>
-    
+
 </UserControl>

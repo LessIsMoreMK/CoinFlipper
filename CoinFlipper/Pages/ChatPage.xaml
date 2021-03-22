@@ -30,7 +30,7 @@
         </Border>
 
         <!-- Title Bar -->
-        <Grid Height="50">
+        <Grid Height="50" Panel.ZIndex="2">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="Auto"/>
