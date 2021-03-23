@@ -81,8 +81,13 @@
                             local:TextEntryWidthMatcherProperty.Value="True">
                     <local:TextEntryControl DataContext="{Binding Name}"/>
                     <local:TextEntryControl DataContext="{Binding Username}"/>
-                    <local:TextEntryControl DataContext="{Binding Password}"/>
+                    <local:PasswordEntryControl DataContext="{Binding Password}"/>
                     <local:TextEntryControl DataContext="{Binding Email}"/>
+
+                    <Button Content="{Binding LogoutButtonText}"
+                            Command="{Binding LogoutCommand}"
+                            FontSize="{StaticResource FontSizeRegular}"/>
+
                 </StackPanel>
                 
             </Grid>

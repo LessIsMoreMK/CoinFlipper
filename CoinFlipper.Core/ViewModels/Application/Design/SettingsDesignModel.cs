@@ -25,7 +25,7 @@ namespace CoinFlipper.Core
         {
             Name = new TextEntryViewModel { Label = "Name", OriginalText = "Maciej Kulaszewiccz" };
             Username = new TextEntryViewModel { Label = "Username", OriginalText = "Lessi" };
-            Password = new TextEntryViewModel { Label = "Password", OriginalText = "********" };
+            Password = new PasswordEntryViewModel { Label = "Password", FakePassword = "********" };
             Email = new TextEntryViewModel { Label = "Email", OriginalText = "maciej8kz@gmail.com" };
         }
         

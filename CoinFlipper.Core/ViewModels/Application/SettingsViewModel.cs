@@ -1,4 +1,5 @@
-﻿using System.Windows.Input;
+﻿using System;
+using System.Windows.Input;
 
 namespace CoinFlipper.Core
 {
@@ -22,12 +23,17 @@ namespace CoinFlipper.Core
         /// <summary>
         /// The current users password
         /// </summary>
-        public TextEntryViewModel Password { get; set; }
+        public PasswordEntryViewModel Password { get; set; }
 
         /// <summary>
         /// The current users email
         /// </summary>
         public TextEntryViewModel Email { get; set; }
+
+        /// <summary>
+        /// The text for the logout button
+        /// </summary>
+        public string LogoutButtonText { get; set; }
 
         #endregion
 
@@ -43,21 +49,30 @@ namespace CoinFlipper.Core
         /// </summary>
         public ICommand OpenCommand { get; set; }
 
+        /// <summary>
+        /// The command to logout of the application
+        /// </summary>
+        public ICommand LogoutCommand { get; set; }
+
+        /// <summary>
+        /// The command to clear the users data from the view model
+        /// </summary>
+        public ICommand ClearUserDataCommand { get; set; }
+
         #endregion
 
         #region Constructor
 
         public SettingsViewModel()
         {
-            // Create commnads
+            // Create commands
             CloseCommand = new RelayCommand(Close);
             OpenCommand = new RelayCommand(Open);
+            LogoutCommand = new RelayCommand(Logout);
+            ClearUserDataCommand = new RelayCommand(ClearUserData);
 
-            //TODO: remove this
-            Name = new TextEntryViewModel { Label = "Name", OriginalText = "Maciej Kulaszewiccz" };
-            Username = new TextEntryViewModel { Label = "Username", OriginalText = "Lessi" };
-            Password = new TextEntryViewModel { Label = "Password", OriginalText = "********" };
-            Email = new TextEntryViewModel { Label = "Email", OriginalText = "maciej8kz@gmail.com" };
+            //TODO: get from localization
+            LogoutButtonText = "Logout";
         }
 
         #endregion
@@ -78,6 +93,34 @@ namespace CoinFlipper.Core
         {
             // Open the setting menu
             IoC.Application.SettingsMenuVisible = true;
+        }
+
+        /// <summary>
+        /// Logs the user out
+        /// </summary>
+        public void Logout()
+        {
+            // TODO: confirm logout
+
+            // TODO: Clear any user data/cache
+
+            // Clean all application level view model that contain any information about current user
+            ClearUserData();
+
+            // Go to login page
+            IoC.Application.GoToPage(ApplicationPage.Login);
+        }
+
+        /// <summary>
+        /// Clear any data specific to the current user
+        /// </summary>
+        public void ClearUserData()
+        {
+            // Clear all view model containing the user info
+            Name = null;
+            Username = null;
+            Password = null;
+            Email = null;
         }
     }
 }

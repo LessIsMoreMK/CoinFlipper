@@ -67,7 +67,6 @@ namespace CoinFlipper.Core
                 //var email = this.Email;
                 //var pass = (parameter as IHavePassword).SecurePassword.Unsecure();
             });
-            IoC.Application.GoToPage(ApplicationPage.Login);
         }
 
         /// <summary>
@@ -78,7 +77,7 @@ namespace CoinFlipper.Core
         {
             await Task.Delay(1);
             //((WindowViewModel)((MainWindow)Application.Current.MainWindow).DataContext).CurrentPage = ApplicationPage.Register;
-            IoC.Application.GoToPage(ApplicationPage.Register);
+            IoC.Application.GoToPage(ApplicationPage.Login);
         }
 
         #endregion

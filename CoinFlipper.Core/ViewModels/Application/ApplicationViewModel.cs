@@ -28,11 +28,14 @@ namespace CoinFlipper.Core
         /// <param name="page">The page to go to</param>
         public void GoToPage(ApplicationPage page)
         {
+            // Always hid settings page if we are chaning pages
+            SettingsMenuVisible = false;
+
             // Set the current page
             CurrentPage = page;
 
             // Show side menu or not? 
-            //SideMenuVisible = page == ApplicationPage.Chat;
+            SideMenuVisible = page == ApplicationPage.Chat;
         }
     }
 }

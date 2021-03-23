@@ -1,4 +1,5 @@
-﻿using System.Security;
+﻿using System;
+using System.Security;
 using System.Threading.Tasks;
 using System.Windows.Input;
 
@@ -60,14 +61,9 @@ namespace CoinFlipper.Core
         /// <returns></returns>
         public async Task RegisterAsync(object parameter)
         {
-            await RunCommand(() => this.RegisterIsRunning, async() =>
-            {
-                await Task.Delay(500);
-            });
+            IoC.Application.GoToPage(ApplicationPage.Register);
 
-            IoC.Application.SideMenuVisible ^= true;
-            IoC.Application.GoToPage(ApplicationPage.Chat);
-
+            await Task.Delay(1);
         }
 
         /// <summary>
@@ -76,9 +72,18 @@ namespace CoinFlipper.Core
         /// <returns></returns>
         public async Task LoginAsync()
         {
-            IoC.Application.GoToPage(ApplicationPage.Register);
+            await RunCommand(() => this.RegisterIsRunning, async () =>
+            {
+                await Task.Delay(200);
 
-            await Task.Delay(1);
+                // TODO: server...
+                IoC.Settings.Name = new TextEntryViewModel { Label = "Name", OriginalText = $"Maciej Kulaszewiccz { DateTime.Now.ToLocalTime() }" };
+                IoC.Settings.Username = new TextEntryViewModel { Label = "Username", OriginalText = "Lessi" };
+                IoC.Settings.Password = new PasswordEntryViewModel { Label = "Password", FakePassword = "********" };
+                IoC.Settings.Email = new TextEntryViewModel { Label = "Email", OriginalText = "maciej8kz@gmail.com" };
+
+                IoC.Application.GoToPage(ApplicationPage.Chat);
+            });
         }
 
         #endregion

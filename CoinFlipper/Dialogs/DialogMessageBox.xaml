@@ -7,7 +7,7 @@
              xmlns:core="clr-namespace:CoinFlipper.Core;assembly=CoinFlipper.Core"
              mc:Ignorable="d">
     <StackPanel d:DataContext="{x:Static core:MessageBoxDialogDesignModel.Instance}"
-                Background="{StaticResource GrayDarkBrush}">
+                Background="Transparent">
         
         <TextBlock Text="{Binding Message}"
                    Padding="5"
@@ -16,6 +16,8 @@
         <Button Content="{Binding OkText}"
                 FontSize="{StaticResource FontSizeRegular}"
                 HorizontalAlignment="Center"
+                IsDefault="True"
+                IsCancel="True"
                 Command="{Binding CloseCommand, RelativeSource={RelativeSource FindAncestor,  AncestorType={ x:Type local:BaseDialogUserControl}}}"/>
         
     </StackPanel>
