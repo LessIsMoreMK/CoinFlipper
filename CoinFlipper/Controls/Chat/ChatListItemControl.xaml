@@ -15,7 +15,7 @@
                     <ControlTemplate TargetType="{x:Type ContentControl}">
                         
                         <!-- Content -->
-                        <Border x:Name="background"  Background="{StaticResource GrayMediumBrush}">
+                        <Border x:Name="background"  Background="{StaticResource GrayDarkBrush}">
 
                             <!-- Click To Open Message -->
                             <Border.InputBindings>
@@ -34,9 +34,11 @@
                                 <Border Background="{StaticResource RedBrush}" 
                                         Width="4" 
                                         HorizontalAlignment="Left"
-                                        Visibility="{Binding NewContentAvailable, Converter={local:BooleanToVisibilityConverter}, ConverterParameter=True}"/>
+                                        Visibility="{Binding NewContentAvailable, 
+                                            Converter={local:BooleanToVisibilityConverter}, 
+                                            ConverterParameter=True}"/>
 
-                                <!-- Profile Picture -->
+                                <!-- Profile Picture Padding -->
                                 <Border Grid.Column="0" Padding="8 15">
                                     
                                     <!-- Profile Picture Background-->
@@ -76,15 +78,15 @@
 
                         <!-- Hover Effect -->
                         <ControlTemplate.Triggers>
-                            
+
                             <DataTrigger Binding="{Binding IsSelected}" Value="True">
-                                <Setter Property="Background" TargetName="background" Value="{StaticResource GrayLightBrush}"/>
+                                <Setter Property="Background" TargetName="background" Value="{StaticResource GrayMediumBrush}"/>
                             </DataTrigger>
-                            
+
                             <EventTrigger RoutedEvent="MouseEnter">
                                 <BeginStoryboard>
                                     <Storyboard>
-                                        <ColorAnimation To="{StaticResource GrayLight}" Duration="0:0:0.3" Storyboard.TargetName="container" Storyboard.TargetProperty="Background.Color" />
+                                        <ColorAnimation To="{StaticResource GrayMedium}" Duration="0:0:0.3" Storyboard.TargetName="container" Storyboard.TargetProperty="Background.Color" />
                                     </Storyboard>
                                 </BeginStoryboard>
                             </EventTrigger>
@@ -95,13 +97,11 @@
                                     </Storyboard>
                                 </BeginStoryboard>
                             </EventTrigger>
-                            
                             <Trigger Property="IsEnabled" Value="False">
-                                <Setter Property="Background" TargetName="background" Value="{StaticResource GrayMediumBrush}"/>
+                                <Setter Property="Background" TargetName="container" Value="{StaticResource GrayMediumBrush}"/>
                             </Trigger>
-                            
                         </ControlTemplate.Triggers>
-                        
+
                     </ControlTemplate>
                 </Setter.Value>
             </Setter>

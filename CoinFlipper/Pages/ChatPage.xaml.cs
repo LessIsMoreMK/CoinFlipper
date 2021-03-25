@@ -1,4 +1,5 @@
 ﻿using CoinFlipper.Core;
+using System.Windows.Media.Animation;
 
 namespace CoinFlipper
 {
@@ -7,6 +8,8 @@ namespace CoinFlipper
     /// </summary>
     public partial class ChatPage : BasePage<ChatMessageListViewModel>
     {
+        #region Constructor
+
         /// <summary>
         /// Default constructor
         /// </summary>
@@ -23,5 +26,26 @@ namespace CoinFlipper
         {
             InitializeComponent();
         }
+
+        #endregion
+
+        #region Override Methods
+
+        /// <summary>
+        /// Fired when the view model changes
+        /// </summary>
+        protected override void OnViewModelChanged()
+        {
+            // Make sure UI exists first
+            if (ChatMessageList == null)
+                return;
+
+            // Fade in chat message list
+            var storyboard = new Storyboard();
+            storyboard.AddFadeIn(1, from: true);
+            storyboard.Begin(ChatMessageList);
+        }
+
+        #endregion
     }
 }

@@ -10,6 +10,7 @@
     <UserControl.Template>
         <ControlTemplate TargetType="UserControl">
             
+            <!-- Main Background -->
             <Border Grid.Column="0">
                 
                 <!-- Content -->
@@ -26,7 +27,6 @@
                             <ColumnDefinition Width="*"/>
                             <ColumnDefinition Width="Auto"/>
                         </Grid.ColumnDefinitions>
-
 
                         <!-- Main Buttons -->
                         <StackPanel Orientation="Horizontal">

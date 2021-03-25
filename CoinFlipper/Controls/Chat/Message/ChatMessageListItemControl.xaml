@@ -36,6 +36,8 @@
                   HorizontalAlignment="{Binding SentByMe, Converter={local:SentByMeToAllignmentConverter}}">
 
                 <Grid.Triggers>
+
+                    <!-- Mouse Over Shows Time -->
                     <EventTrigger RoutedEvent="MouseEnter">
                         <BeginStoryboard>
                             <Storyboard Storyboard.TargetName="ExtraDetails" Storyboard.TargetProperty="Opacity">
@@ -44,6 +46,7 @@
                         </BeginStoryboard>
                     </EventTrigger>
 
+                    <!-- Mouse Over Hide Time -->
                     <EventTrigger RoutedEvent="MouseLeave">
                         <BeginStoryboard>
                             <Storyboard Storyboard.TargetName="ExtraDetails" Storyboard.TargetProperty="Opacity">
@@ -104,6 +107,5 @@
                 </StackPanel>
             </Grid>
         </Grid>
-            
     </Border>
 </UserControl>

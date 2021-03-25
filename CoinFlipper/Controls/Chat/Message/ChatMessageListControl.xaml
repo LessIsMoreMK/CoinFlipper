@@ -5,11 +5,11 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:CoinFlipper"
              xmlns:core="clr-namespace:CoinFlipper.Core;assembly=CoinFlipper.Core"
-             mc:Ignorable="d" 
-             d:DesignHeight="500" d:DesignWidth="300">
+             mc:Ignorable="d" >
     <Grid VerticalAlignment="Bottom"
           d:DataContext="{x:Static core:ChatMessageListDesignModel.Instance}">
-        <ScrollViewer VerticalScrollBarVisibility="Auto">
+        <ScrollViewer VerticalScrollBarVisibility="Auto"
+          local:ScrollToBottomOnLoadProperty.Value="True">
             <ItemsControl ItemsSource="{Binding Items}">
                 <ItemsControl.ItemTemplate>
                     <DataTemplate>

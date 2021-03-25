@@ -55,7 +55,10 @@
         </Grid>
 
         <!-- Chat List -->
-        <local:ChatMessageListControl Grid.Row="1" DataContext="{Binding}"/>
+        <local:ChatMessageListControl x:Name="ChatMessageList" 
+                                      Grid.Row="1" 
+                                      Panel.ZIndex="2" 
+                                      DataContext="{Binding}"/>
 
         <!-- Attachment Menu Popup -->
         <Border Grid.Row="1"
