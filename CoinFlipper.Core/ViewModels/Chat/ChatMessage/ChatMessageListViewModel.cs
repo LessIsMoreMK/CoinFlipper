@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Windows.Input;
 
 namespace CoinFlipper.Core
@@ -13,7 +15,7 @@ namespace CoinFlipper.Core
         /// <summary>
         /// The chat thread items for the list  
         /// </summary>
-        public List<ChatMessageListItemViewModel> Items { get; set; }
+        public ObservableCollection<ChatMessageListItemViewModel> Items { get; set; }
 
         /// <summary>
         /// True to show the attachment menu, false to hide it 
@@ -29,6 +31,11 @@ namespace CoinFlipper.Core
         /// The view model for the attachment menu
         /// </summary>
         public ChatAttachmentPopupMenuViewModel AttachmentMenu { get; set; }
+
+        /// <summary>
+        /// The text for the current message being written
+        /// </summary>
+        public string PendingMessageText { get; set; }
 
         #endregion
 
@@ -92,14 +99,24 @@ namespace CoinFlipper.Core
         /// <summary>
         /// When the user clicks the send button sends the message
         /// </summary>
-        public async void Send()
+        public void Send()
         {
-            await IoC.UI.ShowMessage(new MessageBoxDialogViewModel
+            if (Items == null)
+                Items = new ObservableCollection<ChatMessageListItemViewModel>();
+
+            // Fake send a new message
+            Items.Add(new ChatMessageListItemViewModel
             {
-                Title = "Send Message",
-                Message = "Thank you for writing a nice message :)",
-                OkText = "OK"
+                Initials = "MK",
+                Message = PendingMessageText,
+                MessageSentTime = DateTime.UtcNow,
+                SentByMe = true,
+                SenderName = "Maciej Kulaszewicz",
+                NewItem = true
             });
+
+            // Clear the pending message text
+            PendingMessageText = String.Empty;
         }
 
         #endregion

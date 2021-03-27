@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Windows.Input;
 
 namespace CoinFlipper.Core
@@ -74,7 +75,7 @@ namespace CoinFlipper.Core
         {
             IoC.Application.GoToPage(ApplicationPage.Chat, new ChatMessageListViewModel
             {
-                Items = new List<ChatMessageListItemViewModel>
+                Items = new ObservableCollection<ChatMessageListItemViewModel>
                 {
                     new ChatMessageListItemViewModel
                     {

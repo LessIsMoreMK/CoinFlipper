@@ -97,11 +97,15 @@
             <TextBox Grid.Column="1"
                      Tag="Write a message..."
                      BorderThickness="0"
+                     x:Name="MessageText"
+                     local:IsFocusedProperty.Value="True"
+                     Text="{Binding PendingMessageText, UpdateSourceTrigger=PropertyChanged}"
                      FontSize="{StaticResource FontSizeRegular}"
                      Padding="0 10"
                      VerticalAlignment="Center"
-                     AcceptsReturn="True"
                      AcceptsTab="True"
+                     AcceptsReturn="True"
+                     PreviewKeyDown="MessageText_PreviewKeyDown"
                      VerticalScrollBarVisibility="Auto"/>
             
             <!-- Additional Buttons -->
@@ -118,10 +122,12 @@
                         FontFamily="{StaticResource LatoBlack}"/>
                 
                 <!-- Send Button -->
-                <Button Content="{StaticResource FontAwesomeSendIcon}"
+                <Button Padding="10"
+                        IsDefault="True"
+                        
+                        Content="{StaticResource FontAwesomeSendIcon}"
                         FontFamily="{StaticResource FontAwesome}"
                         Background="{StaticResource GreenDarkBrush}"
-                        Padding="10"
                         FontSize="{StaticResource FontSizeSmall}"
                         Command="{Binding SendCommand}"/>
             </StackPanel>
