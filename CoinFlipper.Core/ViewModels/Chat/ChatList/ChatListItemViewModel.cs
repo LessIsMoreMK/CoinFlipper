@@ -75,6 +75,8 @@ namespace CoinFlipper.Core
         {
             IoC.Application.GoToPage(ApplicationPage.Chat, new ChatMessageListViewModel
             {
+                DisplayTitle = "Alice, me",
+
                 Items = new ObservableCollection<ChatMessageListItemViewModel>
                 {
                     new ChatMessageListItemViewModel
