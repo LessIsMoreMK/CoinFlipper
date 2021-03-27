@@ -72,7 +72,8 @@
     <Compile Include="ViewModels\Base\RelayParameterizedCommand.cs" />
     <Compile Include="ViewModels\Chat\ChatList\ChatListItemViewModel.cs" />
     <Compile Include="ViewModels\Chat\ChatList\ChatListViewModel.cs" />
-    <Compile Include="ViewModels\Chat\ChatMessage\ChatListItemViewModel.cs" />
+    <Compile Include="ViewModels\Chat\ChatMessage\ChatMessageListItemImageAttachmentViewModel.cs" />
+    <Compile Include="ViewModels\Chat\ChatMessage\ChatMessageListItemViewModel.cs" />
     <Compile Include="ViewModels\Chat\ChatMessage\ChatMessageListViewModel.cs" />
     <Compile Include="ViewModels\Chat\ChatList\Design\ChatListDesignModel.cs" />
     <Compile Include="ViewModels\Chat\ChatList\Design\ChatListItemDesignModel.cs" />

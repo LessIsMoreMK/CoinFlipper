@@ -161,6 +161,10 @@ namespace CoinFlipper.Core
                     new ChatMessageListItemViewModel
                     {
                         Message = "A received message",
+                        ImageAttachment = new ChatMessageListItemImageAttachmentViewModel
+                        {
+                            ThumbnailUrl = "http://anywhere"
+                        },
                         Initials = Initials,
                         MessageSentTime = DateTime.UtcNow,
                         ProfilePictureRGB = "FF0000",
@@ -168,7 +172,7 @@ namespace CoinFlipper.Core
                         SentByMe = false,
                     },
                 }
-            });
+            }); 
         }
 
         #endregion
