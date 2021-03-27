@@ -115,7 +115,7 @@
     <Compile Include="ValueConverters\MenuItemTypeVisibilityConverter.cs" />
     <Compile Include="ValueConverters\PopupContentConverter.cs" />
     <Compile Include="ValueConverters\SentByMeToBackgroundConverter.cs" />
-    <Compile Include="ValueConverters\SentByMeToAllignmentConverter.cs" />
+    <Compile Include="ValueConverters\SentByMeToAlignmentConverter.cs" />
     <Compile Include="ValueConverters\HorizontalAlignmentConverter.cs" />
     <Compile Include="ValueConverters\TimeToReadTimeConverter.cs" />
     <Compile Include="ValueConverters\TimeToDisplayTimeConverter.cs" />

@@ -43,7 +43,7 @@ namespace CoinFlipper
             // Setup size changed event
             mBorder_SizeChanged = (s1, e1) => Border_OnChange(s1, e1, self);
 
-            // If true, book into events
+            // If true, hook into events
             if ((bool)e.NewValue)
             {
                 border.Loaded += mBorder_Loaded;

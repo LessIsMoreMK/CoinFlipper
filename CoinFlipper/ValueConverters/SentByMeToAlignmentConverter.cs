@@ -8,7 +8,7 @@ namespace CoinFlipper
     /// A converter that takes in a boolean if a message was sent by me, and aligns to the right
     /// If not sent by me, aligns, to the left
     /// </summary>
-    public class SentByMeToAllignmentConverter : BaseValueConverter<SentByMeToAllignmentConverter>
+    public class SentByMeToAlignmentConverter : BaseValueConverter<SentByMeToAlignmentConverter>
     {
         public override object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
