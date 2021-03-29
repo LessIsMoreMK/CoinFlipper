@@ -20,6 +20,9 @@ namespace CoinFlipper
             // Setup the main application 
             ApplicationSetup();
 
+            // Log it 
+            IoC.Logger.Log("Application starting up...");
+
             // Show the main window
             Current.MainWindow = new MainWindow();
             Current.MainWindow.Show();
@@ -37,6 +40,9 @@ namespace CoinFlipper
             IoC.Kernel.Bind<IUIManager>().ToConstant(new UIManager());
 
             //IoC.Get<IUIManager>(); = IoC.UI;
+
+            // Bind a logger
+            IoC.Kernel.Bind<ILogFactory>().ToConstant(new BaseLogFactory());
         }
     }
 }
