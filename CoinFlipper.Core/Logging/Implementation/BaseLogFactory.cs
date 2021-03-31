@@ -53,10 +53,16 @@ namespace CoinFlipper.Core
         /// <summary>
         /// Default constructor
         /// </summary>
-        public BaseLogFactory()
+        /// <param name="loggers">The loggers to add to the factory, on top of the stock loggers already included</param>
+        public BaseLogFactory(ILogger[] loggers = null)
         {
             // Add console logger
             AddLogger(new ConsoleLogger());
+
+            // Add any others passed in
+            if (loggers != null)
+                foreach (var logger in loggers)
+                    AddLogger(logger);
         }
 
         #endregion
@@ -115,7 +121,7 @@ namespace CoinFlipper.Core
 
             // If the user wants to know where the log originated from...
             if (IncludeLogOriginDetails)
-                message = $"[{Path.GetFileName(filePath)} > {origin}() > Line {lineNumber}]{message}";
+                message = $"[{Path.GetFileName(filePath)} > {origin}() > Line {lineNumber}] {message}";
 
             // Log to all loggers
             mLoggers.ForEach(logger => logger.Log(message, level));

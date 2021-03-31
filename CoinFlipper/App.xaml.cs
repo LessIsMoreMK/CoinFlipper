@@ -1,4 +1,5 @@
 ﻿using CoinFlipper.Core;
+using System;
 using System.Windows;
 
 namespace CoinFlipper
@@ -36,13 +37,24 @@ namespace CoinFlipper
             // Setup IoC
             IoC.Setup();
 
+            // Bind a logger
+            IoC.Kernel.Bind<ILogFactory>().ToConstant(new BaseLogFactory(new[] 
+            { 
+                // TODO: Add ApplicationSettings so we can set/edit a log location
+                //       For now just log to the path where this application is running
+                new FileLogger("log.txt"), 
+            }));
+
+            // Add task manager
+            IoC.Kernel.Bind<ITaskManager>().ToConstant(new TaskManager());
+
+            // Bind a file manager
+            IoC.Kernel.Bind<IFileManager>().ToConstant(new FileManager());
+
             // Bind a UI Manager
             IoC.Kernel.Bind<IUIManager>().ToConstant(new UIManager());
 
             //IoC.Get<IUIManager>(); = IoC.UI;
-
-            // Bind a logger
-            IoC.Kernel.Bind<ILogFactory>().ToConstant(new BaseLogFactory());
         }
     }
 }
