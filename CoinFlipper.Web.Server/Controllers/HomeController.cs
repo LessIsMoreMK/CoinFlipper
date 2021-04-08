@@ -1,5 +1,9 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace CoinFlipper.Web.Server
 {
@@ -12,6 +16,16 @@ namespace CoinFlipper.Web.Server
         /// </summary>
         protected ApplicationDbContext mContext;
 
+        /// <summary>
+        /// The manager for handling user creation, deletion, searching, roles etc...
+        /// </summary>
+        protected UserManager<ApplicationUser> mUserManager;
+
+        /// <summary>
+        /// The manager for handling signing in and out for our users
+        /// </summary>
+        protected SignInManager<ApplicationUser> mSignInManager;
+
         #endregion
 
         #region Constructor
@@ -20,9 +34,11 @@ namespace CoinFlipper.Web.Server
         /// Default constructor
         /// </summary>
         /// <param name="context">The injected context</param>
-        public HomeController(ApplicationDbContext context)
+        public HomeController(ApplicationDbContext context, UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager)
         {
             mContext = context;
+            mUserManager = userManager;
+            mSignInManager = signInManager;
         }
 
         #endregion
@@ -59,6 +75,71 @@ namespace CoinFlipper.Web.Server
             }
 
             return View();
+        }
+
+        /// <summary>
+        /// Creates our single user for now
+        /// </summary>
+        /// <returns></returns>
+        [Route("Create")]
+        public async Task<IActionResult> CreateUserAsync()
+        {
+            var result = await mUserManager.CreateAsync(new ApplicationUser
+            {
+                UserName = "LessIsMore",
+                Email = "maciej8kz@gmail.com"
+            }, "password");
+
+            if(result.Succeeded)
+                return Content("User was created", "text/html");
+
+            return Content("User creation failed", "text/html");
+        }
+
+        /// <summary>
+        /// Private area. No peaking
+        /// </summary>
+        /// <returns></returns>
+        [Authorize]
+        [Route("private")]
+        public IActionResult Private()
+        {
+            return Content("This is private area. Welcome " {HttpContext.User.Identity.Name}, "text/html");
+        }
+
+        [Route("logout")]
+        public async Task<IActionResult> SignOutAsync(string returnUrl)
+        {
+            await HttpContext.SignOutAsync(IdentityConstants.ApplicationScheme);
+            return Content("Done", "text/html");
+        }
+        /// <summary>
+        /// Ab auto-login page for testing
+        /// </summary>
+        /// <param name="returnUrl">The url to return to if successfully logged in</param>
+        /// <returns></returns>
+        [Route("login")]
+        public async Task<IActionResult> LoginAsync(string returnUrl)
+        {
+            // Sing out any previous sessions
+            await HttpContext.SignOutAsync(IdentityConstants.ApplicationScheme);
+
+            // Sign user in with the valid credentials
+            var result = await mSignInManager.PasswordSignInAsync("LessIsMore", "password", true, false);
+
+            // If successful...
+            if (result.Succeeded)
+            {
+                // If we have no return URL...
+                if (string.IsNullOrEmpty(returnUrl))
+                    // Go to home
+                    return RedirectToAction(nameof(Index));
+
+                // Otherwise, go to the return url
+                return Redirect(returnUrl);
+            }
+
+            return Content("testing", "text/html");
         }
     }
 }
