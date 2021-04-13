@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -7,6 +8,9 @@ using System.Threading.Tasks;
 
 namespace CoinFlipper.Web.Server
 {
+    /// <summary>
+    /// Manages the standard web server pages
+    /// </summary>
     public class HomeController : Controller
     {
         #region Protected Members
@@ -104,13 +108,13 @@ namespace CoinFlipper.Web.Server
         [Route("private")]
         public IActionResult Private()
         {
-            return Content("This is private area. Welcome " {HttpContext.User.Identity.Name}, "text/html");
+            return Content($"This is private area. Welcome {HttpContext.User.Identity.Name}", "text/html");
         }
 
         [Route("logout")]
         public async Task<IActionResult> SignOutAsync(string returnUrl)
         {
-            await HttpContext.SignOutAsync(IdentityConstants.ApplicationScheme);
+            await HttpContext.SignOutAsync();
             return Content("Done", "text/html");
         }
         /// <summary>
@@ -122,10 +126,10 @@ namespace CoinFlipper.Web.Server
         public async Task<IActionResult> LoginAsync(string returnUrl)
         {
             // Sing out any previous sessions
-            await HttpContext.SignOutAsync(IdentityConstants.ApplicationScheme);
+            await HttpContext.SignOutAsync();
 
             // Sign user in with the valid credentials
-            var result = await mSignInManager.PasswordSignInAsync("LessIsMore", "password", true, false);
+            var result = await mSignInManager.PasswordSignInAsync("lessismore", "password", true, false);
 
             // If successful...
             if (result.Succeeded)

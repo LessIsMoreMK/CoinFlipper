@@ -4,7 +4,9 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.IdentityModel.Tokens;
 using System;
+using System.Text;
 
 namespace CoinFlipper.Web.Server
 {
@@ -12,17 +14,15 @@ namespace CoinFlipper.Web.Server
     {
         public Startup(IConfiguration configuration)
         {
-            Configuration = configuration;
+            IoCContainer.Configuration = configuration;
         }
-
-        public IConfiguration Configuration { get; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
             // Add ApplicationDbContext to DI
             services.AddDbContext<ApplicationDbContext>(options =>
-                options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+                options.UseSqlServer(IoCContainer.Configuration.GetConnectionString("DefaultConnection")));
 
             // AddIdentity adds cookie based authentication 
             // Adds scoped classes for things like UserManager, SignInManager, PasswordHashers etc...
@@ -36,6 +36,22 @@ namespace CoinFlipper.Web.Server
                 // Adds a provider that generates unique keys ans hashes for things like
                 // forgot password link, phone number verification codes etc.
                 .AddDefaultTokenProviders();
+
+            // Add JWT Authentication for API clients
+            services.AddAuthentication().
+                AddJwtBearer(options =>
+                {
+                    options.TokenValidationParameters = new TokenValidationParameters
+                    {
+                        ValidateIssuer = true,
+                        ValidateAudience = true,
+                        ValidateLifetime = true,
+                        ValidateIssuerSigningKey = true,
+                        ValidIssuer = IoCContainer.Configuration["Jwt:Issuer"],
+                        ValidAudience = IoCContainer.Configuration["Jwt:Audience"],
+                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(IoCContainer.Configuration["Jwt:SecretKey"])),
+                    };
+                });
 
             // Change password policy
             services.Configure<IdentityOptions>(options =>
@@ -55,7 +71,7 @@ namespace CoinFlipper.Web.Server
                 options.LoginPath = "/login";
 
                 // Change cookie timeout
-                options.ExpireTimeSpan = TimeSpan.From
+                options.ExpireTimeSpan = TimeSpan.FromDays(15);
             });
 
 
