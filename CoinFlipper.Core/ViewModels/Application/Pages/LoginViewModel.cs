@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Dna;
+using System;
 using System.Security;
 using System.Threading.Tasks;
 using System.Windows.Input;
@@ -20,7 +21,7 @@ namespace CoinFlipper.Core
         /// <summary>
         /// A flag indicating if the register command is running
         /// </summary>
-        public bool RegisterIsRunning { get; set; }
+        public bool LoginIsRunning { get; set; }
 
         #endregion
 
@@ -46,8 +47,8 @@ namespace CoinFlipper.Core
         public LoginViewModel()
         {
             // Initialize commands
-            RegisterCommand = new RelayParameterizedCommand(async (parameter) => await RegisterAsync(parameter));
-            LoginCommand = new RelayCommand(async () => await LoginAsync());
+            LoginCommand = new RelayParameterizedCommand(async (parameter) => await LoginAsync(parameter));
+            RegisterCommand = new RelayCommand(async () => await RegisterAsync());
         }
 
         #endregion
@@ -59,7 +60,7 @@ namespace CoinFlipper.Core
         /// </summary>
         /// <param name="parameter">The <see cref="SecureString"/>passed in from the view for the users password</param>
         /// <returns></returns>
-        public async Task RegisterAsync(object parameter)
+        public async Task RegisterAsync()
         {
             IoC.Application.GoToPage(ApplicationPage.Register);
 
@@ -70,17 +71,57 @@ namespace CoinFlipper.Core
         /// Takes the user to the login page
         /// </summary>
         /// <returns></returns>
-        public async Task LoginAsync()
+        public async Task LoginAsync(object parameter)
         {
-            await RunCommand(() => this.RegisterIsRunning, async () =>
+            await RunCommand(() => this.LoginIsRunning, async () =>
             {
-                await Task.Delay(200);
+                // Call the server and attempt to login with credentials
+                // TODO: Move all URLs and API routes to static class in core
+                var result = await WebRequests.PostAsync<ApiResponse<LoginResultApiModel>>(
+                    "http://localhost:5000/api/login",
+                    new LoginCredentialsApiModel
+                    {
+                        UsernameOrEmail = Email,
+                        Password = (parameter as IHavePassword).SecurePassword.Unsecure()
+                    });
 
-                // TODO: server...
-                IoC.Settings.Name = new TextEntryViewModel { Label = "Name", OriginalText = $"Maciej Kulaszewiccz { DateTime.Now.ToLocalTime() }" };
-                IoC.Settings.Username = new TextEntryViewModel { Label = "Username", OriginalText = "Lessi" };
+                // If there was no response, bad data, or response with a error message...
+                if (result == null || result.ServerResponse == null || !result.ServerResponse.Scuccessful)
+                {
+                    // Default error message
+                    var message = "Unknown error from server call";
+
+                    // If we got a response from the server...
+                    if (result?.ServerResponse != null)
+                        // Set a message to servers response
+                        message = result.ServerResponse.ErrorMessage;
+                    // If we have a result but deserialize failed...
+                    else if(!string.IsNullOrWhiteSpace(result?.RawServerResponse))
+                        // Set error message
+                        message = $"Unexpected response from server. {result.RawServerResponse}";
+                    // If we have a result but no server response dtails at all
+                    else if (result != null)
+                        // Set message to standard HTTP server response details
+                        message = $"Failed to communicate with server. Status code {result.StatusCode}. {result.StatusDescription}";
+
+                    // Display error
+                    await IoC.UI.ShowMessage(new MessageBoxDialogViewModel
+                    {
+                        Title = "Login Failed",
+                        Message = message
+                    });
+
+                    // We are done
+                    return;
+                }
+
+                // OK successfully logged... now get suers data
+                var userData = result.ServerResponse.Response;
+
+                IoC.Settings.Name = new TextEntryViewModel { Label = "Name", OriginalText = $"{userData.FirstName} {userData.LastName}"};
+                IoC.Settings.Username = new TextEntryViewModel { Label = "Username", OriginalText = userData.Username };
                 IoC.Settings.Password = new PasswordEntryViewModel { Label = "Password", FakePassword = "********" };
-                IoC.Settings.Email = new TextEntryViewModel { Label = "Email", OriginalText = "maciej8kz@gmail.com" };
+                IoC.Settings.Email = new TextEntryViewModel { Label = "Email", OriginalText = userData.Email };
 
                 IoC.Application.GoToPage(ApplicationPage.Chat);
             });

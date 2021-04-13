@@ -21,4 +21,8 @@
     <Folder Include="wwwroot\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\CoinFlipper.Core\CoinFlipper.Core.csproj" />
+  </ItemGroup>
+
 </Project>

@@ -38,6 +38,9 @@ namespace CoinFlipper.Web.Server
         /// Default constructor
         /// </summary>
         /// <param name="context">The injected context</param>
+        /// <param name="context">The injected context</param>
+        /// <param name="signInManager">The Identity sign in manager</param>
+        /// <param name="userManager">The Identity user manager</param>
         public HomeController(ApplicationDbContext context, UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager)
         {
             mContext = context;
@@ -90,8 +93,10 @@ namespace CoinFlipper.Web.Server
         {
             var result = await mUserManager.CreateAsync(new ApplicationUser
             {
-                UserName = "LessIsMore",
-                Email = "maciej8kz@gmail.com"
+                UserName = "lessismore",
+                Email = "maciej8kz@gmail.com",
+                FirstName = "Maciej",
+                LastName = "Kulaszewicz"
             }, "password");
 
             if(result.Succeeded)
