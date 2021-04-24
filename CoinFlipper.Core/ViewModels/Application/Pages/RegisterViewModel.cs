@@ -60,7 +60,7 @@ namespace CoinFlipper.Core
         /// <returns></returns>
         public async Task LoginAsync(object parameter)
         {
-            await RunCommand(() => this.LoginIsRunning, async() =>
+            await RunCommandAsync(() => this.LoginIsRunning, async() =>
             {
                 await Task.Delay(500);
 

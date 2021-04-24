@@ -1,4 +1,5 @@
-﻿using Ninject;
+﻿using Dna;
+using Ninject;
 
 namespace CoinFlipper.Core
 {
@@ -43,6 +44,11 @@ namespace CoinFlipper.Core
         /// A shortcut to access the <see cref="SettingsViewModel"/>
         /// </summary>
         public static SettingsViewModel Settings => IoC.Get<SettingsViewModel>();
+
+        /// <summary>
+        /// A shortcut to access toe <see cref="IClientDataStore"/> service
+        /// </summary>
+        public static IClientDataStore ClientDataStore => Framework.Service<IClientDataStore>();
 
         #endregion
 

@@ -5,7 +5,11 @@ VisualStudioVersion = 16.0.31005.135
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CoinFlipper", "CoinFlipper\CoinFlipper.csproj", "{60E1489E-FEB7-4F8F-9C59-DEA663DFE9C1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CoinFlipper.Core", "CoinFlipper.Core\CoinFlipper.Core.csproj", "{0B20AD92-16B3-48DB-B680-995295C2FA68}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CoinFlipper.Core", "CoinFlipper.Core\CoinFlipper.Core.csproj", "{0B20AD92-16B3-48DB-B680-995295C2FA68}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CoinFlipper.Relational", "CoinFlipper.Relational\CoinFlipper.Relational.csproj", "{119A7197-6954-4CDE-94D0-E10F9E5BC423}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CoinFlipper.Web.Server", "CoinFlipper.Web.Server\CoinFlipper.Web.Server.csproj", "{5D08984B-6168-4573-AAFF-A4D925A01A82}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +25,14 @@ Global
 		{0B20AD92-16B3-48DB-B680-995295C2FA68}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0B20AD92-16B3-48DB-B680-995295C2FA68}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0B20AD92-16B3-48DB-B680-995295C2FA68}.Release|Any CPU.Build.0 = Release|Any CPU
+		{119A7197-6954-4CDE-94D0-E10F9E5BC423}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{119A7197-6954-4CDE-94D0-E10F9E5BC423}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{119A7197-6954-4CDE-94D0-E10F9E5BC423}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{119A7197-6954-4CDE-94D0-E10F9E5BC423}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5D08984B-6168-4573-AAFF-A4D925A01A82}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5D08984B-6168-4573-AAFF-A4D925A01A82}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5D08984B-6168-4573-AAFF-A4D925A01A82}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5D08984B-6168-4573-AAFF-A4D925A01A82}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

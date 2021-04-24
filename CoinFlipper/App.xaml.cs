@@ -1,5 +1,7 @@
 ﻿using CoinFlipper.Core;
-using System;
+using CoinFlipper.Relational;
+using Dna;
+using System.Threading.Tasks;
 using System.Windows;
 
 namespace CoinFlipper
@@ -13,16 +15,25 @@ namespace CoinFlipper
         /// Custom startup so we load our IoC immediately before anything else
         /// </summary>
         /// <param name="e"></param>
-        protected override void OnStartup(StartupEventArgs e)
+        protected override async void OnStartup(StartupEventArgs e)
         {
             // Let the base application do what it needs
             base.OnStartup(e);
 
             // Setup the main application 
-            ApplicationSetup();
+            await ApplicationSetupAsync();
 
             // Log it 
-            IoC.Logger.Log("Application starting up...");
+            IoC.Logger.Log("Application starting up...", LogLevel.Debug);
+
+            // Setup the application view model based on if we are logged in
+            IoC.Application.GoToPage(
+                // If we are logged in...
+                await IoC.ClientDataStore.HasCredentialsAsync() ?
+                // Go to chat page
+                ApplicationPage.Chat :
+                // Otherwise, go to login page
+                ApplicationPage.Login);
 
             // Show the main window
             Current.MainWindow = new MainWindow();
@@ -32,20 +43,26 @@ namespace CoinFlipper
         /// <summary>
         /// Configures our application ready for use
         /// </summary>
-        private void ApplicationSetup()
+        private async Task ApplicationSetupAsync()
         {
+            // Setup the Dna Framework
+            new DefaultFrameworkConstruction()
+                .UseFileLogger()
+                .UseClientDataStore()
+                .Build();
+
             // Setup IoC
             IoC.Setup();
 
             // Bind a logger
-            IoC.Kernel.Bind<ILogFactory>().ToConstant(new BaseLogFactory(new[] 
-            { 
+            IoC.Kernel.Bind<ILogFactory>().ToConstant(new BaseLogFactory(new[]
+            {
                 // TODO: Add ApplicationSettings so we can set/edit a log location
                 //       For now just log to the path where this application is running
-                new FileLogger("log.txt"), 
+                new Core.FileLogger("Oldlog.txt"),
             }));
 
-            // Add task manager
+            // Add our task manager
             IoC.Kernel.Bind<ITaskManager>().ToConstant(new TaskManager());
 
             // Bind a file manager
@@ -54,7 +71,11 @@ namespace CoinFlipper
             // Bind a UI Manager
             IoC.Kernel.Bind<IUIManager>().ToConstant(new UIManager());
 
-            //IoC.Get<IUIManager>(); = IoC.UI;
+            // Ensure the client data store 
+            await IoC.ClientDataStore.EnsureDataStoreAsync();
+
+            // Load new settings
+            await IoC.Settings.LoadAsync();
         }
     }
 }

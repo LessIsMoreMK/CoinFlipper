@@ -1,4 +1,4 @@
-﻿using System;
+﻿using System.Threading.Tasks;
 using System.Windows.Input;
 
 namespace CoinFlipper.Core
@@ -59,6 +59,11 @@ namespace CoinFlipper.Core
         /// </summary>
         public ICommand ClearUserDataCommand { get; set; }
 
+        /// <summary>
+        /// Loads the settings data from the client data store
+        /// </summary>
+        public ICommand LoadCommand { get; set; }
+
         #endregion
 
         #region Constructor
@@ -70,6 +75,7 @@ namespace CoinFlipper.Core
             OpenCommand = new RelayCommand(Open);
             LogoutCommand = new RelayCommand(Logout);
             ClearUserDataCommand = new RelayCommand(ClearUserData);
+            LoadCommand = new RelayCommand(async () => await LoadAsync());
 
             //TODO: get from localization
             LogoutButtonText = "Logout";
@@ -121,6 +127,20 @@ namespace CoinFlipper.Core
             Username = null;
             Password = null;
             Email = null;
+        }
+
+        /// <summary>
+        /// Sets the settings view model properties based on the data in the client data store
+        /// </summary>
+        public async Task LoadAsync()
+        {
+            // Get the stored credentials
+            var storedCredentials = await IoC.ClientDataStore.GetLoginCredentialsAsync();
+
+            Name = new TextEntryViewModel { Label = "Name", OriginalText = $"{storedCredentials?.FirstName} {storedCredentials?.LastName}" };
+            Username = new TextEntryViewModel { Label = "Username", OriginalText = storedCredentials?.Username };
+            Password = new PasswordEntryViewModel { Label = "Password", FakePassword = "********" };
+            Email = new TextEntryViewModel { Label = "Email", OriginalText = storedCredentials?.Email };
         }
     }
 }

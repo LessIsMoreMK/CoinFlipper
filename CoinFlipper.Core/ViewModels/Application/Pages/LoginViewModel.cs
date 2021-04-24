@@ -73,7 +73,7 @@ namespace CoinFlipper.Core
         /// <returns></returns>
         public async Task LoginAsync(object parameter)
         {
-            await RunCommand(() => this.LoginIsRunning, async () =>
+            await RunCommandAsync(() => LoginIsRunning, async () =>
             {
                 // Call the server and attempt to login with credentials
                 // TODO: Move all URLs and API routes to static class in core
@@ -85,21 +85,22 @@ namespace CoinFlipper.Core
                         Password = (parameter as IHavePassword).SecurePassword.Unsecure()
                     });
 
-                // If there was no response, bad data, or response with a error message...
-                if (result == null || result.ServerResponse == null || !result.ServerResponse.Scuccessful)
+                // If there was no response, bad data, or a response with a error message...
+                if (result == null || result.ServerResponse == null || !result.ServerResponse.Successful)
                 {
                     // Default error message
+                    // TODO: Localize strings
                     var message = "Unknown error from server call";
 
                     // If we got a response from the server...
                     if (result?.ServerResponse != null)
-                        // Set a message to servers response
+                        // Set message to servers response
                         message = result.ServerResponse.ErrorMessage;
                     // If we have a result but deserialize failed...
-                    else if(!string.IsNullOrWhiteSpace(result?.RawServerResponse))
+                    else if (!string.IsNullOrWhiteSpace(result?.RawServerResponse))
                         // Set error message
                         message = $"Unexpected response from server. {result.RawServerResponse}";
-                    // If we have a result but no server response dtails at all
+                    // If we have a result but no server response details at all...
                     else if (result != null)
                         // Set message to standard HTTP server response details
                         message = $"Failed to communicate with server. Status code {result.StatusCode}. {result.StatusDescription}";
@@ -107,6 +108,7 @@ namespace CoinFlipper.Core
                     // Display error
                     await IoC.UI.ShowMessage(new MessageBoxDialogViewModel
                     {
+                        // TODO: Localize strings
                         Title = "Login Failed",
                         Message = message
                     });
@@ -115,14 +117,23 @@ namespace CoinFlipper.Core
                     return;
                 }
 
-                // OK successfully logged... now get suers data
+                // OK successfully logged in... now get users data
                 var userData = result.ServerResponse.Response;
 
-                IoC.Settings.Name = new TextEntryViewModel { Label = "Name", OriginalText = $"{userData.FirstName} {userData.LastName}"};
-                IoC.Settings.Username = new TextEntryViewModel { Label = "Username", OriginalText = userData.Username };
-                IoC.Settings.Password = new PasswordEntryViewModel { Label = "Password", FakePassword = "********" };
-                IoC.Settings.Email = new TextEntryViewModel { Label = "Email", OriginalText = userData.Email };
+                // Store this in the client data store
+                await IoC.ClientDataStore.SaveLoginCredentialsAsync(new LoginCredentialsDataModel
+                {
+                    Email = userData.Email,
+                    FirstName = userData.FirstName,
+                    LastName = userData.LastName,
+                    Username = userData.Username,
+                    Token = userData.Token
+                });
 
+                // Load new settings
+                await IoC.Settings.LoadAsync();
+
+                // Go to chat page
                 IoC.Application.GoToPage(ApplicationPage.Chat);
             });
         }
