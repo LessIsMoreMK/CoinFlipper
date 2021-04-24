@@ -35,10 +35,13 @@
                                    FontSize="{StaticResource FontSizeRegular}" 
                                    Foreground="{StaticResource AlmostWhiteBrush}"
                                    Margin="0 0 0 20"/>
+
+                        <!-- Username -->
+                        <TextBox Text="{Binding Username}" Tag="Username"
+                                 local:IsFocusedProperty.Value="True"/>
                         
                         <!-- Email -->
-                        <TextBox Text="{Binding Email}" Tag="Email"
-                                 local:IsFocusedProperty.Value="True"/>
+                        <TextBox Text="{Binding Email}" Tag="Email"/>
                         
                         <!-- Password -->
                         <PasswordBox x:Name="PasswordText" Tag="Password" Margin="0 0 0 30"/>
@@ -47,7 +50,7 @@
                         <Button Content="Register" 
                                 HorizontalAlignment="Center"
                                 IsDefault="True"
-                                Command="{Binding LoginCommand}"
+                                Command="{Binding RegisterCommand}"
                                 CommandParameter="{Binding ElementName=Page}"
                                 local:IsBusyProperty.Value="{Binding LoginIsRunning}"/>
                     </StackPanel>
@@ -56,7 +59,7 @@
                 <Button Style="{StaticResource TextButton}" 
                         Content="I already have an account" 
                         HorizontalAlignment="Center"
-                        Command="{Binding RegisterCommand}"/>
+                        Command="{Binding LoginCommand}"/>
             </StackPanel>
         </ScrollViewer>
     </Grid>

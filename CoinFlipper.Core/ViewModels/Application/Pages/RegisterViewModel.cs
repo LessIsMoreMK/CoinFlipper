@@ -1,4 +1,5 @@
-﻿using System.Security;
+﻿using Dna;
+using System.Security;
 using System.Threading.Tasks;
 using System.Windows.Input;
 
@@ -10,6 +11,11 @@ namespace CoinFlipper.Core
     public class RegisterViewModel : BaseViewModel
     {
         #region Public Properties
+
+        /// <summary>
+        /// The username of the user
+        /// </summary>
+        public string Username { get; set; }
 
         /// <summary>
         /// The email of the user
@@ -45,8 +51,8 @@ namespace CoinFlipper.Core
         public RegisterViewModel()
         {
             // Initialize commands
-            LoginCommand = new RelayParameterizedCommand(async (parameter) => await LoginAsync(parameter));
-            RegisterCommand = new RelayCommand(async () => await RegisterAsync());
+            RegisterCommand = new RelayParameterizedCommand(async (parameter) => await RegisterAsync(parameter));
+            LoginCommand = new RelayCommand(async () => await LoginAsync());
         }
 
         #endregion
@@ -58,14 +64,32 @@ namespace CoinFlipper.Core
         /// </summary>
         /// <param name="parameter">The <see cref="SecureString"/>passed in from the view for the users password</param>
         /// <returns></returns>
-        public async Task LoginAsync(object parameter)
+        public async Task RegisterAsync(object parameter)
         {
             await RunCommandAsync(() => this.LoginIsRunning, async() =>
             {
-                await Task.Delay(500);
+                // Call the server and attempt to register with the provided credentials
+                // TODO: Move all URLs and API routes to static class in core
+                var result = await WebRequests.PostAsync<ApiResponse<RegisterResultApiModel>>(
+                    "http://localhost:5000/api/register",
+                    new RegisterCredentialsApiModel
+                    {
+                        Username = Username,
+                        Email = Email,
+                        Password = (parameter as IHavePassword).SecurePassword.Unsecure()
+                    });
 
-                //var email = this.Email;
-                //var pass = (parameter as IHavePassword).SecurePassword.Unsecure();
+                // If the response has an error...
+                if (await result.DisplayErrorIfFailedAsync("Register Failed"))
+                    // We are done
+                    return;
+
+                // OK successfully registered (and logged in)... now get users data
+                var loginResult = result.ServerResponse.Response;
+
+                // Let the application view model handle what happens
+                // with the successful login
+                await IoC.Application.HandleSuccessfulLoginAsync(loginResult);
             });
         }
 
@@ -73,7 +97,7 @@ namespace CoinFlipper.Core
         /// Takes the user to the register page
         /// </summary>
         /// <returns></returns>
-        public async Task RegisterAsync()
+        public async Task LoginAsync()
         {
             await Task.Delay(1);
             //((WindowViewModel)((MainWindow)Application.Current.MainWindow).DataContext).CurrentPage = ApplicationPage.Register;
