@@ -1,13 +1,10 @@
 ﻿using CoinFlipper.Core;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.IdentityModel.Tokens;
 using System;
-using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
-using System.Security.Claims;
-using System.Text;
 using System.Threading.Tasks;
+using System.Web;
 
 namespace CoinFlipper.Web.Server
 {
@@ -103,9 +100,13 @@ namespace CoinFlipper.Web.Server
                 var userIdentity = await mUserManager.FindByNameAsync(registerCredentials.Username);
 
                 // Generate an email verification code
-                var emailVaerificationCode = mUserManager.GenerateEmailConfirmationTokenAsync(user);
+                var emailVaerificationCode = await mUserManager.GenerateEmailConfirmationTokenAsync(user);
 
-                // TODO: Email the user the verification code
+                // TODO: Replace with APIRoutes that will contain the static routes to use
+                var confirmationUrl = $"http://{Request.Host.Value}/api/verify/email/{HttpUtility.UrlEncode(userIdentity.Id)}/{HttpUtility.UrlEncode(emailVaerificationCode)}";
+
+                // Email the user the verification code
+                await CoinFlipperEmailSender.SendUserVerificationEmailAsync(null, userIdentity.Email, confirmationUrl);
 
                 // Return valid response containing all user details
                 return new ApiResponse<RegisterResultApiModel>
@@ -200,11 +201,44 @@ namespace CoinFlipper.Web.Server
             };
         }
 
+        [Route("api/verify/email/{userId}/{emailToken}")]
+        [HttpGet]
+        public async Task<ActionResult> VerifyEmailAsync(string userId, string emailToken)
+        {
+            // Get the user
+            var user = await mUserManager.FindByIdAsync(userId);
+
+            // NOTE: Issue with Url decoding that contains /'s does not replace them
+            // Manual fix:
+            emailToken = emailToken.Replace("%2f", "/").Replace("%2F", "/");
+
+            // If the user is null
+            if (user == null)
+                // TODO: UI
+                return Content("User not found");
+
+            // If we have a user
+
+            // Verify the email token
+            var result = await mUserManager.ConfirmEmailAsync(user, emailToken);
+
+            // If succeeded...
+            if (result.Succeeded)
+                // TODO: UI
+                return Content("Email Verified :)");
+
+            // TODO: UI
+            return Content("Invalid Email Verification Token :(");
+        }
+
         [AuthorizeToken]
         [Route("api/private")]
         public IActionResult Private()
         {
+            // Get the authenticated user
             var user = HttpContext.User;
+
+            // Tell the a secret
             return Ok(new { privateDate = $"some secret for {user.Identity.Name}"});
         }
     }
