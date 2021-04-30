@@ -1,4 +1,6 @@
 ﻿using CoinFlipper.Core;
+using Dna;
+using Dna.AspNet;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
@@ -8,6 +10,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 using System;
 using System.Text;
+using static Dna.FrameworkDI;
 
 namespace CoinFlipper.Web.Server
 {
@@ -15,7 +18,7 @@ namespace CoinFlipper.Web.Server
     {
         public Startup(IConfiguration configuration)
         {
-            IoCContainer.Configuration = configuration;
+
         }
 
         // This method gets called by the runtime. Use this method to add services to the container.
@@ -29,7 +32,7 @@ namespace CoinFlipper.Web.Server
 
             // Add ApplicationDbContext to DI
             services.AddDbContext<ApplicationDbContext>(options =>
-                options.UseSqlServer(IoCContainer.Configuration.GetConnectionString("DefaultConnection")));
+                options.UseSqlServer(Framework.Construction.Configuration.GetConnectionString("DefaultConnection")));
 
             // AddIdentity adds cookie based authentication 
             // Adds scoped classes for things like UserManager, SignInManager, PasswordHashers etc...
@@ -54,9 +57,9 @@ namespace CoinFlipper.Web.Server
                         ValidateAudience = true,
                         ValidateLifetime = true,
                         ValidateIssuerSigningKey = true,
-                        ValidIssuer = IoCContainer.Configuration["Jwt:Issuer"],
-                        ValidAudience = IoCContainer.Configuration["Jwt:Audience"],
-                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(IoCContainer.Configuration["Jwt:SecretKey"])),
+                        ValidIssuer = Framework.Construction.Configuration["Jwt:Issuer"],
+                        ValidAudience = Framework.Construction.Configuration["Jwt:Audience"],
+                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Framework.Construction.Configuration["Jwt:SecretKey"])),
                     };
                 });
 
@@ -91,19 +94,24 @@ namespace CoinFlipper.Web.Server
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, IServiceProvider serviceProvider)
         {
-            // Store instance of the DI service provider so our application can access it anywhere
-            IoCContainer.Provider = (ServiceProvider)serviceProvider;
+            // Use Dna Framework
+            app.UseDnaFramework();
+
+            Logger.LogCriticalSource("We are alive");
 
             // Setup Identity
-            app.UseAuthentication(); 
+            app.UseAuthentication();
 
-            var userStore = IoCContainer.Provider.GetService<UserManager<ApplicationUser>>();
-
+            // If in development...
             if (env.IsDevelopment())
+                // Show any exceptions in browser when they crash
                 app.UseDeveloperExceptionPage();
+            // Otherwise...
             else
+                // Just show generic error page
                 app.UseExceptionHandler("/Home/Error");
 
+            // Serve static files
             app.UseStaticFiles();
 
             app.UseMvc(routes =>

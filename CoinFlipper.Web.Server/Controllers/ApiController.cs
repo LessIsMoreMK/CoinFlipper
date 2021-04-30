@@ -61,7 +61,7 @@ namespace CoinFlipper.Web.Server
         public async Task<ApiResponse<RegisterResultApiModel>> RegisterAsync([FromBody] RegisterCredentialsApiModel registerCredentials)
         {
             // The message when we fail to login
-            var invalidErrorMessage = "Please provide all required details to register for an account";
+            var invalidErrorMessage = "Please provide all required details to register for an account.";
 
             // The error response for a filed login
             var errorResponse = new ApiResponse<RegisterResultApiModel>

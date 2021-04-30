@@ -25,7 +25,7 @@ namespace CoinFlipper.Core
         /// <summary>
         /// A flag indicating if the login command is running
         /// </summary>
-        public bool LoginIsRunning { get; set; }
+        public bool RegisterIsRunning { get; set; }
 
         #endregion
 
@@ -66,7 +66,7 @@ namespace CoinFlipper.Core
         /// <returns></returns>
         public async Task RegisterAsync(object parameter)
         {
-            await RunCommandAsync(() => this.LoginIsRunning, async() =>
+            await RunCommandAsync(() => this.RegisterIsRunning, async() =>
             {
                 // Call the server and attempt to register with the provided credentials
                 // TODO: Move all URLs and API routes to static class in core

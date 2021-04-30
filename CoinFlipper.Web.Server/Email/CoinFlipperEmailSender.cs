@@ -17,11 +17,11 @@ namespace CoinFlipper.Web.Server
         /// <returns></returns>
         public static async Task<SendEmailResponse> SendUserVerificationEmailAsync(string displayName, string email, string verificationUrl)
         {
-            return await IoC.EmailTemplateSender.SendGeneralEmailAsync(new SendEmailDetails
+            return await DI.EmailTemplateSender.SendGeneralEmailAsync(new SendEmailDetails
             {
                 IsHTML = true,
-                FromEmail = IoCContainer.Configuration["CoinFlipperSettings:SendEmailFromEmail" ],
-                FromName = IoCContainer.Configuration["CoinFlipperSettings:SendEmailFromName"],
+                FromEmail = Dna.FrameworkDI.Configuration["CoinFlipperSettings:SendEmailFromEmail" ],
+                FromName = Dna.FrameworkDI.Configuration["CoinFlipperSettings:SendEmailFromName"],
                 ToEmail = email,
                 ToName = displayName,
                 Subject = "Verify Your Email - Coin Flipper"

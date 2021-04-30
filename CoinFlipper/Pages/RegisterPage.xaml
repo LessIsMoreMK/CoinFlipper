@@ -52,7 +52,7 @@
                                 IsDefault="True"
                                 Command="{Binding RegisterCommand}"
                                 CommandParameter="{Binding ElementName=Page}"
-                                local:IsBusyProperty.Value="{Binding LoginIsRunning}"/>
+                                local:IsBusyProperty.Value="{Binding RegisterIsRunning}"/>
                     </StackPanel>
                 </Border>
 
