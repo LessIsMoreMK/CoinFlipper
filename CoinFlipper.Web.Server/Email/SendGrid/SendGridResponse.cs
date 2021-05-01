@@ -8,7 +8,7 @@ namespace CoinFlipper.Web.Server
     public class SendGridResponse
     {
         /// <summary>
-        /// Any error form a response
+        /// Any errors from a response
         /// </summary>
         public List<SendGridResponseError> Errors { get; set; }
     }

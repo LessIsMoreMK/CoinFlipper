@@ -57,7 +57,7 @@ namespace CoinFlipper.Core
         public BaseLogFactory(ILogger[] loggers = null)
         {
             // Add console logger
-            AddLogger(new ConsoleLogger());
+            AddLogger(new DebugLogger());
 
             // Add any others passed in
             if (loggers != null)
@@ -76,10 +76,10 @@ namespace CoinFlipper.Core
         public void AddLogger(ILogger logger)
         {
             // Log the list so it is thread-safe
-            lock(mLoggersLock)
+            lock (mLoggersLock)
             {
                 // If the logger is not already in the list...
-                if(!mLoggers.Contains(logger))
+                if (!mLoggers.Contains(logger))
                     // Add the logger to the list
                     mLoggers.Add(logger);
             }
@@ -97,7 +97,7 @@ namespace CoinFlipper.Core
                 // If the logger is in the list...
                 if (mLoggers.Contains(logger))
                     // Remove the logger from the list
-                    mLoggers.Add(logger);
+                    mLoggers.Remove(logger);
             }
         }
 
@@ -108,11 +108,11 @@ namespace CoinFlipper.Core
         /// <param name="level">The level of the message being logged</param>
         /// <param name="origin">The method/function this message was logged in</param>
         /// <param name="filePath">The code filename that this message was logged from</param>
-        /// <param name="lineNumber">The line of code in the filename the message was logged from</param>
+        /// <param name="lineNumber">The line of code in the filename this message was logged from</param>
         public void Log(string message,
                         LogLevel level = LogLevel.Informative, 
-                        [CallerMemberName] string origin = "", 
-                        [CallerFilePath] string filePath = "", 
+                        [CallerMemberName] string origin = "",
+                        [CallerFilePath] string filePath = "",
                         [CallerLineNumber] int lineNumber = 0)
         {
             // If we should not log the message as the level is too low...

@@ -31,7 +31,7 @@ namespace CoinFlipper
             var self = (sender as FrameworkElement);
 
             // Check we have a parent Border
-            if(!(self.Parent is Border border))
+            if (!(self.Parent is Border border))
             {
                 Debugger.Break();
                 return;
@@ -62,7 +62,7 @@ namespace CoinFlipper
         /// </summary>
         /// <param name="sender">The border</param>
         /// <param name="e"></param>
-        /// <param name="child"> The child element (our selves)</param>
+        /// <param name="child">The child element (our selves)</param>
         private void Border_OnChange(object sender, RoutedEventArgs e, FrameworkElement child)
         {
             // Get border
@@ -72,7 +72,7 @@ namespace CoinFlipper
             if (border.ActualWidth == 0 && border.ActualHeight == 0)
                 return;
 
-            // Set the new child clipping area
+            // Setup the new child clipping area
             var rect = new RectangleGeometry();
             
             // Match the corner radius with the borders corner radius
@@ -86,4 +86,3 @@ namespace CoinFlipper
         }
     }
 }
- 

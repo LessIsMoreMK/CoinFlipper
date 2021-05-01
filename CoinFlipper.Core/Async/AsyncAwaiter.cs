@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Dna;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Threading;
@@ -149,7 +150,7 @@ namespace CoinFlipper.Core
 
                 // Log message to debug level 
                 // (may not be an issue but we don't want to miss anything in debug)
-                IoC.Logger.Log($"Crash in {nameof(AwaitAsync)}. {ex.Message}", LogLevel.Debug);
+                Dna.FrameworkDI.Logger.LogDebugSource($"Crash in {nameof(AwaitAsync)}. {ex.Message}");
 
                 // Break debugger
                 Debugger.Break();

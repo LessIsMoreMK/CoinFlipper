@@ -19,7 +19,7 @@ namespace CoinFlipper
         #region Public Properties
 
         /// <summary>
-        ///  the view model for this window
+        /// The view model for this window
         /// </summary>
         public DialogWindowViewModel ViewModel
         {
@@ -33,6 +33,7 @@ namespace CoinFlipper
                 DataContext = mViewModel;
             }
         }
+
         #endregion
 
         #region Constructor

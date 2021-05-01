@@ -1,4 +1,5 @@
-﻿using CoinFlipper.Core;
+﻿using CoinFlipper;
+using CoinFlipper.Core;
 using System.ComponentModel;
 using System.Threading.Tasks;
 using System.Windows;
@@ -60,7 +61,7 @@ namespace CoinFlipper
             // If we are in DesignMode, show the current page
             // as the dependency property does not fire
             if (DesignerProperties.GetIsInDesignMode(this))
-                NewPage.Content = new ApplicationViewModel().CurrentPage.ToBasePage();
+                NewPage.Content = CoinFlipper.DI.ViewModelApplication.CurrentPage.ToBasePage();
         }
 
         #endregion

@@ -1,5 +1,4 @@
-﻿using CoinFlipper.Core;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media.Animation;
@@ -202,7 +201,7 @@ namespace CoinFlipper
             element.Unloaded += (s, e) => unloaded = true;
 
             // Run a loop off the caller thread
-            IoC.Task.Run(async () =>
+            CoinFlipper.Core.CoreDI.TaskManager.Run(async () =>
             {
                 // While the element is still available, recheck the size
                 // after every loop in case the container was resized

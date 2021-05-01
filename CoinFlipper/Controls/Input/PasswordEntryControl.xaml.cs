@@ -1,5 +1,4 @@
-﻿using CoinFlipper.Core;
-using System;
+﻿using System;
 using System.Diagnostics;
 using System.Windows;
 using System.Windows.Controls;
@@ -18,8 +17,8 @@ namespace CoinFlipper
         /// </summary>
         public GridLength LabelWidth
         {
-            get => (GridLength)GetValue(LabelWidthProperty); 
-            set => SetValue(LabelWidthProperty, value); 
+            get => (GridLength)GetValue(LabelWidthProperty);
+            set => SetValue(LabelWidthProperty, value);
         }
 
         // Using a DependencyProperty as the backing store for LabelWidth.  This enables animation, styling, binding, etc...
@@ -43,7 +42,7 @@ namespace CoinFlipper
         #region Dependency Callbacks
 
         /// <summary>
-        /// Call when the label width has changed
+        /// Called when the label width has changed
         /// </summary>
         /// <param name="d"></param>
         /// <param name="e"></param>
@@ -72,8 +71,8 @@ namespace CoinFlipper
         /// <param name="e"></param>
         private void CurrentPassword_PasswordChanged(object sender, RoutedEventArgs e)
         {
-            //Update view model
-            if(DataContext is PasswordEntryViewModel viewModel)
+            // Update view model
+            if (DataContext is PasswordEntryViewModel viewModel)
                 viewModel.CurrentPassword = CurrentPassword.SecurePassword;
         }
 
@@ -84,7 +83,7 @@ namespace CoinFlipper
         /// <param name="e"></param>
         private void ConfirmPassword_PasswordChanged(object sender, RoutedEventArgs e)
         {
-            //Update view model
+            // Update view model
             if (DataContext is PasswordEntryViewModel viewModel)
                 viewModel.ConfirmPassword = ConfirmPassword.SecurePassword;
         }
@@ -96,7 +95,7 @@ namespace CoinFlipper
         /// <param name="e"></param>
         private void NewPassword_PasswordChanged(object sender, RoutedEventArgs e)
         {
-            //Update view model
+            // Update view model
             if (DataContext is PasswordEntryViewModel viewModel)
                 viewModel.NewPassword = NewPassword.SecurePassword;
         }

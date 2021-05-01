@@ -2,9 +2,7 @@ C:\Users\Maciej\Desktop\CoinFlipper\CoinFlipper\bin\Debug\CoinFlipper.exe.config
 C:\Users\Maciej\Desktop\CoinFlipper\CoinFlipper\bin\Debug\CoinFlipper.exe
 C:\Users\Maciej\Desktop\CoinFlipper\CoinFlipper\bin\Debug\CoinFlipper.pdb
 C:\Users\Maciej\Desktop\CoinFlipper\CoinFlipper\bin\Debug\CoinFlipper.Core.dll
-C:\Users\Maciej\Desktop\CoinFlipper\CoinFlipper\bin\Debug\Ninject.dll
 C:\Users\Maciej\Desktop\CoinFlipper\CoinFlipper\bin\Debug\CoinFlipper.Core.pdb
-C:\Users\Maciej\Desktop\CoinFlipper\CoinFlipper\bin\Debug\Ninject.xml
 C:\Users\Maciej\Desktop\CoinFlipper\CoinFlipper\obj\Debug\CoinFlipper.csprojAssemblyReference.cache
 C:\Users\Maciej\Desktop\CoinFlipper\CoinFlipper\obj\Debug\Controls\BubbleContent.g.cs
 C:\Users\Maciej\Desktop\CoinFlipper\CoinFlipper\obj\Debug\Controls\Chat\Menu\VerticalMenu.g.cs

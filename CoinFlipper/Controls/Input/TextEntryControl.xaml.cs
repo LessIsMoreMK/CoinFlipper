@@ -17,8 +17,8 @@ namespace CoinFlipper
         /// </summary>
         public GridLength LabelWidth
         {
-            get => (GridLength)GetValue(LabelWidthProperty); 
-            set => SetValue(LabelWidthProperty, value); 
+            get => (GridLength)GetValue(LabelWidthProperty);
+            set => SetValue(LabelWidthProperty, value);
         }
 
         // Using a DependencyProperty as the backing store for LabelWidth.  This enables animation, styling, binding, etc...
@@ -42,7 +42,7 @@ namespace CoinFlipper
         #region Dependency Callbacks
 
         /// <summary>
-        /// Call when the label width has changed
+        /// Called when the label width has changed
         /// </summary>
         /// <param name="d"></param>
         /// <param name="e"></param>

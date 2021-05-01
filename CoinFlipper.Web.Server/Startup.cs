@@ -1,5 +1,4 @@
-﻿using CoinFlipper.Core;
-using Dna;
+﻿using Dna;
 using Dna.AspNet;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -14,8 +13,15 @@ using static Dna.FrameworkDI;
 
 namespace CoinFlipper.Web.Server
 {
+    /// <summary>
+    /// The startup class that handles constructing the ASP.Net server services
+    /// </summary>
     public class Startup
     {
+        /// <summary>
+        /// Main entry point for start of web server
+        /// </summary>
+        /// <param name="configuration"></param>
         public Startup(IConfiguration configuration)
         {
 
@@ -43,23 +49,35 @@ namespace CoinFlipper.Web.Server
                 // That are consumed by the UserManager and RoleManager
                 // https://github.com/aspnet/Identity/blob/dev/src/EF/IdentityEntityFrameworkBuilderExtensions.cs
                 .AddEntityFrameworkStores<ApplicationDbContext>()
-                // Adds a provider that generates unique keys ans hashes for things like
-                // forgot password link, phone number verification codes etc.
+                // Adds a provider that generates unique keys and hashes for things like
+                // forgot password links, phone number verification codes etc...
                 .AddDefaultTokenProviders();
 
             // Add JWT Authentication for API clients
             services.AddAuthentication().
                 AddJwtBearer(options =>
                 {
+                    // Set validation parameters
                     options.TokenValidationParameters = new TokenValidationParameters
                     {
+                        // Validate issuer
                         ValidateIssuer = true,
+                        // Validate audience
                         ValidateAudience = true,
+                        // Validate expiration
                         ValidateLifetime = true,
+                        // Validate signature
                         ValidateIssuerSigningKey = true,
+
+                        // Set issuer
                         ValidIssuer = Framework.Construction.Configuration["Jwt:Issuer"],
+                        // Set audience
                         ValidAudience = Framework.Construction.Configuration["Jwt:Audience"],
-                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Framework.Construction.Configuration["Jwt:SecretKey"])),
+
+                        // Set signing key
+                        IssuerSigningKey = new SymmetricSecurityKey(
+                            // Get our secret key from configuration
+                            Encoding.UTF8.GetBytes(Framework.Construction.Configuration["Jwt:SecretKey"])),
                     };
                 });
 
@@ -88,7 +106,12 @@ namespace CoinFlipper.Web.Server
             });
 
 
-            services.AddMvc();
+            // Use MVC style website
+            services.AddMvc(options =>
+            {
+                //options.InputFormatters.Add(new XmlSerializerInputFormatter());
+                //options.OutputFormatters.Add(new XmlSerializerOutputFormatter());
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -96,8 +119,6 @@ namespace CoinFlipper.Web.Server
         {
             // Use Dna Framework
             app.UseDnaFramework();
-
-            Logger.LogCriticalSource("We are alive");
 
             // Setup Identity
             app.UseAuthentication();
@@ -114,12 +135,15 @@ namespace CoinFlipper.Web.Server
             // Serve static files
             app.UseStaticFiles();
 
+            // Setup MVC routes
             app.UseMvc(routes =>
             {
+                // Default route of /controller/action/info
                 routes.MapRoute(
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{moreInfo?}");
 
+                // Set explicit about me page route
                 routes.MapRoute(
                     name: "aboutPage",
                     template: "more",

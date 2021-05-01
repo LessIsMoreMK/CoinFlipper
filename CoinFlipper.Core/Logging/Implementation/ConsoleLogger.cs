@@ -14,8 +14,48 @@ namespace CoinFlipper.Core
         /// <param name="level">The level of the message</param>
         public void Log(string message, LogLevel level)
         {
-            // Write message to the console
-            Console.WriteLine($"[{level}]".PadRight(13, ' ') + message);
+            // Save old color
+            var consoleOldColor = Console.ForegroundColor;
+
+            // Default log color value 
+            var consoleColor = ConsoleColor.White;
+
+            // Color console based on level
+            switch (level)
+            {
+                // Debug is blue
+                case LogLevel.Debug:
+                    consoleColor = ConsoleColor.Blue;
+                    break;
+                // Verbose is gray
+                case LogLevel.Verbose:
+                    consoleColor = ConsoleColor.Gray;
+                    break;
+
+                // Warning is yellow
+                case LogLevel.Warning:
+                    consoleColor = ConsoleColor.DarkYellow;
+                    break;
+
+                // Error is red
+                case LogLevel.Error:
+                    consoleColor = ConsoleColor.Red;
+                    break;
+
+                // Success is green
+                case LogLevel.Success:
+                    consoleColor = ConsoleColor.Green;
+                    break;
+            }
+
+            // Set the desired console color
+            Console.ForegroundColor = consoleColor;
+
+            // Write message to console
+            Console.WriteLine(message);
+
+            // Reset color
+            Console.ForegroundColor = consoleOldColor;
         }
     }
 }

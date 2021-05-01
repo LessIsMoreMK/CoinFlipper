@@ -8,7 +8,7 @@
         #region Public Properties
 
         /// <summary>
-        /// The users username or email
+        /// The users username
         /// </summary>
         public string Username { get; set; }
 

@@ -31,8 +31,8 @@ namespace CoinFlipper
             if (!(sender is Control control))
                 return;
 
-            if((bool)e.NewValue)
-                // Focus this control once loaded
+            if ((bool)e.NewValue)
+                // Focus this control
                 control.Focus();
         }
     }
@@ -49,7 +49,7 @@ namespace CoinFlipper
             {
                 if ((bool)e.NewValue)
                 {
-                    // Focus this control once loaded
+                    // Focus this control
                     control.Focus();
 
                     // Select all text
@@ -60,15 +60,13 @@ namespace CoinFlipper
             {
                 if ((bool)e.NewValue)
                 {
-                    // Focus this control once loaded
+                    // Focus this control
                     password.Focus();
 
                     // Select all text
                     password.SelectAll();
                 }
             }
-
         }
     }
 }
- 

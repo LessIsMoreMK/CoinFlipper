@@ -4,9 +4,9 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:CoinFlipper"
-             xmlns:core="clr-namespace:CoinFlipper.Core;assembly=CoinFlipper.Core"
+             xmlns:core="clr-namespace:CoinFlipper;assembly=CoinFlipper"
              mc:Ignorable="d"
-             d:DataContext="{x:Static core:SettingsDesignModel.Instance}">
+             d:DataContext="{x:Static local:SettingsDesignModel.Instance}">
     <Border  Background="{StaticResource GrayDarkBrush}"
              Padding="15">
         <Grid>
@@ -37,7 +37,7 @@
                     <Run FontFamily="{StaticResource FontAwesome}"
                          Text="{StaticResource FontAwesomeCogIcon}"
                          Foreground="{StaticResource GreenMediumBrush}"/>
-                    <!-- Settings Head -->
+                    <!-- Settings Text Head -->
                     <Run Text="Settings"
                          FontFamily="{StaticResource LatoBold}"/>
                 </TextBlock>

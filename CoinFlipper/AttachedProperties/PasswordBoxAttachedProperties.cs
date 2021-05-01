@@ -47,14 +47,14 @@ namespace CoinFlipper
     /// The HasText attached property for a <see cref="PasswordBox"/>
     /// </summary>
     public class HasTextProperty : BaseAttachedProperty<HasTextProperty, bool>
-    { 
+    {
         /// <summary>
         /// Sets the HasText property based on if the caller <see cref="PasswordBox"/> has any text
         /// </summary>
         /// <param name="sender"></param>
         public static void SetValue(DependencyObject sender)
         {
-            HasTextProperty.SetValue(sender, ((PasswordBox)sender).SecurePassword.Length > 0);
+            SetValue(sender, ((PasswordBox)sender).SecurePassword.Length > 0);
         }
     }
 }

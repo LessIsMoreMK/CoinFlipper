@@ -56,14 +56,14 @@ namespace CoinFlipper.Web.Server
         /// Tries to register for a new account on the server
         /// </summary>
         /// <param name="registerCredentials">The registration details</param>
-        /// <returns>Return the result of the register request</returns>
+        /// <returns>Returns the result of the register request</returns>
         [Route("api/register")]
         public async Task<ApiResponse<RegisterResultApiModel>> RegisterAsync([FromBody] RegisterCredentialsApiModel registerCredentials)
         {
             // The message when we fail to login
             var invalidErrorMessage = "Please provide all required details to register for an account.";
 
-            // The error response for a filed login
+            // The error response for a failed login
             var errorResponse = new ApiResponse<RegisterResultApiModel>
             {
                 // TODO: Localize all strings
@@ -81,7 +81,7 @@ namespace CoinFlipper.Web.Server
                 // Return error message to user
                 return errorResponse;
 
-            // Create the desired user form the given details
+            // Create the desired user from the given details
             var user = new ApplicationUser
             {
                 UserName = registerCredentials.Username,
@@ -100,15 +100,15 @@ namespace CoinFlipper.Web.Server
                 var userIdentity = await mUserManager.FindByNameAsync(registerCredentials.Username);
 
                 // Generate an email verification code
-                var emailVaerificationCode = await mUserManager.GenerateEmailConfirmationTokenAsync(user);
+                var emailVerificationCode = await mUserManager.GenerateEmailConfirmationTokenAsync(user);
 
                 // TODO: Replace with APIRoutes that will contain the static routes to use
-                var confirmationUrl = $"http://{Request.Host.Value}/api/verify/email/{HttpUtility.UrlEncode(userIdentity.Id)}/{HttpUtility.UrlEncode(emailVaerificationCode)}";
+                var confirmationUrl = $"http://{Request.Host.Value}/api/verify/email/{HttpUtility.UrlEncode(userIdentity.Id)}/{HttpUtility.UrlEncode(emailVerificationCode)}";
 
                 // Email the user the verification code
                 await CoinFlipperEmailSender.SendUserVerificationEmailAsync(null, userIdentity.Email, confirmationUrl);
 
-                // Return valid response containing all user details
+                // Return valid response containing all users details
                 return new ApiResponse<RegisterResultApiModel>
                 {
                     Response = new RegisterResultApiModel
@@ -127,7 +127,9 @@ namespace CoinFlipper.Web.Server
                 return new ApiResponse<RegisterResultApiModel>
                 {
                     // Aggregate all errors into a single error string
-                    ErrorMessage = result.Errors?.ToList().Select(f => f.Description).Aggregate((a, b) => $"{a}{Environment.NewLine}{b}")
+                    ErrorMessage = result.Errors?.ToList()
+                        .Select(f => f.Description)
+                        .Aggregate((a, b) => $"{a}{Environment.NewLine}{b}")
                 };
         }
                 
@@ -135,7 +137,6 @@ namespace CoinFlipper.Web.Server
         /// <summary>
         /// Logs in a user using token-based authentication
         /// </summary>
-        /// <param name="loginCredentials">Returns the result of the login request</param>
         /// <returns>Return the result of the register request</returns>
         [Route("api/login")]
         public async Task<ApiResponse<LoginResultApiModel>> LogInAsync([FromBody]LoginCredentialsApiModel loginCredentials)
@@ -143,7 +144,7 @@ namespace CoinFlipper.Web.Server
             // The message when we fail to login
             var invalidErrorMessage = "Invalid username or password";
 
-            // The error response for a filed login
+            // The error response for a failed login
             var errorResponse = new ApiResponse<LoginResultApiModel>
             {
                 // TODO: Localize all strings
@@ -177,7 +178,7 @@ namespace CoinFlipper.Web.Server
             var isValidPassword = await mUserManager.CheckPasswordAsync(user, loginCredentials.Password);
 
             // If the password was wrong
-            if(!isValidPassword)
+            if (!isValidPassword)
                 // Return error message to user
                 return errorResponse;
 
@@ -208,8 +209,10 @@ namespace CoinFlipper.Web.Server
             // Get the user
             var user = await mUserManager.FindByIdAsync(userId);
 
-            // NOTE: Issue with Url decoding that contains /'s does not replace them
-            // Manual fix:
+            // NOTE: Issue at the minute with Url Decoding that contains /'s does not replace them
+            //       https://github.com/aspnet/Home/issues/2669
+            //       
+            //       For now, manually fix that
             emailToken = emailToken.Replace("%2f", "/").Replace("%2F", "/");
 
             // If the user is null
@@ -217,7 +220,7 @@ namespace CoinFlipper.Web.Server
                 // TODO: UI
                 return Content("User not found");
 
-            // If we have a user
+            // If we have the user
 
             // Verify the email token
             var result = await mUserManager.ConfirmEmailAsync(user, emailToken);
@@ -231,6 +234,10 @@ namespace CoinFlipper.Web.Server
             return Content("Invalid Email Verification Token :(");
         }
 
+        /// <summary>
+        /// Test private area for token-based authentication
+        /// </summary>
+        /// <returns></returns>
         [AuthorizeToken]
         [Route("api/private")]
         public IActionResult Private()
@@ -238,8 +245,8 @@ namespace CoinFlipper.Web.Server
             // Get the authenticated user
             var user = HttpContext.User;
 
-            // Tell the a secret
-            return Ok(new { privateDate = $"some secret for {user.Identity.Name}"});
+            // Tell them a secret
+            return Ok(new { privateData = $"some secret for {user.Identity.Name}" });
         }
     }
 }

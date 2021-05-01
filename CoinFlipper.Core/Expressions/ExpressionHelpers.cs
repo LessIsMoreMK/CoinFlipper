@@ -10,7 +10,7 @@ namespace CoinFlipper.Core
     public static class ExpressionHelpers
     {
         /// <summary>
-        /// Compiles an expression and gets the function return value
+        /// Compiles an expression and gets the functions return value
         /// </summary>
         /// <typeparam name="T">The type of return value</typeparam>
         /// <param name="lambda">The expression to compile</param>

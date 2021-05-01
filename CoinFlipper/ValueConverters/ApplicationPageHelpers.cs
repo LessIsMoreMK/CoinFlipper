@@ -1,7 +1,5 @@
 ﻿using CoinFlipper.Core;
-using System;
 using System.Diagnostics;
-using System.Globalization;
 
 namespace CoinFlipper
 {
@@ -11,7 +9,7 @@ namespace CoinFlipper
     public static class ApplicationPageHelpers
     {
         /// <summary>
-        /// Takes a <see cref="ApplicationPage"/> and a view model, if any, and creates a desired page
+        /// Takes a <see cref="ApplicationPage"/> and a view model, if any, and creates the desired page
         /// </summary>
         /// <param name="page"></param>
         /// <param name="viewModel"></param>
@@ -37,18 +35,18 @@ namespace CoinFlipper
         }
 
         /// <summary>
-        /// Converts a <see cref="BasePage"/> to specific <see cref="ApplicationPage"/> that is for that type of page
+        /// Converts a <see cref="BasePage"/> the specific <see cref="ApplicationPage"/> that is for that type of page
         /// </summary>
         /// <param name="page"></param>
         /// <returns></returns>
         public static ApplicationPage ToApplicationPage(this BasePage page)
         {
-            // Find application page that matches 
+            // Find application page that matches the base page
             if (page is ChatPage)
                 return ApplicationPage.Chat;
             if (page is LoginPage)
                 return ApplicationPage.Login;
-            if(page is RegisterPage)
+            if (page is RegisterPage)
                 return ApplicationPage.Register;
 
             // Alert developer of issue

@@ -4,12 +4,11 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:CoinFlipper"
-        xmlns:core="clr-namespace:CoinFlipper.Core;assembly=CoinFlipper.Core"
         mc:Ignorable="d"
         x:Name="AppWindow"
         Icon="Images/logo.png"
         WindowStyle="None"
-        AllowsTransparency="true"
+        AllowsTransparency="True"
         WindowStartupLocation="CenterScreen"
         Title="Coin Flipper" 
         Height="600" Width="800"
@@ -27,10 +26,10 @@
                         <!-- Outer Border With The Drop Shadow Margin -->
                         <Border Padding="{Binding OuterMarginSizeThickness, FallbackValue=10}">
                             
-                            <!-- Main window outline -->
+                            <!-- Main Window Outline -->
                             <Grid>
                                 
-                                <!-- Opacity Mask For Corners-->
+                                <!-- Opacity Mask For Corners On Grid-->
                                 <Border x:Name="Container" Background="{StaticResource GrayDarkBrush}"
                                         CornerRadius="{Binding WindowCornerRadius, FallbackValue=10}"/>
 
@@ -49,11 +48,11 @@
                                         </Grid.OpacityMask>
                                         
                                         <Grid.RowDefinitions>
-                                            <!-- Title Bar-->
+                                            <!-- Title Bar -->
                                             <RowDefinition Height="{Binding TitleHeightGridLength, FallbackValue=30}"/>
                                             <!-- Drop Shadow-->
                                             <RowDefinition Height="Auto"/>
-                                            <!-- Window Content-->
+                                            <!-- Window Content -->
                                             <RowDefinition Height="*"/>
                                         </Grid.RowDefinitions>
                                         
@@ -70,8 +69,7 @@
                                             
                                             <!-- Icon -->
                                             <Button Command="{Binding MenuCommand}"
-                                                    Style="{StaticResource SystemIconButton}"
-                                                    Padding="6">
+                                                    Style="{StaticResource SystemIconButton}">
                                                 <Image Source="/Images/logo.png"/>
                                             </Button>
                                             
@@ -122,7 +120,7 @@
                                         </Border>
 
                                         <!-- Page Content -->
-                                        <Border Grid.Row="2" Padding="{Binding InnerContentPadding}"  Background="Transparent" ClipToBounds="True">
+                                        <Border Grid.Row="2" Padding="{Binding InnerContentPadding}" ClipToBounds="True">
                                             <Border>
                                                 <!-- Content -->
                                                 <ContentPresenter Content="{TemplateBinding Content}"/>
@@ -182,7 +180,6 @@
 
         <!-- Side Menu -->
         <local:SideMenuControl
-                Grid.Column="0"
                 Width="300" 
                 local:AnimateSlideInFromLeftProperty.Value="{Binding ApplicationViewModel.SideMenuVisible, 
                                      Source={x:Static local:ViewModelLocator.Instance}}">

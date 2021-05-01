@@ -1,4 +1,4 @@
-﻿using CoinFlipper.Core;
+﻿using Dna;
 using System.ComponentModel;
 using System.Threading.Tasks;
 using System.Windows;
@@ -170,7 +170,7 @@ namespace CoinFlipper
         #region Public Properties
 
         /// <summary>
-        ///  The view model associated with this page
+        /// The view model associated with this page
         /// </summary>
         public VM ViewModel
         {
@@ -185,11 +185,15 @@ namespace CoinFlipper
         /// <summary>
         /// Default constructor
         /// </summary>
-        /// <param name="specificViewModel">The specific view model to use, if any</param>
         public BasePage() : base()
         {
-            // Create a default view model
-            ViewModel = IoC.Get<VM>();
+            // If in design time mode...
+            if (DesignerProperties.GetIsInDesignMode(this))
+                // Just use a new instance of the VM
+                ViewModel = new VM();
+            else
+                // Create a default view model
+                ViewModel = Framework.Service<VM>() ?? new VM();
         }
 
         /// <summary>
@@ -202,8 +206,17 @@ namespace CoinFlipper
             if (specificViewModel != null)
                 ViewModel = specificViewModel;
             else
-                // Create a default view model
-                ViewModel = IoC.Get<VM>();
+            {
+                // If in design time mode...
+                if (DesignerProperties.GetIsInDesignMode(this))
+                    // Just use a new instance of the VM
+                    ViewModel = new VM();
+                else
+                {
+                    // Create a default view model
+                    ViewModel = Framework.Service<VM>() ?? new VM();
+                }
+            }
         }
 
         #endregion

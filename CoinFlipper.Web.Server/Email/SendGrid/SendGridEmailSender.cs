@@ -39,11 +39,11 @@ namespace CoinFlipper.Web.Server
             var msg = MailHelper.CreateSingleEmail(
                 from, to, subject, 
                 // Plain content
-                details.IsHTML ? null : details.Content, 
+                details.IsHTML ? null : details.Content,
                 // HTML content
                 details.IsHTML ? details.Content : null);
 
-            // Finally, send the email
+            // Finally, send the email...
             var response = await client.SendEmailAsync(msg);
 
             // If we succeeded...
@@ -70,12 +70,12 @@ namespace CoinFlipper.Web.Server
                 // Make sure we have at least one error
                 if (errorResponse.Errors == null || errorResponse.Errors.Count == 0)
                     // Add an unknown error
-                    errorResponse.Errors = new List<string>(new[] { "Unknown error form email sending service. Please contact support" });
+                    errorResponse.Errors = new List<string>(new[] { "Unknown error from email sending service. Please contact support." });
 
-                // Return an error
+                // Return the response
                 return errorResponse;
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 // Break if we are debugging
                 if (Debugger.IsAttached)

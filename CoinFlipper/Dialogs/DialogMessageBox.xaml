@@ -4,9 +4,8 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:CoinFlipper"
-             xmlns:core="clr-namespace:CoinFlipper.Core;assembly=CoinFlipper.Core"
              mc:Ignorable="d">
-    <StackPanel d:DataContext="{x:Static core:MessageBoxDialogDesignModel.Instance}"
+    <StackPanel d:DataContext="{x:Static local:MessageBoxDialogDesignModel.Instance}"
                 Background="Transparent">
         
         <TextBlock Text="{Binding Message}"
@@ -18,7 +17,7 @@
                 HorizontalAlignment="Center"
                 IsDefault="True"
                 IsCancel="True"
-                Command="{Binding CloseCommand, RelativeSource={RelativeSource FindAncestor,  AncestorType={ x:Type local:BaseDialogUserControl}}}"/>
+                Command="{Binding CloseCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={ x:Type local:BaseDialogUserControl}}}"/>
         
     </StackPanel>
 </local:BaseDialogUserControl>

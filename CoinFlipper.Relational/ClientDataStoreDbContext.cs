@@ -14,7 +14,7 @@ namespace CoinFlipper.Relational
         /// The client login credentials
         /// </summary>
         public DbSet<LoginCredentialsDataModel> LoginCredentials { get; set; }
-
+       
         #endregion
 
         #region Constructor

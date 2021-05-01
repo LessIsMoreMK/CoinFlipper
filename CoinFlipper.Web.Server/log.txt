@@ -1,0 +1,118 @@
+INFORMATION: [2021-04-30 10:40:06] User profile is available. Using 'C:\Users\Maciej\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+INFORMATION: [2021-04-30 10:40:09] Request starting HTTP/1.1 GET http://localhost:5000/  
+INFORMATION: [2021-04-30 10:40:11] Executing action method CoinFlipper.Web.Server.HomeController.Index (CoinFlipper.Web.Server) with arguments ((null)) - ModelState is Valid
+INFORMATION: [2021-04-30 10:40:12] Entity Framework Core 2.0.1-rtm-125 initialized 'ApplicationDbContext' using provider 'Microsoft.EntityFrameworkCore.SqlServer' with options: None
+INFORMATION: [2021-04-30 10:40:12] Executed DbCommand (77ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+IF EXISTS (SELECT * FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_TYPE = 'BASE TABLE') SELECT 1 ELSE SELECT 0
+INFORMATION: [2021-04-30 10:40:12] Executed DbCommand (9ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+SELECT CASE
+    WHEN EXISTS (
+        SELECT 1
+        FROM [Settings] AS [s])
+    THEN CAST(1 AS BIT) ELSE CAST(0 AS BIT)
+END
+INFORMATION: [2021-04-30 10:40:19] Executing ViewResult, running view at path /Views/Home/Index.cshtml.
+INFORMATION: [2021-04-30 10:44:51] User profile is available. Using 'C:\Users\Maciej\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+CRITICAL: [2021-04-30 10:44:52] We are alive [Startup.cs > Configure() > Line 100]
+INFORMATION: [2021-04-30 10:44:55] Request starting HTTP/1.1 GET http://localhost:5000/  
+INFORMATION: [2021-04-30 10:44:58] Executing action method CoinFlipper.Web.Server.HomeController.Index (CoinFlipper.Web.Server) with arguments ((null)) - ModelState is Valid
+INFORMATION: [2021-04-30 10:44:58] Entity Framework Core 2.0.1-rtm-125 initialized 'ApplicationDbContext' using provider 'Microsoft.EntityFrameworkCore.SqlServer' with options: None
+INFORMATION: [2021-04-30 10:44:59] Executed DbCommand (386ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+IF EXISTS (SELECT * FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_TYPE = 'BASE TABLE') SELECT 1 ELSE SELECT 0
+INFORMATION: [2021-04-30 10:45:00] Executed DbCommand (22ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+SELECT CASE
+    WHEN EXISTS (
+        SELECT 1
+        FROM [Settings] AS [s])
+    THEN CAST(1 AS BIT) ELSE CAST(0 AS BIT)
+END
+INFORMATION: [2021-04-30 10:45:06] Executing ViewResult, running view at path /Views/Home/Index.cshtml.
+INFORMATION: [2021-04-30 10:45:08] Executed action CoinFlipper.Web.Server.HomeController.Index (CoinFlipper.Web.Server) in 10851.9565ms
+INFORMATION: [2021-04-30 10:45:08] Request finished in 12970.6768ms 200 text/html; charset=utf-8
+INFORMATION: [2021-04-30 11:17:48] User profile is available. Using 'C:\Users\Maciej\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+CRITICAL: [2021-04-30 11:17:48] We are alive [Startup.cs > Configure() > Line 100]
+INFORMATION: [2021-04-30 11:17:50] Request starting HTTP/1.1 GET http://localhost:5000/  
+INFORMATION: [2021-04-30 11:17:52] Executing action method CoinFlipper.Web.Server.HomeController.Index (CoinFlipper.Web.Server) with arguments ((null)) - ModelState is Valid
+INFORMATION: [2021-04-30 11:17:53] Entity Framework Core 2.0.1-rtm-125 initialized 'ApplicationDbContext' using provider 'Microsoft.EntityFrameworkCore.SqlServer' with options: None
+INFORMATION: [2021-04-30 11:17:53] Executed DbCommand (92ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+IF EXISTS (SELECT * FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_TYPE = 'BASE TABLE') SELECT 1 ELSE SELECT 0
+INFORMATION: [2021-04-30 11:17:54] Executed DbCommand (30ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+SELECT CASE
+    WHEN EXISTS (
+        SELECT 1
+        FROM [Settings] AS [s])
+    THEN CAST(1 AS BIT) ELSE CAST(0 AS BIT)
+END
+INFORMATION: [2021-04-30 11:17:59] Executing ViewResult, running view at path /Views/Home/Index.cshtml.
+INFORMATION: [2021-04-30 11:18:00] Executed action CoinFlipper.Web.Server.HomeController.Index (CoinFlipper.Web.Server) in 8797.8756ms
+INFORMATION: [2021-04-30 11:18:00] Request finished in 9930.3773ms 200 text/html; charset=utf-8
+INFORMATION: [2021-05-01 10:16:34] User profile is available. Using 'C:\Users\Maciej\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+CRITICAL: [2021-05-01 10:16:35] We are alive [Startup.cs > Configure() > Line 99]
+INFORMATION: [2021-05-01 10:16:37] Request starting HTTP/1.1 GET http://localhost:5000/  
+INFORMATION: [2021-05-01 10:16:38] Executing action method CoinFlipper.Web.Server.HomeController.Index (CoinFlipper.Web.Server) with arguments ((null)) - ModelState is Valid
+INFORMATION: [2021-05-01 10:16:38] Entity Framework Core 2.0.1-rtm-125 initialized 'ApplicationDbContext' using provider 'Microsoft.EntityFrameworkCore.SqlServer' with options: None
+INFORMATION: [2021-05-01 10:16:39] Executed DbCommand (462ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+IF EXISTS (SELECT * FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_TYPE = 'BASE TABLE') SELECT 1 ELSE SELECT 0
+INFORMATION: [2021-05-01 10:16:40] Executed DbCommand (61ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+SELECT CASE
+    WHEN EXISTS (
+        SELECT 1
+        FROM [Settings] AS [s])
+    THEN CAST(1 AS BIT) ELSE CAST(0 AS BIT)
+END
+INFORMATION: [2021-05-01 10:16:45] Executing ViewResult, running view at path /Views/Home/Index.cshtml.
+INFORMATION: [2021-05-01 10:16:46] Executed action CoinFlipper.Web.Server.HomeController.Index (CoinFlipper.Web.Server) in 8686.1443ms
+INFORMATION: [2021-05-01 10:16:46] Request finished in 9322.9726ms 200 text/html; charset=utf-8
+INFORMATION: [2021-05-01 11:47:21] Request starting HTTP/1.1 POST http://localhost:5000/api/login application/json 38
+INFORMATION: [2021-05-01 11:47:22] Executing action method CoinFlipper.Web.Server.ApiController.LogInAsync (CoinFlipper.Web.Server) with arguments (CoinFlipper.Core.LoginCredentialsApiModel) - ModelState is Valid
+INFORMATION: [2021-05-01 11:47:22] Executing ObjectResult, writing value Microsoft.AspNetCore.Mvc.ControllerContext.
+INFORMATION: [2021-05-01 11:47:22] Executed action CoinFlipper.Web.Server.ApiController.LogInAsync (CoinFlipper.Web.Server) in 942.2379ms
+INFORMATION: [2021-05-01 11:47:22] Request finished in 1536.709ms 200 application/json; charset=utf-8
+INFORMATION: [2021-05-01 11:47:26] Request starting HTTP/1.1 POST http://localhost:5000/api/register application/json 77
+INFORMATION: [2021-05-01 11:47:26] Executing action method CoinFlipper.Web.Server.ApiController.RegisterAsync (CoinFlipper.Web.Server) with arguments (CoinFlipper.Core.RegisterCredentialsApiModel) - ModelState is Valid
+INFORMATION: [2021-05-01 11:47:26] Executing ObjectResult, writing value Microsoft.AspNetCore.Mvc.ControllerContext.
+INFORMATION: [2021-05-01 11:47:26] Executed action CoinFlipper.Web.Server.ApiController.RegisterAsync (CoinFlipper.Web.Server) in 147.8309ms
+INFORMATION: [2021-05-01 11:47:26] Request finished in 223.3984ms 200 application/json; charset=utf-8
+INFORMATION: [2021-05-01 11:48:17] Request starting HTTP/1.1 POST http://localhost:5000/api/login application/json 38
+INFORMATION: [2021-05-01 11:48:17] Executing action method CoinFlipper.Web.Server.ApiController.LogInAsync (CoinFlipper.Web.Server) with arguments (CoinFlipper.Core.LoginCredentialsApiModel) - ModelState is Valid
+INFORMATION: [2021-05-01 11:48:17] Executing ObjectResult, writing value Microsoft.AspNetCore.Mvc.ControllerContext.
+INFORMATION: [2021-05-01 11:48:17] Executed action CoinFlipper.Web.Server.ApiController.LogInAsync (CoinFlipper.Web.Server) in 109.7277ms
+INFORMATION: [2021-05-01 11:48:17] Request finished in 164.6172ms 200 application/json; charset=utf-8
+INFORMATION: [2021-05-01 12:12:42] Request starting HTTP/1.1 POST http://localhost:5000/api/login application/json 38
+INFORMATION: [2021-05-01 12:12:42] Executing action method CoinFlipper.Web.Server.ApiController.LogInAsync (CoinFlipper.Web.Server) with arguments (CoinFlipper.Core.LoginCredentialsApiModel) - ModelState is Valid
+INFORMATION: [2021-05-01 12:12:42] Executing ObjectResult, writing value Microsoft.AspNetCore.Mvc.ControllerContext.
+INFORMATION: [2021-05-01 12:12:42] Executed action CoinFlipper.Web.Server.ApiController.LogInAsync (CoinFlipper.Web.Server) in 75.4398ms
+INFORMATION: [2021-05-01 12:12:42] Request finished in 117.4922ms 200 application/json; charset=utf-8
+INFORMATION: [2021-05-01 12:12:44] Request starting HTTP/1.1 POST http://localhost:5000/api/login application/json 38
+INFORMATION: [2021-05-01 12:12:44] Executing action method CoinFlipper.Web.Server.ApiController.LogInAsync (CoinFlipper.Web.Server) with arguments (CoinFlipper.Core.LoginCredentialsApiModel) - ModelState is Valid
+INFORMATION: [2021-05-01 12:12:44] Executing ObjectResult, writing value Microsoft.AspNetCore.Mvc.ControllerContext.
+INFORMATION: [2021-05-01 12:12:44] Executed action CoinFlipper.Web.Server.ApiController.LogInAsync (CoinFlipper.Web.Server) in 87.0244ms
+INFORMATION: [2021-05-01 12:12:44] Request finished in 116.3221ms 200 application/json; charset=utf-8
+INFORMATION: [2021-05-01 04:53:04] User profile is available. Using 'C:\Users\Maciej\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+INFORMATION: [2021-05-01 04:53:06] Request starting HTTP/1.1 GET http://localhost:5000/  
+INFORMATION: [2021-05-01 04:53:07] Executing action method CoinFlipper.Web.Server.HomeController.Index (CoinFlipper.Web.Server) with arguments ((null)) - ModelState is Valid
+INFORMATION: [2021-05-01 04:53:07] Entity Framework Core 2.0.1-rtm-125 initialized 'ApplicationDbContext' using provider 'Microsoft.EntityFrameworkCore.SqlServer' with options: None
+INFORMATION: [2021-05-01 04:53:08] Executed DbCommand (152ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+IF EXISTS (SELECT * FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_TYPE = 'BASE TABLE') SELECT 1 ELSE SELECT 0
+INFORMATION: [2021-05-01 04:53:08] Executed DbCommand (8ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+SELECT CASE
+    WHEN EXISTS (
+        SELECT 1
+        FROM [Settings] AS [s])
+    THEN CAST(1 AS BIT) ELSE CAST(0 AS BIT)
+END
+INFORMATION: [2021-05-01 04:53:13] Executing ViewResult, running view at path /Views/Home/Index.cshtml.
+INFORMATION: [2021-05-01 04:53:14] Executed action CoinFlipper.Web.Server.HomeController.Index (CoinFlipper.Web.Server) in 6710.2134ms
+INFORMATION: [2021-05-01 04:53:14] Request finished in 7292.1844ms 200 text/html; charset=utf-8
+INFORMATION: [2021-05-01 04:53:14] Request starting HTTP/1.1 GET http://localhost:5000/favicon.ico  
+INFORMATION: [2021-05-01 04:53:14] Request finished in 135.0174ms 404 
+INFORMATION: [2021-05-01 04:53:16] Request starting HTTP/1.1 POST http://localhost:5000/api/login application/json 63
+INFORMATION: [2021-05-01 04:53:16] Executing action method CoinFlipper.Web.Server.ApiController.LogInAsync (CoinFlipper.Web.Server) with arguments (CoinFlipper.Core.LoginCredentialsApiModel) - ModelState is Valid
+INFORMATION: [2021-05-01 04:53:16] Entity Framework Core 2.0.1-rtm-125 initialized 'ApplicationDbContext' using provider 'Microsoft.EntityFrameworkCore.SqlServer' with options: None
+INFORMATION: [2021-05-01 04:53:17] Executed DbCommand (362ms) [Parameters=[@__normalizedEmail_0='?' (Size = 256)], CommandType='Text', CommandTimeout='30']
+SELECT TOP(1) [u].[Id], [u].[AccessFailedCount], [u].[ConcurrencyStamp], [u].[Email], [u].[EmailConfirmed], [u].[FirstName], [u].[LastName], [u].[LockoutEnabled], [u].[LockoutEnd], [u].[NormalizedEmail], [u].[NormalizedUserName], [u].[PasswordHash], [u].[PhoneNumber], [u].[PhoneNumberConfirmed], [u].[SecurityStamp], [u].[TwoFactorEnabled], [u].[UserName]
+FROM [AspNetUsers] AS [u]
+WHERE [u].[NormalizedEmail] = @__normalizedEmail_0
+INFORMATION: [2021-05-01 04:53:17] Executing ObjectResult, writing value Microsoft.AspNetCore.Mvc.ControllerContext.
+INFORMATION: [2021-05-01 04:53:17] Executed action CoinFlipper.Web.Server.ApiController.LogInAsync (CoinFlipper.Web.Server) in 1366.4163ms
+INFORMATION: [2021-05-01 04:53:17] Request finished in 1463.1669ms 200 application/json; charset=utf-8

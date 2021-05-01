@@ -4,7 +4,6 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:CoinFlipper"
-             xmlns:core="clr-namespace:CoinFlipper.Core;assembly=CoinFlipper.Core"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="300">
     <UserControl.Template>
@@ -20,7 +19,7 @@
                         <RowDefinition Height="*"/>
                     </Grid.RowDefinitions>
 
-                    <!-- Top Menu-->
+                    <!-- Top Menu -->
                     <Grid Height="50">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="Auto"/>

@@ -52,6 +52,7 @@ namespace CoinFlipper
         BottomRight = 7,
     }
 
+
     /// <summary>
     /// Fixes the issue with Windows of Style <see cref="WindowStyle.None"/> covering the taskbar
     /// </summary>
@@ -62,7 +63,7 @@ namespace CoinFlipper
         /// <summary>
         /// The window to handle the resizing for
         /// </summary>
-        private readonly Window mWindow;
+        private Window mWindow;
 
         /// <summary>
         /// The last calculated available screen size
@@ -72,7 +73,7 @@ namespace CoinFlipper
         /// <summary>
         /// How close to the edge the window has to be to be detected as at the edge of the screen
         /// </summary>
-        private readonly int mEdgeTolerance = 1;
+        private int mEdgeTolerance = 1;
 
         /// <summary>
         /// The transform matrix used to convert WPF sizes to screen pixels
@@ -100,16 +101,16 @@ namespace CoinFlipper
 
         [DllImport("user32.dll")]
         [return: MarshalAs(UnmanagedType.Bool)]
-        private static extern bool GetCursorPos(out POINT lpPoint);
+        static extern bool GetCursorPos(out POINT lpPoint);
 
         [DllImport("user32.dll")]
-        private static extern bool GetMonitorInfo(IntPtr hMonitor, MONITORINFO lpmi);
+        static extern bool GetMonitorInfo(IntPtr hMonitor, MONITORINFO lpmi);
 
         [DllImport("user32.dll", SetLastError = true)]
-        private static extern IntPtr MonitorFromPoint(POINT pt, MonitorOptions dwFlags);
+        static extern IntPtr MonitorFromPoint(POINT pt, MonitorOptions dwFlags);
 
         [DllImport("user32.dll")]
-        private static extern IntPtr MonitorFromWindow(IntPtr hwnd, MonitorOptions dwFlags);
+        static extern IntPtr MonitorFromWindow(IntPtr hwnd, MonitorOptions dwFlags);
 
         #endregion
 
@@ -235,18 +236,18 @@ namespace CoinFlipper
 
             // Get window position/size in device pixels
             var windowTopLeft = new Point(left * mMonitorDpi.Value.DpiScaleX, top * mMonitorDpi.Value.DpiScaleX);
-            var windowBottomRight =
-                new Point(right * mMonitorDpi.Value.DpiScaleX, bottom * mMonitorDpi.Value.DpiScaleX);
+
+            var windowBottomRight = new Point(right * mMonitorDpi.Value.DpiScaleX, bottom * mMonitorDpi.Value.DpiScaleX);
 
             // Check for edges docked
-            var edgedTop = windowTopLeft.Y <= (mScreenSize.Top + mEdgeTolerance) &&
-                           windowTopLeft.Y >= (mScreenSize.Top - mEdgeTolerance);
-            var edgedLeft = windowTopLeft.X <= (mScreenSize.Left + mEdgeTolerance) &&
-                            windowTopLeft.X >= (mScreenSize.Left - mEdgeTolerance);
-            var edgedBottom = windowBottomRight.Y >= (mScreenSize.Bottom - mEdgeTolerance) &&
-                              windowBottomRight.Y <= (mScreenSize.Bottom + mEdgeTolerance);
-            var edgedRight = windowBottomRight.X >= (mScreenSize.Right - mEdgeTolerance) &&
-                             windowBottomRight.X <= (mScreenSize.Right + mEdgeTolerance);
+            var edgedTop = windowTopLeft.Y <= (mScreenSize.Top + mEdgeTolerance) && windowTopLeft.Y >= (mScreenSize.Top - mEdgeTolerance);
+
+            var edgedLeft = windowTopLeft.X <= (mScreenSize.Left + mEdgeTolerance) && windowTopLeft.X >= (mScreenSize.Left - mEdgeTolerance);
+
+            var edgedBottom = windowBottomRight.Y >= (mScreenSize.Bottom - mEdgeTolerance) && windowBottomRight.Y <= (mScreenSize.Bottom + mEdgeTolerance);
+
+            var edgedRight = windowBottomRight.X >= (mScreenSize.Right - mEdgeTolerance) && windowBottomRight.X <= (mScreenSize.Right + mEdgeTolerance);
+
 
             // Get docked position
             var dock = WindowDockPosition.Undocked;
@@ -339,11 +340,11 @@ namespace CoinFlipper
             GetCursorPos(out var lMousePosition);
 
             // Now get the current screen
-            var lCurrentScreen = mBeingMoved
-                ?
+            var lCurrentScreen = mBeingMoved ?
+
                 // If being dragged get it from the mouse position
-                MonitorFromPoint(lMousePosition, MonitorOptions.MONITOR_DEFAULTTONULL)
-                :
+                MonitorFromPoint(lMousePosition, MonitorOptions.MONITOR_DEFAULTTONULL) :
+
                 // Otherwise get it from the window position (for example being moved via Win + Arrow)
                 // in case the mouse is on another monitor
                 MonitorFromWindow(hwnd, MonitorOptions.MONITOR_DEFAULTTONULL);
@@ -373,13 +374,13 @@ namespace CoinFlipper
             var currentY = lCurrentScreenInfo.RCWork.Top - lCurrentScreenInfo.RCMonitor.Top;
             var currentWidth = (lCurrentScreenInfo.RCWork.Right - lCurrentScreenInfo.RCWork.Left);
             var currentHeight = (lCurrentScreenInfo.RCWork.Bottom - lCurrentScreenInfo.RCWork.Top);
-            var currentRatio = currentWidth / (float)currentHeight;
+            var currentRatio = (float)currentWidth / (float)currentHeight;
 
             var primaryX = lPrimaryScreenInfo.RCWork.Left - lPrimaryScreenInfo.RCMonitor.Left;
             var primaryY = lPrimaryScreenInfo.RCWork.Top - lPrimaryScreenInfo.RCMonitor.Top;
             var primaryWidth = (lPrimaryScreenInfo.RCWork.Right - lPrimaryScreenInfo.RCWork.Left);
             var primaryHeight = (lPrimaryScreenInfo.RCWork.Bottom - lPrimaryScreenInfo.RCWork.Top);
-            var primaryRatio = primaryWidth / (float)primaryHeight;
+            var primaryRatio = (float)primaryWidth / (float)primaryHeight;
 
             if (lParam != IntPtr.Zero)
             {
@@ -418,8 +419,8 @@ namespace CoinFlipper
                 lMmi.PointMaxSize.Y = lPrimaryScreenInfo.RCMonitor.Bottom;
 
                 // Set min size
-                var minSize = new Point(mWindow.MinWidth * mMonitorDpi.Value.DpiScaleX,
-                    mWindow.MinHeight * mMonitorDpi.Value.DpiScaleX);
+                var minSize = new Point(mWindow.MinWidth * mMonitorDpi.Value.DpiScaleX, mWindow.MinHeight * mMonitorDpi.Value.DpiScaleX);
+
                 lMmi.PointMinTrackSize.X = (int)minSize.X;
                 lMmi.PointMinTrackSize.Y = (int)minSize.Y;
 
@@ -436,11 +437,11 @@ namespace CoinFlipper
                 (lCurrentScreenInfo.RCWork.Top - lCurrentScreenInfo.RCMonitor.Top) / mMonitorDpi.Value.DpiScaleY,
                 (lCurrentScreenInfo.RCMonitor.Right - lCurrentScreenInfo.RCWork.Right) / mMonitorDpi.Value.DpiScaleX,
                 (lCurrentScreenInfo.RCMonitor.Bottom - lCurrentScreenInfo.RCWork.Bottom) / mMonitorDpi.Value.DpiScaleY
-            );
+                );
 
             // Store new size
-            mScreenSize = new Rect(lCurrentScreenInfo.RCWork.Left, lCurrentScreenInfo.RCWork.Top, currentWidth,
-                currentHeight);
+            mScreenSize = new Rect(lCurrentScreenInfo.RCWork.Left, lCurrentScreenInfo.RCWork.Top, currentWidth, currentHeight);
+
         }
 
         /// <summary>
@@ -453,8 +454,8 @@ namespace CoinFlipper
             GetCursorPos(out var lMousePosition);
 
             // Apply DPI scaling
-            return new Point(lMousePosition.X / mMonitorDpi.Value.DpiScaleX,
-                lMousePosition.Y / mMonitorDpi.Value.DpiScaleY);
+            return new Point(lMousePosition.X / mMonitorDpi.Value.DpiScaleX, lMousePosition.Y / mMonitorDpi.Value.DpiScaleY);
+
         }
     }
 

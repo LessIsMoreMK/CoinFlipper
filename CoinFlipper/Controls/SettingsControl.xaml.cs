@@ -1,5 +1,4 @@
-﻿using CoinFlipper.Core;
-using System.Windows.Controls;
+﻿using System.Windows.Controls;
 
 namespace CoinFlipper
 {
@@ -13,7 +12,7 @@ namespace CoinFlipper
             InitializeComponent();
 
             // Set data context to settings view model
-            DataContext = IoC.Settings;
+            DataContext = CoinFlipper.DI.ViewModelSettings;
         }
     }
 }

@@ -4,11 +4,10 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:CoinFlipper"
-        xmlns:core="clr-namespace:CoinFlipper.Core;assembly=CoinFlipper.Core"
         mc:Ignorable="d"
         Icon="Images/logo.png"
         WindowStyle="None"
-        AllowsTransparency="true" 
+        AllowsTransparency="True" 
         WindowStartupLocation="CenterScreen"
         ResizeMode="NoResize"
         SizeToContent="WidthAndHeight"
@@ -23,12 +22,12 @@
                     <ControlTemplate TargetType="{x:Type Window}">
                         
                         <!-- Outer border with the drop shadow margin -->
-                        <Border Padding="{Binding OuterMarginSizeThickness, FallbackValue=10}">
+                        <Border Padding="{Binding OuterMarginSize, FallbackValue=10}">
                             
                             <!-- Main window outline -->
                             <Grid>
                                 
-                                <!-- Opacity mask for corners-->
+                                <!-- Opacity mask for corners on grid -->
                                 <Border x:Name="Container" Background="{StaticResource GrayDarkBrush}"
                                         CornerRadius="{Binding WindowCornerRadius, FallbackValue=10}"/>
 
@@ -149,7 +148,7 @@
 
     <Border>
         <Grid>
-            <!-- Background image -->
+            <!-- Background Image -->
             <Grid.Background>
                 <ImageBrush TileMode="Tile" 
                             ViewportUnits="Absolute" 
@@ -163,4 +162,5 @@
             </Border>
         </Grid>
     </Border>
+    
 </Window>

@@ -4,9 +4,9 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:CoinFlipper"
-             xmlns:core="clr-namespace:CoinFlipper.Core;assembly=CoinFlipper.Core"
+             xmlns:core="clr-namespace:CoinFlipper;assembly=CoinFlipper"
              mc:Ignorable="d">
-    <Grid DataContext="{x:Static core:ChatListDesignModel.Instance}" Background="{StaticResource GrayDarkBrush}">
+    <Grid DataContext="{x:Static local:ChatListDesignModel.Instance}" Background="{StaticResource GrayDarkBrush}">
         <ScrollViewer VerticalScrollBarVisibility="Auto">
             <ItemsControl ItemsSource="{Binding Items}">
                 <ItemsControl.ItemTemplate>

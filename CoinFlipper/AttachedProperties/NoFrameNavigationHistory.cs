@@ -5,7 +5,7 @@ namespace CoinFlipper
 {
     /// <summary>
     /// The NoFrameHistory attached property for creating a <see cref="Frame"/> that never shows navigation
-    /// and keep the navigation history empty
+    /// and keeps the navigation history empty
     /// </summary>
     public class NoFrameNavigationHistory : BaseAttachedProperty<NoFrameNavigationHistory, bool>
     {
@@ -22,4 +22,3 @@ namespace CoinFlipper
         }
     }
 }
- 

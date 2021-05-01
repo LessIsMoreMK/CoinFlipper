@@ -18,7 +18,7 @@
         public string ErrorMessage { get; set; }
 
         /// <summary>
-        /// The API res
+        /// The API response object
         /// </summary>
         public T Response { get; set; }
 

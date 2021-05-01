@@ -11,12 +11,12 @@
         public string Message { get; set; }
 
         /// <summary>
-        /// The field inside the email message details that error is related to
+        /// The field inside the email message details that the error is related to
         /// </summary>
         public string Field { get; set; }
 
         /// <summary>
-        /// Useful information of resolving the error
+        /// Useful information for resolving the error
         /// </summary>
         public string Help { get; set; }
     }

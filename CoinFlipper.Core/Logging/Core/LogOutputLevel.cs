@@ -21,7 +21,7 @@
         Informative = 3,
 
         /// <summary>
-        /// Log only critical errors and warnings and success, no general information
+        /// Log only critical errors and warnings and success, but no general information
         /// </summary>
         Critical = 4,
 

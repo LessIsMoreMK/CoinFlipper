@@ -6,7 +6,7 @@ using System.Windows.Markup;
 namespace CoinFlipper
 {
     /// <summary>
-    /// A vase value converter that allows direct XAML usage
+    /// A base value converter that allows direct XAML usage
     /// </summary>
     /// <typeparam name="T">The type of this value converter</typeparam>
     public abstract class BaseValueConverter<T> : MarkupExtension, IValueConverter where T : class, new()
@@ -25,7 +25,7 @@ namespace CoinFlipper
         /// <summary>
         /// Provides a static instance of the value converter
         /// </summary>
-        /// <param name="serviceProvider">the service provider</param>
+        /// <param name="serviceProvider">The service provider</param>
         /// <returns></returns>
         public override object ProvideValue(IServiceProvider serviceProvider)
         {

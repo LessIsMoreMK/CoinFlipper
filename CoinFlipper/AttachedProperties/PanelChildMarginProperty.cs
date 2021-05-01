@@ -5,7 +5,7 @@ namespace CoinFlipper
 {
     /// <summary>
     /// The NoFrameHistory attached property for creating a <see cref="Frame"/> that never shows navigation
-    /// and keep the navigation history empty
+    /// and keeps the navigation history empty
     /// </summary>
     public class PanelChildMarginProperty : BaseAttachedProperty<PanelChildMarginProperty, string>
     {
@@ -18,13 +18,10 @@ namespace CoinFlipper
             panel.Loaded += (s, ee) =>
             {
                 // Loop each child
-                foreach(var child in panel.Children)
-                {
+                foreach (var child in panel.Children)
                     // Set it's margin to the given value
                     (child as FrameworkElement).Margin = (Thickness)(new ThicknessConverter().ConvertFromString(e.NewValue as string));
-                }
             };
         }
     }
 }
- 

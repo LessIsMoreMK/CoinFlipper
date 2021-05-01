@@ -1,5 +1,4 @@
-﻿using CoinFlipper.Core;
-using System.ComponentModel;
+﻿using System.ComponentModel;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -15,7 +14,7 @@ namespace CoinFlipper
         #region Private Members
 
         /// <summary>
-        /// The dialog window we will be container within
+        /// The dialog window we will be contained within
         /// </summary>
         private DialogWindow mDialogWindow;
 
@@ -26,7 +25,7 @@ namespace CoinFlipper
         /// <summary>
         /// Closes this dialog
         /// </summary>
-        public ICommand CloseCommand { get; set; }
+        public ICommand CloseCommand { get; private set; }
 
         #endregion
 
@@ -36,7 +35,6 @@ namespace CoinFlipper
         /// The minimum width of this dialog
         /// </summary>
         public int WindowMinimumWidth { get; set; } = 250;
-
 
         /// <summary>
         /// The minimum height of this dialog
@@ -49,7 +47,7 @@ namespace CoinFlipper
         public int TitleHeight { get; set; } = 30;
 
         /// <summary>
-        /// The title of this dialog
+        /// The title for this dialog
         /// </summary>
         public string Title { get; set; }
 
@@ -63,7 +61,7 @@ namespace CoinFlipper
         public BaseDialogUserControl()
         {
             if (!DesignerProperties.GetIsInDesignMode(this))
-            { 
+            {
                 // Create a new dialog window
                 mDialogWindow = new DialogWindow();
                 mDialogWindow.ViewModel = new DialogWindowViewModel(mDialogWindow);
@@ -78,7 +76,7 @@ namespace CoinFlipper
         #region Public Dialog Show Methods
 
         /// <summary>
-        /// Displays a simple message box to the user
+        /// Displays a single message box to the user
         /// </summary>
         /// <param name="viewModel">The view model</param>
         /// <returns></returns>
@@ -86,7 +84,7 @@ namespace CoinFlipper
             where T : BaseDialogViewModel
         {
             // Create a task to await the dialog closing
-            var task = new TaskCompletionSource<bool>();
+            var tcs = new TaskCompletionSource<bool>();
 
             // Run on UI thread
             Application.Current.Dispatcher.Invoke(() =>
@@ -102,7 +100,7 @@ namespace CoinFlipper
                     // Set this control to the dialog window content
                     mDialogWindow.ViewModel.Content = this;
 
-                    // Setup this control data context binding to this view model
+                    // Setup this controls data context binding to the view model
                     DataContext = viewModel;
 
                     // Show in the center of the parent
@@ -115,11 +113,11 @@ namespace CoinFlipper
                 finally
                 {
                     // Let caller know we finished
-                    task.TrySetResult(true);
+                    tcs.TrySetResult(true);
                 }
             });
 
-            return task.Task;
+            return tcs.Task;
         }
 
         #endregion

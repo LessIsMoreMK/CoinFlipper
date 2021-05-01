@@ -4,10 +4,10 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:CoinFlipper"
-             xmlns:core="clr-namespace:CoinFlipper.Core;assembly=CoinFlipper.Core"
+             xmlns:core="clr-namespace:CoinFlipper;assembly=CoinFlipper"
              mc:Ignorable="d" >
     <Grid VerticalAlignment="Bottom"
-          d:DataContext="{x:Static core:ChatMessageListDesignModel.Instance}">
+          d:DataContext="{x:Static local:ChatMessageListDesignModel.Instance}">
         <ScrollViewer VerticalScrollBarVisibility="Auto"
                       local:ScrollToBottomOnLoadProperty.Value="True"
                       local:AutoScrollToBottomProperty.Value="True">

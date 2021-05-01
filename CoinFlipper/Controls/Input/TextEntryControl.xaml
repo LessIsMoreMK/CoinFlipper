@@ -4,9 +4,9 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:CoinFlipper"
-             xmlns:core="clr-namespace:CoinFlipper.Core;assembly=CoinFlipper.Core"
+             xmlns:core="clr-namespace:CoinFlipper;assembly=CoinFlipper"
              mc:Ignorable="d" 
-             d:DataContext="{x:Static core:TextEntryDesignModel.Instance}">
+             d:DataContext="{x:Static local:TextEntryDesignModel.Instance}">
     <!-- Underline -->
     <Border BorderBrush="{StaticResource GrayMediumBrush}"
             BorderThickness="0 0 0 1">
@@ -25,7 +25,7 @@
                 <BeginStoryboard>
                     <Storyboard>
                         <DoubleAnimation To="1" 
-                                         Duration="0:0:0.1" 
+                                         Duration="0:0:0.4" 
                                          Storyboard.TargetName="EditButton" 
                                          Storyboard.TargetProperty="Opacity"/>
                     </Storyboard>
@@ -35,7 +35,7 @@
                     <BeginStoryboard>
                         <Storyboard>
                             <DoubleAnimation To="0" 
-                                             Duration="0:0:0.1" 
+                                             Duration="0:0:0.4" 
                                              Storyboard.TargetName="EditButton" 
                                              Storyboard.TargetProperty="Opacity"/>
                         </Storyboard>
@@ -44,7 +44,7 @@
             </Grid.Triggers>
             
             <Grid.ColumnDefinitions>
-                <ColumnDefinition x:Name="LabelColumnDefinition" Width="Auto"/>
+                <ColumnDefinition Name="LabelColumnDefinition" Width="Auto"/>
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="Auto"/>
             </Grid.ColumnDefinitions>

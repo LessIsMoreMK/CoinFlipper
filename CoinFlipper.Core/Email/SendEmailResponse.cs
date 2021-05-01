@@ -10,7 +10,7 @@ namespace CoinFlipper.Core
         /// <summary>
         /// True if the email was sent successfully
         /// </summary>
-        public bool Successfull => !(Errors?.Count > 0);
+        public bool Successful => !(Errors?.Count > 0);
 
         /// <summary>
         /// The error message if the sending failed

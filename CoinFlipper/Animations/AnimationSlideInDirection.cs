@@ -1,7 +1,7 @@
 ﻿namespace CoinFlipper
 {
     /// <summary>
-    /// The direction of an animation while slides in
+    /// The direction an animation slides in (the slide out direction is reversed)
     /// </summary>
     public enum AnimationSlideInDirection
     {

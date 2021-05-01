@@ -1,14 +1,14 @@
-﻿<local:BasePage x:TypeArguments="core:ChatMessageListViewModel" x:Class="CoinFlipper.ChatPage"
+﻿<local:BasePage x:TypeArguments="local:ChatMessageListViewModel" x:Class="CoinFlipper.ChatPage"
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:CoinFlipper"
-      xmlns:core="clr-namespace:CoinFlipper.Core;assembly=CoinFlipper.Core"
+      xmlns:core="clr-namespace:CoinFlipper;assembly=CoinFlipper"
       mc:Ignorable="d" 
       d:DesignHeight="500" d:DesignWidth="500"
       x:Name="Page"
-      d:DataContext="{x:Static core:ChatMessageListDesignModel.Instance}">
+      d:DataContext="{x:Static local:ChatMessageListDesignModel.Instance}">
     <Grid>
         <Grid.RowDefinitions>
             <!-- Title Bar -->
@@ -30,7 +30,7 @@
         </Border>
 
         <!-- Title Bar -->
-        <Grid Height="50" Panel.ZIndex="2">
+        <Grid Height="50">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="Auto"/>
@@ -156,7 +156,7 @@
                         FontFamily="{StaticResource LatoBlack}"/>
                 
                 <!-- Send Button -->
-                <Button Padding="10"
+                <Button Padding="8"
                         IsDefault="True"
                         
                         Content="{StaticResource FontAwesomeSendIcon}"

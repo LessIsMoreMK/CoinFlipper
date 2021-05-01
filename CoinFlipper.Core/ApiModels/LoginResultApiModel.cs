@@ -1,7 +1,7 @@
 ﻿namespace CoinFlipper.Core
 {
     /// <summary>
-    /// The result of a successful login request via API
+    /// The result of a login request via API
     /// </summary>
     public class LoginResultApiModel
     {

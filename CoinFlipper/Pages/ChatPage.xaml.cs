@@ -1,5 +1,4 @@
-﻿using CoinFlipper.Core;
-using System;
+﻿using System;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media.Animation;
@@ -59,13 +58,13 @@ namespace CoinFlipper
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void MessageText_PreviewKeyDown(object sender, System.Windows.Input.KeyEventArgs e)
+        private void MessageText_PreviewKeyDown(object sender, KeyEventArgs e)
         {
             // Get the text box
             var textBox = sender as TextBox;
 
             // Check if we have pressed enter
-            if(e.Key == Key.Enter)
+            if (e.Key == Key.Enter)
             {
                 // If we have control pressed...
                 if (Keyboard.Modifiers.HasFlag(ModifierKeys.Control))
@@ -86,7 +85,7 @@ namespace CoinFlipper
                     // Send the message
                     ViewModel.Send();
 
-                // Mark this key as handled by us
+                // Mark the key as handled
                 e.Handled = true;
             }
         }

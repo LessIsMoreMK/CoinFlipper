@@ -15,10 +15,10 @@ namespace CoinFlipper.Web.Server
         {
             var templateText = default(string);
 
-            // Read the general template form file
+            // Read the general template from file
             using (var reader = new StreamReader(Assembly.GetEntryAssembly().GetManifestResourceStream("CoinFlipper.Web.Server.Email.Templates.GeneralTemplate.htm"), Encoding.UTF8))
             {
-                // Read file content
+                // Read file contents
                 templateText = await reader.ReadToEndAsync();
             }
 
@@ -29,7 +29,7 @@ namespace CoinFlipper.Web.Server
                                         .Replace("--ButtonText--", buttonText)
                                         .Replace("--ButtonUrl--", buttonUrl);
 
-            // Set the details to this template content
+            // Set the details content to this template content
             details.Content = templateText;
 
             // Send email

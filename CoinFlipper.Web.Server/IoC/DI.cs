@@ -1,7 +1,6 @@
-﻿using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
-using CoinFlipper.Core;
+﻿using CoinFlipper.Core;
 using Dna;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace CoinFlipper.Web.Server
 {

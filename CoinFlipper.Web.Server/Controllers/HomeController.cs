@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Authentication;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -38,7 +37,6 @@ namespace CoinFlipper.Web.Server
         /// Default constructor
         /// </summary>
         /// <param name="context">The injected context</param>
-        /// <param name="context">The injected context</param>
         /// <param name="signInManager">The Identity sign in manager</param>
         /// <param name="userManager">The Identity user manager</param>
         public HomeController(ApplicationDbContext context, UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager)
@@ -50,6 +48,10 @@ namespace CoinFlipper.Web.Server
 
         #endregion
 
+        /// <summary>
+        /// Basic welcome page
+        /// </summary>
+        /// <returns></returns>
         public IActionResult Index()
         {
             // Make sure we have the database
@@ -88,7 +90,7 @@ namespace CoinFlipper.Web.Server
         /// Creates our single user for now
         /// </summary>
         /// <returns></returns>
-        [Route("Create")]
+        [Route("create")]
         public async Task<IActionResult> CreateUserAsync()
         {
             var result = await mUserManager.CreateAsync(new ApplicationUser
@@ -113,24 +115,29 @@ namespace CoinFlipper.Web.Server
         [Route("private")]
         public IActionResult Private()
         {
-            return Content($"This is private area. Welcome {HttpContext.User.Identity.Name}", "text/html");
+            return Content($"This is a private area. Welcome {HttpContext.User.Identity.Name}", "text/html");
         }
 
-        [Route("logout")]
-        public async Task<IActionResult> SignOutAsync(string returnUrl)
-        {
-            await HttpContext.SignOutAsync();
-            return Content("Done", "text/html");
-        }
         /// <summary>
-        /// Ab auto-login page for testing
+        /// Log the user out
+        /// </summary>
+        /// <returns></returns>
+        [Route("logout")]
+        public async Task<IActionResult> SignOutAsync()
+        {
+            await HttpContext.SignOutAsync(IdentityConstants.ApplicationScheme);
+            return Content("done");
+        }
+
+        /// <summary>
+        /// An auto-login page for testing
         /// </summary>
         /// <param name="returnUrl">The url to return to if successfully logged in</param>
         /// <returns></returns>
         [Route("login")]
         public async Task<IActionResult> LoginAsync(string returnUrl)
         {
-            // Sing out any previous sessions
+            // Sign out any previous sessions
             await HttpContext.SignOutAsync();
 
             // Sign user in with the valid credentials
@@ -148,7 +155,7 @@ namespace CoinFlipper.Web.Server
                 return Redirect(returnUrl);
             }
 
-            return Content("testing", "text/html");
+            return Content("Failed to login", "text/html");
         }
     }
 }

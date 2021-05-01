@@ -42,11 +42,11 @@ namespace CoinFlipper.Core
             // Get current time
             var currentTime = DateTimeOffset.Now.ToString("yyyy-MM-dd hh:mm:ss");
 
-            // Append log time if desired
+            // Prepend the time to the log if desired
             var timeLogString = LogTime ? $"[{currentTime}] " : "";
 
-            // Write the message to the log file
-            IoC.File.WriteTextToFileAsync(timeLogString + message + Environment.NewLine, FilePath, append: true);
+            // Write the message
+            CoreDI.FileManager.WriteTextToFileAsync($"{timeLogString}{message}{Environment.NewLine}", FilePath, append: true);
         }
 
         #endregion

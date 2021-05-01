@@ -69,6 +69,7 @@ namespace CoinFlipper
             // Call event listeners
             (Instance as BaseAttachedProperty<Parent, Property>)?.ValueUpdated(d, value);
 
+            // Return the value
             return value;
         }
 
@@ -98,7 +99,7 @@ namespace CoinFlipper
         public virtual void OnValueChanged(DependencyObject sender, DependencyPropertyChangedEventArgs e) { }
 
         /// <summary>
-        /// The method that is called when any attached property of this type is changed, even if the value is the same 
+        /// The method that is called when any attached property of this type is changed, even if the value is the same
         /// </summary>
         /// <param name="sender">The UI element that this property was changed for</param>
         /// <param name="e">The arguments for this event</param>

@@ -12,7 +12,7 @@ namespace CoinFlipper.Core
         /// <summary>
         /// Unsecures a <see cref="SecureString"/> to plain text
         /// </summary>
-        /// <param name="securePassword">The secure string</param>
+        /// <param name="secureString">The secure string</param>
         /// <returns></returns>
         public static string Unsecure(this SecureString secureString)
         {
@@ -32,7 +32,7 @@ namespace CoinFlipper.Core
             finally
             {
                 // Clean up any memory allocation
-                Marshal.ZeroFreeCoTaskMemUnicode(unmanagedString);
+                Marshal.ZeroFreeGlobalAllocUnicode(unmanagedString);
             }
         }
     }

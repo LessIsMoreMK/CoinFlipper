@@ -1,5 +1,4 @@
-﻿using CoinFlipper.Core;
-using System.Security;
+﻿using System.Security;
 
 namespace CoinFlipper
 {
