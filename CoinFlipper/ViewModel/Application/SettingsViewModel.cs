@@ -65,6 +65,21 @@ namespace CoinFlipper
         /// </summary>
         public ICommand LoadCommand { get; set; }
 
+        /// <summary>
+        /// Saves the username name to the server
+        /// </summary>
+        public ICommand SaveUsernameCommand { get; set; }
+
+        /// <summary>
+        /// Saves the current name to the server
+        /// </summary>
+        public ICommand SaveNameCommand { get; set; }
+
+        /// <summary>
+        /// Saves the current email to the server
+        /// </summary>
+        public ICommand SaveEmailCommand { get; set; }
+
         #endregion
 
         #region Constructor
@@ -80,6 +95,9 @@ namespace CoinFlipper
             LogoutCommand = new RelayCommand(Logout);
             ClearUserDataCommand = new RelayCommand(ClearUserData);
             LoadCommand = new RelayCommand(async () => await LoadAsync());
+            SaveUsernameCommand = new RelayCommand(async () => await SaveUsernameAsync());
+            SaveNameCommand = new RelayCommand(async () => await SaveNameAsync());
+            SaveEmailCommand = new RelayCommand(async () => await SaveEmailAsync());
 
             //TODO: get from localization
             LogoutButtonText = "Logout";
@@ -141,10 +159,83 @@ namespace CoinFlipper
             // Get the stored credentials
             var storedCredentials = await CoinFlipper.DI.ClientDataStore.GetLoginCredentialsAsync();
 
-            Name = new TextEntryViewModel { Label = "Name", OriginalText = $"{storedCredentials?.FirstName} {storedCredentials?.LastName}" };
-            Username = new TextEntryViewModel { Label = "Username", OriginalText = storedCredentials?.Username };
-            Password = new PasswordEntryViewModel { Label = "Password", FakePassword = "********" };
-            Email = new TextEntryViewModel { Label = "Email", OriginalText = storedCredentials?.Email };
+            Name = new TextEntryViewModel
+            {
+                Label = "Name",
+                OriginalText = $"{storedCredentials?.FirstName} {storedCredentials?.LastName}",
+                CommitAction = SaveNameAsync
+            };
+            Username = new TextEntryViewModel 
+            { 
+                Label = "Username", 
+                OriginalText = storedCredentials?.Username,
+                CommitAction = SaveUsernameAsync
+            };
+            Password = new PasswordEntryViewModel 
+            { 
+                Label = "Password", 
+                FakePassword = "********",
+                CommitAction = SavePasswordAsync
+            };
+            Email = new TextEntryViewModel 
+            { 
+                Label = "Email", 
+                OriginalText = storedCredentials?.Email,
+                CommitAction = SaveEmailAsync
+            };
         }
+
+        /// <summary>
+        /// Saves the new Username to the server
+        /// </summary>
+        /// <returns>Return true if successful, false otherwise</returns>
+        public async Task<bool> SaveUsernameAsync()
+        {
+            // Update with server
+            await Task.Delay(3000);
+
+            // Return fail
+            return false;
+        }
+
+        /// <summary>
+        /// Saves the new Name to the server
+        /// </summary>
+        /// <returns>Return true if successful, false otherwise</returns>
+        public async Task<bool> SaveNameAsync()
+        {
+            // Update with server
+            await Task.Delay(3000);
+
+            // Return success
+            return true;
+        }
+
+        /// <summary>
+        /// Saves the new Email to the server
+        /// </summary>
+        /// <returns>Return true if successful, false otherwise</returns>
+        public async Task<bool> SaveEmailAsync()
+        {
+            // Update with server
+            await Task.Delay(3000);
+
+            // Return fail
+            return false;
+        }
+
+        /// <summary>
+        /// Saves the new Password to the server
+        /// </summary>
+        /// <returns>Return true if successful, false otherwise</returns>
+        public async Task<bool> SavePasswordAsync()
+        {
+            // Update with server
+            await Task.Delay(3000);
+
+            // Return fail
+            return false;
+        }
+
     }
 }

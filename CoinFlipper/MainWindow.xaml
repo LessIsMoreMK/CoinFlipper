@@ -162,8 +162,9 @@
         
         <!-- Settings Page -->
         <local:SettingsControl Grid.ColumnSpan="2"
-                               Panel.ZIndex="9"
-                               local:AnimateSlideInFromBottomMarginProperty.Value="{Binding ApplicationViewModel.SettingsMenuVisible, Source={x:Static local:ViewModelLocator.Instance}}"/>
+                                   Panel.ZIndex="9"
+                                   local:AnimateSlideInFromBottomMarginProperty.Value="{Binding ApplicationViewModel.SettingsMenuVisible, Source={x:Static local:ViewModelLocator.Instance}}"
+                                   />
 
         <!-- Dimmed Overlay -->
         <Border Grid.ColumnSpan="2"
@@ -175,8 +176,11 @@
 
         <!-- Main Content -->
         <local:PageHost Grid.Column="1" 
-                        CurrentPage="{Binding ApplicationViewModel.CurrentPage, Source={x:Static local:ViewModelLocator.Instance}}"
-                        CurrentPageViewModel="{Binding ApplicationViewModel.CurrentPageViewModel, Source={x:Static local:ViewModelLocator.Instance}}"/>
+                   CurrentPage="{Binding ApplicationViewModel.CurrentPage,
+                                        Source={x:Static local:ViewModelLocator.Instance}}"
+                   CurrentPageViewModel="{Binding ApplicationViewModel.CurrentPageViewModel,
+                                        Source={x:Static local:ViewModelLocator.Instance}}"                            
+                            />
 
         <!-- Side Menu -->
         <local:SideMenuControl

@@ -1,4 +1,6 @@
-﻿using System.Security;
+﻿using System;
+using System.Security;
+using System.Threading.Tasks;
 using System.Windows.Input;
 using CoinFlipper.Core;
 
@@ -56,6 +58,17 @@ namespace CoinFlipper
         /// </summary>
         public bool Editing { get; set; }
 
+        /// <summary>
+        /// Indicates if the current control is pending an update (in progress)
+        /// </summary>
+        public bool Working { get; set; }
+
+        /// <summary>
+        /// The action to run when saving the text
+        /// Return true if the commit was successful, or false otherwise.
+        /// </summary>
+        public Func<Task<bool>> CommitAction { get; set; }
+
         #endregion
 
         #region Commands
@@ -102,57 +115,32 @@ namespace CoinFlipper
         #region Command Methods
 
         /// <summary>
-        /// Commits the content and exits out of edit model
+        /// Commits the content and exits out of edit mode
         /// </summary>
         public void Save()
         {
-            // Make sure current password is correct 
-            // TODO: password
-            var storedPassword = "Testing";
+            // Store the result of a commit call
+            // Defaulting to true (if no CommitAction is declared)
+            var result = default(bool);
 
-            // Confirm current password is a match
-            // TODO: move to server
-            if (storedPassword != CurrentPassword.Unsecure())
+            RunCommandAsync(() => Working, async () =>
             {
-                // Let user know
-                CoinFlipper.DI.UI.ShowMessage(new MessageBoxDialogViewModel
-                {
-                    Title = "Wrong password",
-                    Message = "The current password is invalid",
-                });
-                return;
-            }
+                // While working, come out of edit mode
+                Editing = false;
 
-            // Now check that the new and confirm password match
-            if (NewPassword.Unsecure() != ConfirmPassword.Unsecure())
+                // Try and do the work
+                result = CommitAction == null ? true : await CommitAction();
+            }).ContinueWith(t =>
             {
-                // Let user know
-                CoinFlipper.DI.UI.ShowMessage(new MessageBoxDialogViewModel
+                // If we succeeded...
+                // Nothing to do
+                // If we fail...
+                if (!result)
                 {
-                    Title = "Password mismatch",
-                    Message = "The new and confirm password do not match",
-                });
-                return;
-            }
-
-            // Check we actually have a password
-            if (NewPassword.Unsecure().Length == 0)
-            {
-                // Let user know
-                CoinFlipper.DI.UI.ShowMessage(new MessageBoxDialogViewModel
-                {
-                    Title = "Password too short",
-                    Message = "You must enter a password",
-                });
-                return;
-            }
-
-            // Set the edited password to the current value
-            CurrentPassword = new SecureString();
-            foreach (var c in NewPassword.Unsecure().ToCharArray())
-                CurrentPassword.AppendChar(c);
-
-            Editing = false;
+                    // Go back into edit mode
+                    Editing = true;
+                }
+            });
         }
 
         /// <summary>

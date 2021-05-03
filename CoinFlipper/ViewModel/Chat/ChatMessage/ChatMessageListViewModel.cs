@@ -296,7 +296,7 @@ namespace CoinFlipper
         /// <summary>
         /// Opens the search dialog
         /// </summary>
-        public void OpenSearch() => SearchIsOpen = true;
+        public void OpenSearch() => SearchIsOpen ^= true;
 
         /// <summary>
         /// Closes the search dialog

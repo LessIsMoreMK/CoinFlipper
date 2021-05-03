@@ -11,6 +11,5 @@ namespace CoinFlipper
         /// The chat list items for the list
         /// </summary>
         public List<ChatListItemViewModel> Items { get; set; }
-
     }
 }

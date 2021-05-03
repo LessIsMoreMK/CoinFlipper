@@ -9,6 +9,7 @@
              d:DataContext="{x:Static local:TextEntryDesignModel.Instance}">
     <!-- Underline -->
     <Border BorderBrush="{StaticResource GrayMediumBrush}"
+            IsEnabled="{Binding Working, Converter={local:BooleanInvertConverter}}"
             BorderThickness="0 0 0 1">
 
         <!-- Label - Name - Buttons -->
@@ -80,6 +81,8 @@
 
             <!-- Edit Button Container -->
             <Grid Grid.Column="2"
+                  HorizontalAlignment="Right"
+                  VerticalAlignment="Center"
                   local:AnimateFadeInProperty.Value="{Binding Editing, Converter={local:BooleanInvertConverter}}">
                 
                 <!-- Edit Button -->
@@ -96,6 +99,21 @@
                         FontFamily="{StaticResource FontAwesome}"/>
             </Grid>
 
+            <!-- Working Spinner Container -->
+            <Grid Grid.Column="2"
+                  HorizontalAlignment="Right"
+                  VerticalAlignment="Center"
+                  local:AnimateFadeInProperty.Value="{Binding Working}">
+
+                <Border Padding="0 0 5 0">
+                    <TextBlock Style="{StaticResource SpinningText}"
+                               Foreground="{StaticResource GreenMediumBrush}"
+                                           Text="&#xf110;"/>
+                </Border>
+            </Grid>
+
+            
+
             <StackPanel Grid.Column="2"
                         Orientation="Horizontal">
                 
@@ -103,7 +121,7 @@
                 <Button IsDefault="True"
                         Command="{Binding SaveCommand}"
                         Background="{StaticResource GreenBrush}"
-                        Padding="8 5"
+                        Padding="6 5"
                         Margin="0 0 5 0"
                         Cursor="Hand"
                         VerticalAlignment="Center"
