@@ -70,7 +70,6 @@ namespace CoinFlipper.Web.Server
             // The error response for a failed login
             var errorResponse = new ApiResponse<RegisterResultApiModel>
             {
-                // TODO: Localize all strings
                 // Set error message
                 ErrorMessage = invalidErrorMessage
             };
@@ -199,7 +198,7 @@ namespace CoinFlipper.Web.Server
         }
 
         [AllowAnonymous]
-        [Route(ApiRoutes.Login)]
+        [Route(ApiRoutes.VerifyEmail)]
         [HttpGet]
         public async Task<ActionResult> VerifyEmailAsync(string userId, string emailToken)
         {
@@ -266,63 +265,7 @@ namespace CoinFlipper.Web.Server
         }
 
         /// <summary>
-        /// Attempts to update the users profile password 
-        /// </summary>
-        /// <param name="model">The user password details to update</param>
-        /// <returns>
-        /// Returns successful response if the update was successful, 
-        /// otherwise returns the error reasons for the failure
-        /// </returns>
-        [Route(ApiRoutes.UpdateUserPassword)]
-        public async Task<ApiResponse> UpdateUserPasswordAsync([FromBody]UpdateUserPasswordApiModel model)
-        {
-            #region Declare Variables
-
-            // Make a list of empty errors
-            var errors = new List<string>();
-
-            #endregion
-
-            #region Get User
-
-            // Get the current user
-            var user = await mUserManager.GetUserAsync(HttpContext.User);
-
-            // If we have no user...
-            if (user == null)
-                return new ApiResponse
-                {
-                    ErrorMessage = "User not found"
-                };
-
-            #endregion
-
-            #region Update Password
-
-            // Attempt to commit changes to data store
-            var result = await mUserManager.ChangePasswordAsync(user, model.CurrentPassword, model.NewPassword);
-
-            #endregion
-
-            #region Respond
-
-            // If we were successful...
-            if (result.Succeeded)
-                // Return successful response
-                return new ApiResponse();
-            // Otherwise if it failed...
-            else
-                // Return the failed response
-                return new ApiResponse
-                {
-                    ErrorMessage = result.Errors.AggregateErrors()
-                };
-
-            #endregion
-        }
-
-        /// <summary>
-        /// Attempts to update the users profile details 
+        /// Attempts to update the users profile details
         /// </summary>
         /// <param name="model">The user profile details to update</param>
         /// <returns>
@@ -330,7 +273,7 @@ namespace CoinFlipper.Web.Server
         /// otherwise returns the error reasons for the failure
         /// </returns>
         [Route(ApiRoutes.UpdateUserProfile)]
-        public async Task<ApiResponse> UpdateUserProfileAsync([FromBody] UpdateUserProfileApiModel model)
+        public async Task<ApiResponse> UpdateUserProfileAsync([FromBody]UpdateUserProfileApiModel model)
         {
             #region Declare Variables
 
@@ -399,6 +342,63 @@ namespace CoinFlipper.Web.Server
             if (result.Succeeded && emailChanged)
                 // Send email verification
                 await SendUserEmailVerificationAsync(user);
+
+            #endregion
+
+            #region Respond
+
+            // If we were successful...
+            if (result.Succeeded)
+                // Return successful response
+                return new ApiResponse();
+            // Otherwise if it failed...
+            else
+                // Return the failed response
+                return new ApiResponse
+                {
+                    ErrorMessage = result.Errors.AggregateErrors()
+                };
+
+            #endregion
+        }
+
+
+        /// <summary>
+        /// Attempts to update the users users password 
+        /// </summary>
+        /// <param name="model">The user password details to update</param>
+        /// <returns>
+        /// Returns successful response if the update was successful, 
+        /// otherwise returns the error reasons for the failure
+        /// </returns>
+        [Route(ApiRoutes.UpdateUserPassword)]
+        public async Task<ApiResponse> UpdateUserPasswordAsync([FromBody]UpdateUserPasswordApiModel model)
+        {
+            #region Declare Variables
+
+            // Make a list of empty errors
+            var errors = new List<string>();
+
+            #endregion
+
+            #region Get User
+
+            // Get the current user
+            var user = await mUserManager.GetUserAsync(HttpContext.User);
+
+            // If we have no user...
+            if (user == null)
+                return new ApiResponse
+                {
+                    ErrorMessage = "User not found"
+                };
+
+            #endregion
+
+            #region Update Password
+
+            // Attempt to commit changes to data store
+            var result = await mUserManager.ChangePasswordAsync(user, model.CurrentPassword, model.NewPassword);
 
             #endregion
 

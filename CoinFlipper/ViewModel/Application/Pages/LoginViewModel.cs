@@ -56,29 +56,19 @@ namespace CoinFlipper
         #region Commands Methods
 
         /// <summary>
-        /// Takes the user to the register page
+        /// Attempts to log the user in
         /// </summary>
-        /// <returns></returns>
-        public async Task RegisterAsync()
-        {
-            // Go to register page?
-            CoinFlipper.DI.ViewModelApplication.GoToPage(ApplicationPage.Register);
-
-            await Task.Delay(1);
-        }
-
-        /// <summary>
-        /// Takes the user to the login page
-        /// </summary>
+        /// <param name="parameter">The <see cref="SecureString"/> passed in from the view for the users password</param>
         /// <returns></returns>
         public async Task LoginAsync(object parameter)
         {
             await RunCommandAsync(() => LoginIsRunning, async () =>
             {
                 // Call the server and attempt to login with credentials
-                // TODO: Move all URLs and API routes to static class in core
                 var result = await WebRequests.PostAsync<ApiResponse<UserProfileDetailsApiModel>>(
-                    "http://localhost:5000/api/login",
+                    // Set URL
+                    RouteHelpers.GetAbsoluteRoute(ApiRoutes.Login),
+                    // Create api model
                     new LoginCredentialsApiModel
                     {
                         UsernameOrEmail = Email,
@@ -97,6 +87,18 @@ namespace CoinFlipper
                 // with the successful login
                 await CoinFlipper.DI.ViewModelApplication.HandleSuccessfulLoginAsync(loginResult);
             });
+        }
+
+        /// <summary>
+        /// Takes the user to the register page
+        /// </summary>
+        /// <returns></returns>
+        public async Task RegisterAsync()
+        {
+            // Go to register page?
+            CoinFlipper.DI.ViewModelApplication.GoToPage(ApplicationPage.Register);
+
+            await Task.Delay(1);
         }
 
         #endregion

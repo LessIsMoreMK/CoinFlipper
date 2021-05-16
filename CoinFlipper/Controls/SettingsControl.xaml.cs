@@ -1,4 +1,6 @@
-﻿using System.Windows.Controls;
+﻿using System.ComponentModel;
+using System.Windows.Controls;
+using static CoinFlipper.DI;
 
 namespace CoinFlipper
 {
@@ -12,7 +14,13 @@ namespace CoinFlipper
             InitializeComponent();
 
             // Set data context to settings view model
-            DataContext = CoinFlipper.DI.ViewModelSettings;
+
+            // If we are in design mode...
+            if (DesignerProperties.GetIsInDesignMode(this))
+                // Create new instance of settings view model
+                DataContext = new SettingsViewModel();
+            else
+                DataContext = ViewModelSettings;
         }
     }
 }
