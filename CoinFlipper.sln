@@ -7,9 +7,14 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CoinFlipper", "CoinFlipper\
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CoinFlipper.Core", "CoinFlipper.Core\CoinFlipper.Core.csproj", "{0B20AD92-16B3-48DB-B680-995295C2FA68}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CoinFlipper.Relational", "CoinFlipper.Relational\CoinFlipper.Relational.csproj", "{119A7197-6954-4CDE-94D0-E10F9E5BC423}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CoinFlipper.Relational", "CoinFlipper.Relational\CoinFlipper.Relational.csproj", "{119A7197-6954-4CDE-94D0-E10F9E5BC423}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CoinFlipper.Web.Server", "CoinFlipper.Web.Server\CoinFlipper.Web.Server.csproj", "{5D08984B-6168-4573-AAFF-A4D925A01A82}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{B298316A-7550-4431-A330-AE154C3E2315}"
+	ProjectSection(SolutionItems) = preProject
+		.editorconfig = .editorconfig
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
