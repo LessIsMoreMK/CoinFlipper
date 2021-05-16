@@ -1,6 +1,8 @@
 ﻿using CoinFlipper.Core;
+using Dna;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using static CoinFlipper.DI;
 
 namespace CoinFlipper
 {
@@ -9,6 +11,15 @@ namespace CoinFlipper
     /// </summary>
     public class SettingsViewModel : BaseViewModel
     {
+        #region Private Members
+
+        /// <summary>
+        /// The text to show while loading text
+        /// </summary>
+        private string mLoadingText = "...";
+
+        #endregion
+
         #region Public Properties
 
         /// <summary>
@@ -41,14 +52,14 @@ namespace CoinFlipper
         #region Public Commands
 
         /// <summary>
-        /// The command to close the settings menu
-        /// </summary>
-        public ICommand CloseCommand { get; set; }
-
-        /// <summary>
         /// The command to open the settings menu
         /// </summary>
         public ICommand OpenCommand { get; set; }
+
+        /// <summary>
+        /// The command to close the settings menu
+        /// </summary>
+        public ICommand CloseCommand { get; set; }
 
         /// <summary>
         /// The command to logout of the application
@@ -66,14 +77,14 @@ namespace CoinFlipper
         public ICommand LoadCommand { get; set; }
 
         /// <summary>
-        /// Saves the username name to the server
-        /// </summary>
-        public ICommand SaveUsernameCommand { get; set; }
-
-        /// <summary>
         /// Saves the current name to the server
         /// </summary>
         public ICommand SaveNameCommand { get; set; }
+
+        /// <summary>
+        /// Saves the current username to the server
+        /// </summary>
+        public ICommand SaveUsernameCommand { get; set; }
 
         /// <summary>
         /// Saves the current email to the server
@@ -89,66 +100,101 @@ namespace CoinFlipper
         /// </summary>
         public SettingsViewModel()
         {
+            // Create Name
+            Name = new TextEntryViewModel
+            {
+                Label = "Name",
+                OriginalText = mLoadingText,
+                CommitAction = SaveNameAsync
+            };
+
+            // Create Username
+            Username = new TextEntryViewModel
+            {
+                Label = "Username",
+                OriginalText = mLoadingText,
+                CommitAction = SaveUsernameAsync
+            };
+
+            // Create Password
+            Password = new PasswordEntryViewModel
+            {
+                Label = "Password",
+                FakePassword = "********",
+                CommitAction = SavePasswordAsync
+            };
+
+            // Create Email
+            Email = new TextEntryViewModel
+            {
+                Label = "Email",
+                OriginalText = mLoadingText,
+                CommitAction = SaveEmailAsync
+            };
+
             // Create commands
-            CloseCommand = new RelayCommand(Close);
             OpenCommand = new RelayCommand(Open);
-            LogoutCommand = new RelayCommand(Logout);
+            CloseCommand = new RelayCommand(Close);
+            LogoutCommand = new RelayCommand(async () => await LogoutAsync());
             ClearUserDataCommand = new RelayCommand(ClearUserData);
             LoadCommand = new RelayCommand(async () => await LoadAsync());
-            SaveUsernameCommand = new RelayCommand(async () => await SaveUsernameAsync());
             SaveNameCommand = new RelayCommand(async () => await SaveNameAsync());
+            SaveUsernameCommand = new RelayCommand(async () => await SaveUsernameAsync());
             SaveEmailCommand = new RelayCommand(async () => await SaveEmailAsync());
 
-            //TODO: get from localization
+            // TODO: Get from localization
             LogoutButtonText = "Logout";
         }
 
         #endregion
 
-        /// <summary>
-        /// Closes the settings menu
-        /// </summary>
-        public void Close()
-        {
-            // Close setting menu
-            CoinFlipper.DI.ViewModelApplication.SettingsMenuVisible = false;
-        }
+        #region Command Methods
 
         /// <summary>
         /// Open the settings menu
         /// </summary>
         public void Open()
         {
-            // Open the setting menu
-            CoinFlipper.DI.ViewModelApplication.SettingsMenuVisible = true;
+            // Close settings menu
+            ViewModelApplication.SettingsMenuVisible = true;
+        }
+
+        /// <summary>
+        /// Closes the settings menu
+        /// </summary>
+        public void Close()
+        {
+            // Close settings menu
+            ViewModelApplication.SettingsMenuVisible = false;
         }
 
         /// <summary>
         /// Logs the user out
         /// </summary>
-        public void Logout()
+        public async Task LogoutAsync()
         {
-            // TODO: confirm logout
+            // TODO: Confirm the user wants to logout
 
-            // TODO: Clear any user data/cache
+            // Clear any user data/cache
+            await ClientDataStore.ClearAllLoginCredentialsAsync();
 
-            // Clean all application level view model that contain any information about current user
+            // Clean all application level view models that contain
+            // any information about the current user
             ClearUserData();
 
             // Go to login page
-            CoinFlipper.DI.ViewModelApplication.GoToPage(ApplicationPage.Login);
+            ViewModelApplication.GoToPage(ApplicationPage.Login);
         }
 
         /// <summary>
-        /// Clear any data specific to the current user
+        /// Clears any data specific to the current user
         /// </summary>
         public void ClearUserData()
         {
-            // Clear all view models containing the user info
-            Name = null;
-            Username = null;
-            Password = null;
-            Email = null;
+            // Clear all view models containing the users info
+            Name.OriginalText = mLoadingText;
+            Username.OriginalText = mLoadingText;
+            Email.OriginalText = mLoadingText;
         }
 
         /// <summary>
@@ -156,42 +202,48 @@ namespace CoinFlipper
         /// </summary>
         public async Task LoadAsync()
         {
-            // Get the stored credentials
-            var storedCredentials = await CoinFlipper.DI.ClientDataStore.GetLoginCredentialsAsync();
+            // Update values from local cache
+            await UpdateValuesFromLocalStoreAsync();
 
-            Name = new TextEntryViewModel
+            // Get the user token
+            var token = (await ClientDataStore.GetLoginCredentialsAsync()).Token;
+
+            // If we don't have a token (so we are not logged in...)
+            if (string.IsNullOrEmpty(token))
+                // Then do nothing more
+                return;
+
+            // Load user profile details form server
+            var result = await WebRequests.PostAsync<ApiResponse<UserProfileDetailsApiModel>>(
+                "http://localhost:5000/api/user/profile",
+                bearerToken: token);
+
+            // If it was successful...
+            if (result.Successful)
             {
-                Label = "Name",
-                OriginalText = $"{storedCredentials?.FirstName} {storedCredentials?.LastName}",
-                CommitAction = SaveNameAsync
-            };
-            Username = new TextEntryViewModel 
-            { 
-                Label = "Username", 
-                OriginalText = storedCredentials?.Username,
-                CommitAction = SaveUsernameAsync
-            };
-            Password = new PasswordEntryViewModel 
-            { 
-                Label = "Password", 
-                FakePassword = "********",
-                CommitAction = SavePasswordAsync
-            };
-            Email = new TextEntryViewModel 
-            { 
-                Label = "Email", 
-                OriginalText = storedCredentials?.Email,
-                CommitAction = SaveEmailAsync
-            };
+                // TODO: Should we check if the values are different before saving?
+
+                // Create data model from the response
+                var dataModel = result.ServerResponse.Response.ToLoginCredentialsDataModel();
+
+                // Re-add our known token
+                dataModel.Token = token;
+
+                // Save the new information in the data store
+                await ClientDataStore.SaveLoginCredentialsAsync(dataModel);
+
+                // Update values from local cache
+                await UpdateValuesFromLocalStoreAsync();
+            }
         }
 
         /// <summary>
-        /// Saves the new Username to the server
+        /// Saves the new Name to the server
         /// </summary>
-        /// <returns>Return true if successful, false otherwise</returns>
-        public async Task<bool> SaveUsernameAsync()
+        /// <returns>Returns true if successful, false otherwise</returns>
+        public async Task<bool> SaveNameAsync()
         {
-            // Update with server
+            // TODO: Update with server
             await Task.Delay(3000);
 
             // Return fail
@@ -199,12 +251,12 @@ namespace CoinFlipper
         }
 
         /// <summary>
-        /// Saves the new Name to the server
+        /// Saves the new Username to the server
         /// </summary>
-        /// <returns>Return true if successful, false otherwise</returns>
-        public async Task<bool> SaveNameAsync()
+        /// <returns>Returns true if successful, false otherwise</returns>
+        public async Task<bool> SaveUsernameAsync()
         {
-            // Update with server
+            // TODO: Update with server
             await Task.Delay(3000);
 
             // Return success
@@ -214,28 +266,54 @@ namespace CoinFlipper
         /// <summary>
         /// Saves the new Email to the server
         /// </summary>
-        /// <returns>Return true if successful, false otherwise</returns>
+        /// <returns>Returns true if successful, false otherwise</returns>
         public async Task<bool> SaveEmailAsync()
         {
-            // Update with server
+            // TODO: Update with server
             await Task.Delay(3000);
 
             // Return fail
             return false;
         }
+
 
         /// <summary>
         /// Saves the new Password to the server
         /// </summary>
-        /// <returns>Return true if successful, false otherwise</returns>
+        /// <returns>Returns true if successful, false otherwise</returns>
         public async Task<bool> SavePasswordAsync()
         {
-            // Update with server
+            // TODO: Update with server
             await Task.Delay(3000);
 
             // Return fail
             return false;
         }
 
+        #endregion
+
+        #region Private Helper Methods
+
+        /// <summary>
+        /// Loads the settings from the local data store and binds them 
+        /// to this view model
+        /// </summary>
+        /// <returns></returns>
+        private async Task UpdateValuesFromLocalStoreAsync()
+        {
+            // Get the stored credentials
+            var storedCredentials = await ClientDataStore.GetLoginCredentialsAsync();
+
+            // Set name
+            Name.OriginalText = $"{storedCredentials?.FirstName} {storedCredentials?.LastName}";
+
+            // Set username
+            Username.OriginalText = storedCredentials?.Username;
+
+            // Set email
+            Email.OriginalText = storedCredentials?.Email;
+        }
+
+        #endregion
     }
 }

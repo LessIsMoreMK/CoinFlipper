@@ -1,0 +1,6 @@
+diff a/CoinFlipper/WPFViewModels/WindowViewModel.cs b/CoinFlipper/WPFViewModels/WindowViewModel.cs	(rejected hunks)
+@@ -2,4 +1,3 @@
+-using System.Windows;
+ ﻿using System.Windows;
+ using System.Windows.Input;
+ 

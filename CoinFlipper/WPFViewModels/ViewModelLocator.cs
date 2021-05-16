@@ -1,4 +1,6 @@
-﻿namespace CoinFlipper
+﻿using static CoinFlipper.DI;
+
+namespace CoinFlipper
 {
     /// <summary>
     /// Locates view models from the IoC for use in binding in Xaml files
@@ -15,12 +17,12 @@
         /// <summary>
         /// The application view model
         /// </summary>
-        public static ApplicationViewModel ApplicationViewModel => CoinFlipper.DI.ViewModelApplication;
+        public ApplicationViewModel ApplicationViewModel => ViewModelApplication;
 
         /// <summary>
         /// The settings view model
         /// </summary>
-        public static SettingsViewModel SettingsViewModel => CoinFlipper.DI.ViewModelSettings;
+        public SettingsViewModel SettingsViewModel => ViewModelSettings;
 
         #endregion
     }

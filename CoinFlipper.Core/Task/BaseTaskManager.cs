@@ -14,7 +14,7 @@ namespace CoinFlipper.Core
     {
         #region Task Methods
 
-        public async Task Run(Func<Task> function, [CallerMemberName]string origin = "", [CallerFilePath]string filePath = "", [CallerLineNumber]int lineNumber = 0)
+        public async Task Run(Func<Task> function, [CallerMemberName] string origin = "", [CallerFilePath] string filePath = "", [CallerLineNumber] int lineNumber = 0)
         {
             try
             {
@@ -31,7 +31,16 @@ namespace CoinFlipper.Core
             }
         }
 
-        public async Task<TResult> Run<TResult>(Func<Task<TResult>> function, CancellationToken cancellationToken, [CallerMemberName]string origin = "", [CallerFilePath]string filePath = "", [CallerLineNumber]int lineNumber = 0)
+        public async void RunAndForget(Func<Task> function, [CallerMemberName] string origin = "", [CallerFilePath] string filePath = "", [CallerLineNumber] int lineNumber = 0)
+        {
+            try
+            {
+                await Run(function, origin, filePath, lineNumber);
+            }
+            catch { }
+        }
+
+        public async Task<TResult> Run<TResult>(Func<Task<TResult>> function, CancellationToken cancellationToken, [CallerMemberName] string origin = "", [CallerFilePath] string filePath = "", [CallerLineNumber] int lineNumber = 0)
         {
             try
             {
@@ -48,7 +57,7 @@ namespace CoinFlipper.Core
             }
         }
 
-        public async Task<TResult> Run<TResult>(Func<Task<TResult>> function, [CallerMemberName]string origin = "", [CallerFilePath]string filePath = "", [CallerLineNumber]int lineNumber = 0)
+        public async Task<TResult> Run<TResult>(Func<Task<TResult>> function, [CallerMemberName] string origin = "", [CallerFilePath] string filePath = "", [CallerLineNumber] int lineNumber = 0)
         {
             try
             {
@@ -65,7 +74,7 @@ namespace CoinFlipper.Core
             }
         }
 
-        public async Task<TResult> Run<TResult>(Func<TResult> function, CancellationToken cancellationToken, [CallerMemberName]string origin = "", [CallerFilePath]string filePath = "", [CallerLineNumber]int lineNumber = 0)
+        public async Task<TResult> Run<TResult>(Func<TResult> function, CancellationToken cancellationToken, [CallerMemberName] string origin = "", [CallerFilePath] string filePath = "", [CallerLineNumber] int lineNumber = 0)
         {
             try
             {
@@ -82,7 +91,7 @@ namespace CoinFlipper.Core
             }
         }
 
-        public async Task<TResult> Run<TResult>(Func<TResult> function, [CallerMemberName]string origin = "", [CallerFilePath]string filePath = "", [CallerLineNumber]int lineNumber = 0)
+        public async Task<TResult> Run<TResult>(Func<TResult> function, [CallerMemberName] string origin = "", [CallerFilePath] string filePath = "", [CallerLineNumber] int lineNumber = 0)
         {
             try
             {
@@ -99,7 +108,7 @@ namespace CoinFlipper.Core
             }
         }
 
-        public async Task Run(Func<Task> function, CancellationToken cancellationToken, [CallerMemberName]string origin = "", [CallerFilePath]string filePath = "", [CallerLineNumber]int lineNumber = 0)
+        public async Task Run(Func<Task> function, CancellationToken cancellationToken, [CallerMemberName] string origin = "", [CallerFilePath] string filePath = "", [CallerLineNumber] int lineNumber = 0)
         {
             try
             {
@@ -116,7 +125,16 @@ namespace CoinFlipper.Core
             }
         }
 
-        public async Task Run(Action action, CancellationToken cancellationToken, [CallerMemberName]string origin = "", [CallerFilePath]string filePath = "", [CallerLineNumber]int lineNumber = 0)
+        public async void RunAndForget(Func<Task> function, CancellationToken cancellationToken, [CallerMemberName] string origin = "", [CallerFilePath] string filePath = "", [CallerLineNumber] int lineNumber = 0)
+        {
+            try
+            {
+                await Run(function, origin, filePath, lineNumber);
+            }
+            catch { }
+        }
+
+        public async Task Run(Action action, CancellationToken cancellationToken, [CallerMemberName] string origin = "", [CallerFilePath] string filePath = "", [CallerLineNumber] int lineNumber = 0)
         {
             try
             {
@@ -132,8 +150,16 @@ namespace CoinFlipper.Core
                 throw;
             }
         }
+        public async void RunAndForget(Action action, CancellationToken cancellationToken, [CallerMemberName] string origin = "", [CallerFilePath] string filePath = "", [CallerLineNumber] int lineNumber = 0)
+        {
+            try
+            {
+                await Run(action, origin, filePath, lineNumber);
+            }
+            catch { }
+        }
 
-        public async Task Run(Action action, [CallerMemberName]string origin = "", [CallerFilePath]string filePath = "", [CallerLineNumber]int lineNumber = 0)
+        public async Task Run(Action action, [CallerMemberName] string origin = "", [CallerFilePath] string filePath = "", [CallerLineNumber] int lineNumber = 0)
         {
             try
             {
@@ -148,6 +174,15 @@ namespace CoinFlipper.Core
                 // Throw it as normal
                 throw;
             }
+        }
+
+        public async void RunAndForget(Action action, [CallerMemberName] string origin = "", [CallerFilePath] string filePath = "", [CallerLineNumber] int lineNumber = 0)
+        {
+            try
+            {
+                await Run(action, origin, filePath, lineNumber);
+            }
+            catch { }
         }
 
         #endregion

@@ -1,4 +1,4 @@
-﻿using System.Windows;
+using System.Windows;
 using System.Windows.Input;
 
 namespace CoinFlipper
@@ -8,7 +8,7 @@ namespace CoinFlipper
     /// </summary>
     public class WindowViewModel : BaseViewModel
     {
-        #region Private Members
+        #region Private Member
 
         /// <summary>
         /// The window this view model controls
@@ -47,12 +47,13 @@ namespace CoinFlipper
         /// <summary>
         /// The smallest height the window can go to
         /// </summary>
-        public double WindowMinimumHeight { get; set; } = 500;
+        public double WindowMinimumHeight { get; set; } = 600;
 
         /// <summary>
         /// True if the window is currently being moved/dragged
         /// </summary>
         public bool BeingMoved { get; set; }
+
 
         /// <summary>
         /// True if the window should be borderless because it is docked or maximized
@@ -111,7 +112,6 @@ namespace CoinFlipper
         /// The height of the title bar / caption of the window
         /// </summary>
         public int TitleHeight { get; set; } = 30;
-
         /// <summary>
         /// The height of the title bar / caption of the window
         /// </summary>
@@ -232,6 +232,7 @@ namespace CoinFlipper
             OnPropertyChanged(nameof(WindowRadius));
             OnPropertyChanged(nameof(WindowCornerRadius));
         }
+
 
         #endregion
     }

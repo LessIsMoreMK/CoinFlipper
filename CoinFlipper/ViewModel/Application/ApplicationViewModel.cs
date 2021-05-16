@@ -1,5 +1,7 @@
 ﻿using CoinFlipper.Core;
 using System.Threading.Tasks;
+using static CoinFlipper.DI;
+using static CoinFlipper.Core.CoreDI;
 
 namespace CoinFlipper
 {
@@ -8,6 +10,17 @@ namespace CoinFlipper
     /// </summary>
     public class ApplicationViewModel : BaseViewModel
     {
+        #region Private Members
+
+        /// <summary>
+        /// True if the settings menu should be shown
+        /// </summary>
+        private bool mSettingsMenuVisible;
+
+        #endregion
+
+        #region Public Properties
+
         /// <summary>
         /// The current page of the application
         /// </summary>
@@ -16,20 +29,40 @@ namespace CoinFlipper
         /// <summary>
         /// The view model to use for the current page when the CurrentPage changes
         /// NOTE: This is not a live up-to-date view model of the current page
-        ///         it is simply used to set the view model of the current page
-        ///         at the time it changes
+        ///       it is simply used to set the view model of the current page 
+        ///       at the time it changes
         /// </summary>
         public BaseViewModel CurrentPageViewModel { get; set; }
 
         /// <summary>
         /// True if the side menu should be shown
         /// </summary>
-        public bool SideMenuVisible { get; set; }
+        public bool SideMenuVisible { get; set; } = false;
 
         /// <summary>
         /// True if the settings menu should be shown
         /// </summary>
-        public bool SettingsMenuVisible { get; set; }
+        public bool SettingsMenuVisible
+        {
+            get => mSettingsMenuVisible;
+            set
+            {
+                // If property has not changed...
+                if (mSettingsMenuVisible == value)
+                    // Ignore
+                    return;
+
+                // Set the backing field
+                mSettingsMenuVisible = value;
+
+                // If the settings menu is now visible...
+                if (value)
+                    // Reload settings
+                    TaskManager.RunAndForget(ViewModelSettings.LoadAsync);
+            }
+        }
+
+        #endregion
 
         /// <summary>
         /// Navigates to the specified page
@@ -57,29 +90,23 @@ namespace CoinFlipper
 
             // Show side menu or not?
             SideMenuVisible = page == ApplicationPage.Chat;
+
         }
 
         /// <summary>
         /// Handles what happens when we have successfully logged in
         /// </summary>
         /// <param name="loginResult">The results from the successful login</param>
-        public async Task HandleSuccessfulLoginAsync(LoginResultApiModel loginResult)
+        public async Task HandleSuccessfulLoginAsync(UserProfileDetailsApiModel loginResult)
         {
             // Store this in the client data store
-            await CoinFlipper.DI.ClientDataStore.SaveLoginCredentialsAsync(new LoginCredentialsDataModel
-            {
-                Email = loginResult.Email,
-                FirstName = loginResult.FirstName,
-                LastName = loginResult.LastName,
-                Username = loginResult.Username,
-                Token = loginResult.Token
-            });
+            await ClientDataStore.SaveLoginCredentialsAsync(loginResult.ToLoginCredentialsDataModel());
 
             // Load new settings
-            await CoinFlipper.DI.ViewModelSettings.LoadAsync();
+            await ViewModelSettings.LoadAsync();
 
             // Go to chat page
-            CoinFlipper.DI.ViewModelApplication.GoToPage(ApplicationPage.Chat);
+            ViewModelApplication.GoToPage(ApplicationPage.Chat);
         }
     }
 }

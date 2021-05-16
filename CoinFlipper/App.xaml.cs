@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using static CoinFlipper.DI;
 using static Dna.FrameworkDI;
+using static CoinFlipper.Core.CoreDI;
 
 namespace CoinFlipper
 {
@@ -59,7 +60,7 @@ namespace CoinFlipper
             await ClientDataStore.EnsureDataStoreAsync();
 
             // Load new settings
-            await ViewModelSettings.LoadAsync();
+            TaskManager.RunAndForget(ViewModelSettings.LoadAsync);
         }
     }
 }

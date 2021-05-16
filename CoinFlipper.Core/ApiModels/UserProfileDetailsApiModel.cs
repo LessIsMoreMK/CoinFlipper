@@ -1,15 +1,16 @@
 ﻿namespace CoinFlipper.Core
 {
     /// <summary>
-    /// The result of a login request via API
+    /// The result of a login request or get user profile details request via API
     /// </summary>
-    public class LoginResultApiModel
+    public class UserProfileDetailsApiModel
     {
         #region Public Properties
 
         /// <summary>
         /// The authentication token used to stay authenticated through future requests
         /// </summary>
+        /// <remarks>The Token is only provided when called from the login methods</remarks>
         public string Token { get; set; }
 
         /// <summary>
@@ -39,9 +40,30 @@
         /// <summary>
         /// Default constructor
         /// </summary>
-        public LoginResultApiModel()
+        public UserProfileDetailsApiModel()
         {
 
+        }
+
+        #endregion
+
+        #region Public Helper Methods
+
+        /// <summary>
+        /// Creates a new <see cref="LoginCredentialsDataModel"/>
+        /// from this model
+        /// </summary>
+        /// <returns></returns>
+        public LoginCredentialsDataModel ToLoginCredentialsDataModel()
+        {
+            return new LoginCredentialsDataModel
+            {
+                Email = Email,
+                FirstName = FirstName,
+                LastName = LastName,
+                Username = Username,
+                Token = Token
+            };
         }
 
         #endregion
