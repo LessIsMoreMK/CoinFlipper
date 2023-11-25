@@ -1,0 +1,32 @@
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.9.34310.174
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CoinFlipper.AppHost", "CoinFlipper.AppHost\CoinFlipper.AppHost.csproj", "{BB1F781D-6EBF-40E2-BDD7-A47358F7FDAF}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CoinFlipper.ServiceDefaults", "CoinFlipper.ServiceDefaults\CoinFlipper.ServiceDefaults.csproj", "{93E5CC89-7692-4AE6-809C-B5C4EA92FF7C}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Modules", "Modules", "{A92F4059-91CA-43E9-A2CE-AA12A44EFA83}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{BB1F781D-6EBF-40E2-BDD7-A47358F7FDAF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BB1F781D-6EBF-40E2-BDD7-A47358F7FDAF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BB1F781D-6EBF-40E2-BDD7-A47358F7FDAF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BB1F781D-6EBF-40E2-BDD7-A47358F7FDAF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{93E5CC89-7692-4AE6-809C-B5C4EA92FF7C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{93E5CC89-7692-4AE6-809C-B5C4EA92FF7C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{93E5CC89-7692-4AE6-809C-B5C4EA92FF7C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{93E5CC89-7692-4AE6-809C-B5C4EA92FF7C}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {8385AB92-B72E-47B3-BD55-D8ABD65605AB}
+	EndGlobalSection
+EndGlobal
