@@ -1,0 +1,22 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <IsAspireHost>true</IsAspireHost>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Aspire.Hosting" Version="8.0.0-preview.1.23557.2" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\Modules\CoinFlipper.Access\CoinFlipper.Access.Api\CoinFlipper.Access.Api.csproj" />
+    <ProjectReference Include="..\..\Modules\CoinFlipper.Notification\CoinFlipper.Notification.Api\CoinFlipper.Notification.Api.csproj" />
+    <ProjectReference Include="..\..\Modules\CoinFlipper.SwissArmy\CoinFlipper.SwissArmy.Api\CoinFlipper.SwissArmy.Api.csproj" />
+    <ProjectReference Include="..\..\Modules\CoinFlipper.Tracer\CoinFlipper.Tracer.Api\CoinFlipper.Tracer.Api.csproj" />
+  </ItemGroup>
+
+</Project>
