@@ -2,6 +2,7 @@
 using CoinFlipper.ServiceDefaults.Application.Events;
 using CoinFlipper.ServiceDefaults.Application.Queries;
 using CoinFlipper.ServiceDefaults.Attributes;
+using CoinFlipper.ServiceDefaults.Logging;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 
@@ -20,6 +21,15 @@ public static class ApplicationExtensions
             .AddInMemoryEventDispatcher()
             .AddQueryHandlers()
             .AddInMemoryQueryDispatcher();
+    }
+    
+    public static IHostApplicationBuilder AddLoggingDecorators(this IHostApplicationBuilder builder)
+    {
+        builder.Services.Decorate(typeof(IQueryHandler<,>), typeof(QueryHandlerLoggingDecorator<,>));
+        builder.Services.Decorate(typeof(ICommand), typeof(CommandHandlerLoggingDecorator<>));
+        builder.Services.Decorate(typeof(IEvent), typeof(EventHandlerLoggingDecorator<>));
+
+        return builder;
     }
     
     #endregion

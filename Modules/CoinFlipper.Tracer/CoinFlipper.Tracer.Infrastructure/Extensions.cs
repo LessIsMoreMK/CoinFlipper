@@ -20,6 +20,8 @@ public static class Extensions
 
     public static IHostApplicationBuilder AddInfrastructure(this IHostApplicationBuilder builder)
     {
+        builder.AddNpgsqlDbContext<ApplicationDbContext>("db");
+        
         return builder;
     }
 }
