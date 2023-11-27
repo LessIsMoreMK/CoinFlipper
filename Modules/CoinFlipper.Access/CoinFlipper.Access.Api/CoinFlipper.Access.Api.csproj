@@ -8,7 +8,6 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\..\..\Core\CoinFlipper.ServiceDefaults\CoinFlipper.ServiceDefaults.csproj" />
       <ProjectReference Include="..\CoinFlipper.Access.Infrastructure\CoinFlipper.Access.Infrastructure.csproj" />
     </ItemGroup>
 
