@@ -2,11 +2,11 @@
 using CoinFlipper.ServiceDefaults.Application.Events;
 using CoinFlipper.ServiceDefaults.Application.Queries;
 using CoinFlipper.ServiceDefaults.Attributes;
-using CoinFlipper.ServiceDefaults.Logging;
+using CoinFlipper.ServiceDefaults.Logging.Decorators;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 
-namespace CoinFlipper.ServiceDefaults.Application;
+namespace CoinFlipper.ServiceDefaults;
 
 public static class ApplicationExtensions
 {
@@ -25,9 +25,14 @@ public static class ApplicationExtensions
     
     public static IHostApplicationBuilder AddLoggingDecorators(this IHostApplicationBuilder builder)
     {
-        builder.Services.Decorate(typeof(IQueryHandler<,>), typeof(QueryHandlerLoggingDecorator<,>));
-        builder.Services.Decorate(typeof(ICommand), typeof(CommandHandlerLoggingDecorator<>));
-        builder.Services.Decorate(typeof(IEvent), typeof(EventHandlerLoggingDecorator<>));
+        if (builder.Services.Any(sd => sd.ServiceType.IsGenericType && sd.ServiceType.GetGenericTypeDefinition() == typeof(IQueryHandler<,>)))
+            builder.Services.Decorate(typeof(IQueryHandler<,>), typeof(QueryHandlerLoggingDecorator<,>));
+        
+        if (builder.Services.Any(sd => sd.ServiceType.IsGenericType && sd.ServiceType.GetGenericTypeDefinition() == typeof(ICommandHandler<>)))
+            builder.Services.Decorate(typeof(ICommandHandler<>), typeof(CommandHandlerLoggingDecorator<>));
+        
+        if (builder.Services.Any(sd => sd.ServiceType.IsGenericType && sd.ServiceType.GetGenericTypeDefinition() == typeof(IEventHandler<>)))
+            builder.Services.Decorate(typeof(IEventHandler<>), typeof(EventHandlerLoggingDecorator<>));
 
         return builder;
     }

@@ -1,10 +1,10 @@
 ﻿using System.Text.Json;
 using CoinFlipper.ServiceDefaults.Application.Queries;
 using CoinFlipper.ServiceDefaults.Attributes;
-using CoinFlipper.ServiceDefaults.Settings;
+using CoinFlipper.ServiceDefaults.Options;
 using Microsoft.Extensions.Logging;
 
-namespace CoinFlipper.ServiceDefaults.Logging;
+namespace CoinFlipper.ServiceDefaults.Logging.Decorators;
 
 [Decorator]
 internal sealed class QueryHandlerLoggingDecorator<TQuery, TResult>(
@@ -14,7 +14,7 @@ internal sealed class QueryHandlerLoggingDecorator<TQuery, TResult>(
 {
     public async Task<TResult> HandleAsync(TQuery query, CancellationToken cancellationToken = default)
     {
-        var queryJson = JsonSerializer.Serialize(query, JsonSettings.DefaultSettings);
+        var queryJson = JsonSerializer.Serialize(query, JsonOptions.DefaultOptions);
 
         try
         {

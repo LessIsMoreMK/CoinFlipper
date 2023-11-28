@@ -1,4 +1,5 @@
-﻿using CoinFlipper.ServiceDefaults.Application;
+﻿using CoinFlipper.ServiceDefaults;
+using CoinFlipper.ServiceDefaults.Application;
 using Microsoft.Extensions.Hosting;
 
 namespace CoinFlipper.Tracer.Application;

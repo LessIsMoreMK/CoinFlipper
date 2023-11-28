@@ -1,10 +1,10 @@
 ﻿using System.Text.Json;
 using CoinFlipper.ServiceDefaults.Application.Events;
 using CoinFlipper.ServiceDefaults.Attributes;
-using CoinFlipper.ServiceDefaults.Settings;
+using CoinFlipper.ServiceDefaults.Options;
 using Microsoft.Extensions.Logging;
 
-namespace CoinFlipper.ServiceDefaults.Logging;
+namespace CoinFlipper.ServiceDefaults.Logging.Decorators;
 
 [Decorator]
 internal sealed class EventHandlerLoggingDecorator<TEvent>(
@@ -14,7 +14,7 @@ internal sealed class EventHandlerLoggingDecorator<TEvent>(
 {
 	public async Task HandleAsync(TEvent e, CancellationToken cancellationToken = default)
 	{
-		var eventJson = JsonSerializer.Serialize(e, JsonSettings.DefaultSettings);
+		var eventJson = JsonSerializer.Serialize(e, JsonOptions.DefaultOptions);
 
 		logger.LogInformation("Handling an event: {Event} {EventJson}", typeof(TEvent).Name, eventJson);
 

@@ -1,10 +1,10 @@
 ﻿using System.Text.Json;
 using CoinFlipper.ServiceDefaults.Application.Commands;
 using CoinFlipper.ServiceDefaults.Attributes;
-using CoinFlipper.ServiceDefaults.Settings;
+using CoinFlipper.ServiceDefaults.Options;
 using Microsoft.Extensions.Logging;
 
-namespace CoinFlipper.ServiceDefaults.Logging;
+namespace CoinFlipper.ServiceDefaults.Logging.Decorators;
 
 [Decorator]
 internal sealed class CommandHandlerLoggingDecorator<TCommand>(
@@ -14,7 +14,7 @@ internal sealed class CommandHandlerLoggingDecorator<TCommand>(
 {
     public async Task HandleAsync(TCommand command, CancellationToken cancellationToken = default)
     {
-        var commandJson = JsonSerializer.Serialize(command, JsonSettings.DefaultSettings);
+        var commandJson = JsonSerializer.Serialize(command, JsonOptions.DefaultOptions);
 
         logger.LogInformation("Handling a command: {Command} {CommandJson}", typeof(TCommand).Name, commandJson);
 
