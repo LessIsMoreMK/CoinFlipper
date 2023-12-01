@@ -28,9 +28,6 @@ public static class Extensions
             http.UseServiceDiscovery();
         });
         
-        
-
-
         return builder;
     }
     

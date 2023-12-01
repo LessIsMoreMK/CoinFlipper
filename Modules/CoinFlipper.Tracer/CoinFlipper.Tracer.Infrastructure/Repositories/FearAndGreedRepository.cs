@@ -24,14 +24,11 @@ public class FearAndGreedRepository : IFearAndGreedRepository
     
     public async Task<List<FearAndGreed>> GetLastXFearAndGreedAsync(int limit)
     {
-        return new List<FearAndGreed>() { new FearAndGreed()
-        {
-            Value = 1
-        }};
-        
+        //TODO: Deal with performance when there are a lot of records. 
         var result = await _dbContext.Set<FearAndGreedDb>()
-            .TakeLast(limit)
             .AsNoTracking()
+            .OrderByDescending(x => x.DateTime)
+            .Take(limit)
             .ToListAsync();
         
         return result?.Adapt<List<FearAndGreed>>() ?? new List<FearAndGreed>();
