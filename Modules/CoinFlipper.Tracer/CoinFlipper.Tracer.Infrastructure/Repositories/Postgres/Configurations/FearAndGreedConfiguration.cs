@@ -1,5 +1,5 @@
+using CoinFlipper.Shared.DateTimeHelpers;
 using CoinFlipper.Tracer.Infrastructure.Repositories.Models;
-using CoinFlipper.Tracer.Infrastructure.Repositories.Postgres.Extensions;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 

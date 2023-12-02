@@ -7,13 +7,16 @@ namespace CoinFlipper.Tracer.Application.Queries.FearAndGreed.Handlers;
 
 public class GetFearAndGreedIndexHandler(
     IFearAndGreedRepository fearAndGreedRepository
-    ) : IQueryHandler<GetFearAndGreedRequest, List<FearAndGreedDto>>
+    ) : IQueryHandler<GetFearAndGreedRequest, GetFearAndGreedResponse>
 {
-    public async Task<List<FearAndGreedDto>> HandleAsync(
+    public async Task<GetFearAndGreedResponse> HandleAsync(
         GetFearAndGreedRequest query, CancellationToken cancellationToken = default)
     {
         var result = await fearAndGreedRepository.GetLastXFearAndGreedAsync(query.Limit);
 
-        return result?.Adapt<List<FearAndGreedDto>>() ?? new List<FearAndGreedDto>();
+        return new GetFearAndGreedResponse()
+        {
+            FearAndGreedDtos = result?.Adapt<List<FearAndGreedDto>>() ?? new List<FearAndGreedDto>()
+        };
     }
 }

@@ -7,6 +7,4 @@ public class FearAndGreedDto
     public int Value { get; set; }
     
     public string Classification { get; set; } = null!;
-
-    public const string Source = "https://alternative.me";
 }

@@ -2,6 +2,7 @@
 using CoinFlipper.ServiceDefaults.Application.Queries;
 using CoinFlipper.Tracer.Application.Dtos;
 using CoinFlipper.Tracer.Application.Queries.FearAndGreed;
+using CoinFlipper.Tracer.Application.Queries.FearAndGreed.Handlers;
 using CoinFlipper.Tracer.Infrastructure.Repositories.Postgres.DbContext;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
@@ -28,7 +29,7 @@ public static class Endpoints
         app.MapGet($"/{BasePath}/fear-and-greed-index", async (IQueryDispatcher queryDispatcher, int limit) =>
         {
             var query = new GetFearAndGreedRequest { Limit = limit };
-            var result = await queryDispatcher.QueryAsync<GetFearAndGreedRequest, List<FearAndGreedDto>>(query);
+            var result = await queryDispatcher.QueryAsync<GetFearAndGreedRequest, GetFearAndGreedResponse>(query);
             return Results.Ok(result);
         });
         

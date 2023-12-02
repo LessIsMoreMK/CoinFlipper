@@ -1,8 +1,8 @@
-using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
+﻿using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
-namespace CoinFlipper.Tracer.Infrastructure.Repositories.Postgres.Extensions;
+namespace CoinFlipper.Shared.DateTimeHelpers;
 
-internal class DateTimeKindValueConverter : ValueConverter<DateTime, DateTime>
+public class DateTimeKindValueConverter : ValueConverter<DateTime, System.DateTime>
 {
     public DateTimeKindValueConverter(DateTimeKind kind, ConverterMappingHints? mappingHints = null)
         : base(v => DateTime.SpecifyKind(v, kind), v => DateTime.SpecifyKind(v, kind), mappingHints)

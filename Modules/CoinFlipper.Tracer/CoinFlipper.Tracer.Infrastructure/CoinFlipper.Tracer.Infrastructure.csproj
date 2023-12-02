@@ -14,4 +14,9 @@
       <Folder Include="Migrations\" />
     </ItemGroup>
 
+    <ItemGroup>
+      <PackageReference Include="Hangfire.AspNetCore" Version="1.8.6" />
+      <PackageReference Include="Hangfire.InMemory" Version="0.6.0" />
+    </ItemGroup>
+
 </Project>

@@ -7,7 +7,7 @@ using Microsoft.Extensions.Logging;
 namespace CoinFlipper.Tracer.Infrastructure.Clients;
 
 public class FearAndGreedIndexClient(
-    ILogger logger
+    ILogger<FearAndGreedIndexClient> logger
     ) : IFearAndGreedIndexClient
 {
     #region Setup
