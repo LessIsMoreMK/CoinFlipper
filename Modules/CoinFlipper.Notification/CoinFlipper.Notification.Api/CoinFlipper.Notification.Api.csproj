@@ -8,7 +8,13 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\CoinFlipper.Notification.Infrastructure\CoinFlipper.Notification.Infrastructure.csproj" />
+        <ProjectReference Include="..\CoinFlipper.Notification.Infrastructure\CoinFlipper.Notification.Infrastructure.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <Content Include="appsettings.json">
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        </Content>
     </ItemGroup>
 
 </Project>
