@@ -1,6 +1,5 @@
 ﻿using CoinFlipper.ServiceDefaults;
 using CoinFlipper.ServiceDefaults.Application.Queries;
-using CoinFlipper.Tracer.Application.Dtos;
 using CoinFlipper.Tracer.Application.Queries.FearAndGreed;
 using CoinFlipper.Tracer.Application.Queries.FearAndGreed.Handlers;
 using CoinFlipper.Tracer.Infrastructure.Repositories.Postgres.DbContext;
@@ -18,8 +17,9 @@ public static class Endpoints
     public static WebApplication MapEndpoints(this WebApplication app)
     {
         app.MapDefaultEndpoints();
+        app.MapInfrastructureEndpoints();
+        
         app.MapFearAndGreedEndpoints();
-        app.InitializeDatabase();
         
         return app;
     }
@@ -36,15 +36,24 @@ public static class Endpoints
         return app;
     }
     
-    private static WebApplication InitializeDatabase(this WebApplication app)
+    private static WebApplication MapInfrastructureEndpoints(this WebApplication app)
     {
-        app.MapPost($"/{BasePath}/migrate", async () =>
+        //TODO: Generic implementation
+        app.MapPost($"/{BasePath}/migrate", async (HttpContext context) =>
         {
-            using var scope = app.Services.CreateScope();
-            var dbContext = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
-            await dbContext.Database.MigrateAsync();
-            
-            return Results.Ok();
+            try
+            {
+                using var scope = app.Services.CreateScope();
+                var dbContext = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
+                await dbContext.Database.MigrateAsync();
+                
+                await context.Response.WriteAsync("Migration completed.");
+            }
+            catch (Exception ex)
+            {
+                context.Response.StatusCode = StatusCodes.Status500InternalServerError;
+                await context.Response.WriteAsync($"Migration resulted in exception: {ex.Message}");
+            }
         });
         
         return app;

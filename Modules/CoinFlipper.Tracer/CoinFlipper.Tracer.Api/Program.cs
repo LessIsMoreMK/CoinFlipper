@@ -17,12 +17,10 @@ builder.WebHost.ConfigureKestrel(serverOptions =>
 
 builder.AddServiceDefaults();
 
-
 builder.AddApplication();
 
-builder.Services.RegisterInfrastructure();
-
 builder.AddInfrastructure();
+
 
 var app = builder.Build();
 
