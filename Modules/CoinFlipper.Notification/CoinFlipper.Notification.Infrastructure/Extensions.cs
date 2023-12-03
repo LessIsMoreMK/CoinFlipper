@@ -7,21 +7,14 @@ namespace CoinFlipper.Notification.Infrastructure;
 
 public static class Extensions
 {
-    public static IServiceCollection RegisterInfrastructure(this IServiceCollection services)
-    {
-        services
-            .AddSingleton<IEmailSender, SendGridEmailSender>()
-            .AddSingleton<IEmailTemplateSender, EmailTemplateSender>()
-            .AddSingleton<IApplicationEmailSender, ApplicationEmailSender>()
-            
-            ;
-
-        return services;
-    }
-    
     public static IHostApplicationBuilder AddInfrastructure(this IHostApplicationBuilder builder)
     {
-
+        builder.Services
+            .AddSingleton<IEmailSender, SendGridEmailSender>()
+            .AddSingleton<IEmailTemplateSender, EmailTemplateSender>()
+            .AddSingleton<IApplicationEmailSender, ApplicationEmailSender>();
+            
+            
         return builder;
     }
 }

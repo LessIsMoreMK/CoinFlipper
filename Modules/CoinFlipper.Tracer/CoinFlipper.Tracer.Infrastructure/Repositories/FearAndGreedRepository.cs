@@ -7,25 +7,14 @@ using Microsoft.EntityFrameworkCore;
 
 namespace CoinFlipper.Tracer.Infrastructure.Repositories;
 
-public class FearAndGreedRepository : IFearAndGreedRepository
+public class FearAndGreedRepository(ApplicationDbContext dbContext) : IFearAndGreedRepository
 {
-    #region Setup
-
-    private readonly ApplicationDbContext _dbContext;
-    
-    public FearAndGreedRepository(ApplicationDbContext dbContext)
-    {
-        _dbContext = dbContext;
-    }
-    
-    #endregion
-
     #region Methods
     
     public async Task<List<FearAndGreed>> GetLastXFearAndGreedAsync(int limit)
     {
         //TODO: Deal with performance when there are a lot of records. 
-        var result = await _dbContext.Set<FearAndGreedDb>()
+        var result = await dbContext.Set<FearAndGreedDb>()
             .AsNoTracking()
             .OrderByDescending(x => x.DateTime)
             .Take(limit)
@@ -37,8 +26,8 @@ public class FearAndGreedRepository : IFearAndGreedRepository
     public async Task AddFearAndGreedAsync(FearAndGreed fearAndGreed)
     {
         var fearAndGreedDb = fearAndGreed.Adapt<FearAndGreedDb>();
-        _dbContext.FearAndGreed.Add(fearAndGreedDb);
-        await _dbContext.SaveChangesAsync();
+        dbContext.FearAndGreed.Add(fearAndGreedDb);
+        await dbContext.SaveChangesAsync();
     }
     
     #endregion

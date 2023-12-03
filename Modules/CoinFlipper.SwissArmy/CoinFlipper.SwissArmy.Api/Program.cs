@@ -1,3 +1,30 @@
-﻿// See https://aka.ms/new-console-template for more information
+﻿using CoinFlipper.ServiceDefaults;
+using CoinFlipper.ServiceDefaults.Options;
+using CoinFlipper.SwissArmy.Api;
+using CoinFlipper.SwissArmy.Application;
+using CoinFlipper.SwissArmy.Infrastructure;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Hosting;
 
-Console.WriteLine("Hello, World!");
+
+var builder = WebApplication.CreateBuilder(args);
+
+var appOptions = builder.Services.GetOptions<AppOptions>("App");
+builder.WebHost.ConfigureKestrel(serverOptions =>
+{
+    serverOptions.ListenAnyIP(appOptions.Port); 
+});
+
+builder.AddServiceDefaults();
+
+builder.AddApplication();
+
+builder.AddInfrastructure();
+
+
+var app = builder.Build();
+
+
+app.MapEndpoints();
+
+app.Run();
