@@ -28,6 +28,7 @@ public static class Extensions
             http.UseServiceDiscovery();
         });
         
+        
         return builder;
     }
     
@@ -44,7 +45,7 @@ public static class Extensions
         {
             Predicate = r => r.Tags.Contains("live")
         });
-
+        
         return app;
     }
     

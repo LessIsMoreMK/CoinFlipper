@@ -1,5 +1,6 @@
 ﻿using CoinFlipper.ServiceDefaults;
 using CoinFlipper.ServiceDefaults.Application.Queries;
+using CoinFlipper.SwissArmy.Application.Queries.PositionCalculator;
 using CoinFlipper.SwissArmy.Application.Queries.Sentence;
 using CoinFlipper.SwissArmy.Domain.Entities;
 using CoinFlipper.SwissArmy.Infrastructure.Repositories.Postgres.DbContext;
@@ -16,10 +17,26 @@ public static class Endpoints
     
     public static WebApplication MapEndpoints(this WebApplication app)
     {
-        app.MapDefaultEndpoints();
-        app.MapInfrastructureEndpoints();
+        app.MapDefaultEndpoints().
+            MapInfrastructureEndpoints()
+            .MapPositionCalculatorEndpoints()
+            .MapSentenceEndpoints()
+            
+            ;
         
-        app.MapSentenceEndpoints();
+        return app;
+    }
+    
+    private static WebApplication MapPositionCalculatorEndpoints(this WebApplication app)
+    {
+        app.MapGet($"/{BasePath}/position-stats/simple", 
+            async (IQueryDispatcher queryDispatcher, int leverage, bool isLong, double entryPrice, double exitPrice, double quantity) =>
+        {
+            var query = new GetPositionStatsSimpleRequest() 
+                { Leverage = leverage, IsLong = isLong, EntryPrice = entryPrice, ExitPrice = exitPrice, Quantity = quantity};
+            var result = await queryDispatcher.QueryAsync<GetPositionStatsSimpleRequest, GetPositionStatsSimpleResponse>(query);
+            return Results.Ok(result);
+        });
         
         return app;
     }

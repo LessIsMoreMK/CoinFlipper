@@ -1,5 +1,7 @@
 ﻿using CoinFlipper.ServiceDefaults;
+using CoinFlipper.SwissArmy.Application.Services;
 using CoinFlipper.SwissArmy.Domain.Repositories;
+using CoinFlipper.SwissArmy.Domain.Services;
 using CoinFlipper.SwissArmy.Infrastructure.Repositories;
 using CoinFlipper.SwissArmy.Infrastructure.Repositories.Postgres.DbContext;
 using Microsoft.Extensions.DependencyInjection;
@@ -15,6 +17,7 @@ public static class Extensions
         
         builder.Services
             .AddScoped<ISentenceRepository, SentenceRepository>()
+            .AddScoped<IPositionCalculatorService, PositionCalculatorService>()
             
             ;
 
