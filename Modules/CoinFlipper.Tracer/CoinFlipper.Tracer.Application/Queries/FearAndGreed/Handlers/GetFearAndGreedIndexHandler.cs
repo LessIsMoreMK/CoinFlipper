@@ -1,6 +1,7 @@
 ﻿using CoinFlipper.ServiceDefaults.Application.Queries;
 using CoinFlipper.Tracer.Application.Dtos;
 using CoinFlipper.Tracer.Domain.Repositories;
+using FluentValidation;
 using Mapster;
 
 namespace CoinFlipper.Tracer.Application.Queries.FearAndGreed.Handlers;
@@ -18,5 +19,14 @@ public class GetFearAndGreedIndexHandler(
         {
             FearAndGreedDtos = result?.Adapt<List<FearAndGreedDto>>() ?? new List<FearAndGreedDto>()
         };
+    }
+}
+
+public class GetFearAndGreedIndexRequestValidator : AbstractValidator<GetFearAndGreedRequest>
+{
+    public GetFearAndGreedIndexRequestValidator()
+    {
+        RuleFor(request => request.Limit)
+            .InclusiveBetween(1, 100);
     }
 }

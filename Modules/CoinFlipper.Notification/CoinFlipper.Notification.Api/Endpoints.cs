@@ -3,6 +3,7 @@ using CoinFlipper.Notification.Application.Commands.Email.Handlers;
 using CoinFlipper.ServiceDefaults;
 using CoinFlipper.ServiceDefaults.Application.Commands;
 using CoinFlipper.ServiceDefaults.Application.Queries;
+using CoinFlipper.ServiceDefaults.Endpoints;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
@@ -23,18 +24,28 @@ public static class Endpoints
     
     private static WebApplication MapEmailEndpoints(this WebApplication app)
     {
-        app.MapPost($"/{BasePath}/email/feedback", async (ICommandDispatcher commandDispatcher, 
+        app.MapPost($"/{BasePath}/email/feedback", async (HttpContext httpContext, ICommandDispatcher commandDispatcher, 
             string displayName, string email, string content) =>
         {
             var command = new SendFeedbackEmailRequest(displayName, email, content);
+
+            var validationResult = await EndpointsExtensions.ValidateRequestAsync(command, httpContext);
+            if (!validationResult.IsValid)
+                return Results.ValidationProblem(EndpointsExtensions.FormatValidationErrors(validationResult));
+            
             await commandDispatcher.SendAsync<SendFeedbackEmailRequest>(command);
             return Results.Ok();
         });
         
-        app.MapPost($"/{BasePath}/email/verification", async (ICommandDispatcher commandDispatcher, 
+        app.MapPost($"/{BasePath}/email/verification", async (HttpContext httpContext, ICommandDispatcher commandDispatcher, 
             string displayName, string email) =>
         {
             var command = new SendVerificationEmailRequest(displayName, email);
+            
+            var validationResult = await EndpointsExtensions.ValidateRequestAsync(command, httpContext);
+            if (!validationResult.IsValid)
+                return Results.ValidationProblem(EndpointsExtensions.FormatValidationErrors(validationResult));
+            
             await commandDispatcher.SendAsync<SendVerificationEmailRequest>(command);
             return Results.Ok();
         });

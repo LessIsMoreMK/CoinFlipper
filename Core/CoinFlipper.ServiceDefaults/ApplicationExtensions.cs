@@ -3,6 +3,7 @@ using CoinFlipper.ServiceDefaults.Application.Events;
 using CoinFlipper.ServiceDefaults.Application.Queries;
 using CoinFlipper.ServiceDefaults.Attributes;
 using CoinFlipper.ServiceDefaults.Logging.Decorators;
+using FluentValidation;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 
@@ -33,6 +34,19 @@ public static class ApplicationExtensions
         
         if (builder.Services.Any(sd => sd.ServiceType.IsGenericType && sd.ServiceType.GetGenericTypeDefinition() == typeof(IEventHandler<>)))
             builder.Services.Decorate(typeof(IEventHandler<>), typeof(EventHandlerLoggingDecorator<>));
+
+        return builder;
+    }
+    
+    public static IHostApplicationBuilder AddValidators(this IHostApplicationBuilder builder)
+    {
+        builder.Services.Scan(s =>
+            s.FromAssemblies(AppDomain.CurrentDomain.GetAssemblies())
+                .AddClasses(classes => classes
+                    .AssignableToAny(typeof(IValidator<>))
+                    .Where(type => type is {IsGenericType: false, IsNestedPrivate: false})) // Exclude generic and internal types
+                .AsImplementedInterfaces()
+                .WithTransientLifetime());
 
         return builder;
     }
