@@ -7,15 +7,9 @@ using Microsoft.Extensions.Logging;
 namespace CoinFlipper.Tracer.Infrastructure.Clients;
 
 public class FearAndGreedIndexClient(
-    ILogger<FearAndGreedIndexClient> logger
-    ) : IFearAndGreedIndexClient
+    ILogger<FearAndGreedIndexClient> logger, 
+    HttpClient httpClient) : IFearAndGreedIndexClient
 {
-    #region Setup
-    
-    private readonly HttpClient _httpClient = new();
-
-    #endregion
-    
     #region Methods
 
     public async Task<string?> GetFearAndGreedIndex(int limit, bool csvFormat = false)
@@ -33,7 +27,7 @@ public class FearAndGreedIndexClient(
         var request = new HttpRequestMessage(HttpMethod.Get, requestUri);
         request.Headers.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
         
-        var response = await _httpClient.SendAsync(request);
+        var response = await httpClient.SendAsync(request);
         var result = await logger.LogHttpResponseError(response, "FearAndGreedIndexClient", "GetFearAndGreedIndex");
         if (!result)
             return null;

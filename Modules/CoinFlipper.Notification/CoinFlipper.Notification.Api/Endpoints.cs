@@ -1,12 +1,9 @@
 ﻿using CoinFlipper.Notification.Application.Commands.Email;
-using CoinFlipper.Notification.Application.Commands.Email.Handlers;
 using CoinFlipper.ServiceDefaults;
 using CoinFlipper.ServiceDefaults.Application.Commands;
-using CoinFlipper.ServiceDefaults.Application.Queries;
 using CoinFlipper.ServiceDefaults.Endpoints;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
-using Microsoft.Extensions.DependencyInjection;
 
 namespace CoinFlipper.Notification.Api;
 
@@ -14,10 +11,12 @@ public static class Endpoints
 {
     private const string BasePath = "notification";
     
-    public static WebApplication MapEndpoints(this WebApplication app)
+    internal static WebApplication MapEndpoints(this WebApplication app)
     {
-        app.MapDefaultEndpoints();
-        app.MapEmailEndpoints();
+        app.MapDefaultEndpoints()
+            .MapEmailEndpoints()
+            
+            ;
         
         return app;
     }

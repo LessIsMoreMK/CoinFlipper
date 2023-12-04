@@ -40,7 +40,6 @@ public class FearAndGreedJob(
         catch (Exception ex)
         {
             logger.LogError(ex, "Error occured while processing {FearAndGreedJob}", JobsIdentifier.FearAndGreedJob);
-            throw;
         }
     }
     

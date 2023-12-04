@@ -1,0 +1,81 @@
+version: '3.8'
+
+networks:
+ coinflipper:
+
+volumes:
+  postgres:
+  pgadmin:
+  seq:
+   
+services:
+  seq:
+    image: datalust/seq:2023.4
+    ports:
+      - "6001:80"
+    environment:
+      - ACCEPT_EULA=Y  
+    networks:
+      coinflipper:  
+
+  pgadmin4:
+    image: dpage/pgadmin4:8.0
+    ports:
+        - "6002:80"
+    volumes:
+        - pgadmin:/var/lib/pgadmin
+        - ./configs/registerServer.json:/registerServer.json
+    environment:
+      PGADMIN_DEFAULT_EMAIL: "coinflipper8@gmail.com"
+      PGADMIN_DEFAULT_PASSWORD: "coin"
+      PGADMIN_SERVER_JSON_FILE: "/registerServer.json"
+    networks:
+      coinflipper:    
+
+  postgres:
+    image: postgres:16
+    volumes:
+      - postgres:/var/lib/postgresql/data:z
+      - ./configs/postgresql.conf:/etc/postgresql/postgresql.conf
+    environment:
+      POSTGRES_DB: postgres
+      POSTGRES_USER: coinflipper8
+      POSTGRES_PASSWORD: coin
+    ports:
+      - "6003:5432"
+    networks:
+      coinflipper:    
+
+
+  tracer:
+    image: coinflipper-tracer:latest
+    ports:
+      - "6010:80"
+    depends_on:
+      - postgres    
+    environment:
+      Postgres__ConnectionString: "Host=postgres;Port=5432;User Id=coinflipper8;Password=coin;Database=Tracer;Enlist=true;Include Error Detail=true;"
+      Logger__Seq__Url: "http://seq:80"
+    networks:
+      coinflipper:
+
+  notification:
+    image: coinflipper-notification:latest
+    ports:
+      - "6011:80"
+    environment:  
+      Logger__Seq__Url: "http://seq:80"
+    networks:
+      coinflipper:
+
+  swissArmy:
+    image: coinflipper-swissarmy:latest
+    ports:
+      - "6012:80"
+    depends_on:
+      - postgres
+    environment:
+      Postgres__ConnectionString: "Host=postgres;Port=5432;User Id=coinflipper8;Password=coin;Database=SwissArmy;Enlist=true;Include Error Detail=true;"
+      Logger__Seq__Url: "http://seq:80"
+    networks:
+      coinflipper:       

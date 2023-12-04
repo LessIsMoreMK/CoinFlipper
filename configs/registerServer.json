@@ -1,0 +1,14 @@
+{
+    "Servers": {
+        "1": {
+            "Name": "CoinFlipper",
+            "Group": "Servers",
+            "Host": "postgres",
+            "Port": 5432,
+            "Username": "coinflipper8",
+            "Password": "coin",
+            "SSLMode": "prefer",
+            "MaintenanceDB": "postgres"
+        }
+    }
+}

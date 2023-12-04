@@ -14,12 +14,13 @@ public static class Endpoints
 {
     private const string BasePath = "tracer";
     
-    public static WebApplication MapEndpoints(this WebApplication app)
+    internal static WebApplication MapEndpoints(this WebApplication app)
     {
-        app.MapDefaultEndpoints();
-        app.MapInfrastructureEndpoints();
-        
-        app.MapFearAndGreedEndpoints();
+        app.MapDefaultEndpoints()
+            .MapInfrastructureEndpoints()
+            .MapFearAndGreedEndpoints()
+            
+            ;
         
         return app;
     }

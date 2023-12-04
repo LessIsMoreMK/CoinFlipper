@@ -1,5 +1,6 @@
 ﻿using CoinFlipper.ServiceDefaults;
 using CoinFlipper.ServiceDefaults.Application.Queries;
+using CoinFlipper.ServiceDefaults.Endpoints;
 using CoinFlipper.SwissArmy.Application.Queries.PositionCalculator;
 using CoinFlipper.SwissArmy.Application.Queries.Sentence;
 using CoinFlipper.SwissArmy.Domain.Entities;
@@ -13,12 +14,12 @@ namespace CoinFlipper.SwissArmy.Api;
 
 public static class Endpoints
 {
-    private const string BasePath = "swissArmy";
+    private const string BasePath = "swiss-army";
     
-    public static WebApplication MapEndpoints(this WebApplication app)
+    internal static WebApplication MapEndpoints(this WebApplication app)
     {
-        app.MapDefaultEndpoints().
-            MapInfrastructureEndpoints()
+        app.MapDefaultEndpoints()
+            .MapInfrastructureEndpoints()
             .MapPositionCalculatorEndpoints()
             .MapSentenceEndpoints()
             
@@ -30,10 +31,15 @@ public static class Endpoints
     private static WebApplication MapPositionCalculatorEndpoints(this WebApplication app)
     {
         app.MapGet($"/{BasePath}/position-stats/simple", 
-            async (IQueryDispatcher queryDispatcher, int leverage, bool isLong, double entryPrice, double exitPrice, double quantity) =>
+            async (HttpContext httpContext, IQueryDispatcher queryDispatcher, int leverage, bool isLong, double entryPrice, double exitPrice, double quantity) =>
         {
             var query = new GetPositionStatsSimpleRequest() 
                 { Leverage = leverage, IsLong = isLong, EntryPrice = entryPrice, ExitPrice = exitPrice, Quantity = quantity};
+            
+            var validationResult = await EndpointsExtensions.ValidateRequestAsync(query, httpContext);
+            if (!validationResult.IsValid)
+                return Results.ValidationProblem(EndpointsExtensions.FormatValidationErrors(validationResult));
+            
             var result = await queryDispatcher.QueryAsync<GetPositionStatsSimpleRequest, GetPositionStatsSimpleResponse>(query);
             return Results.Ok(result);
         });
@@ -43,9 +49,14 @@ public static class Endpoints
     
     private static WebApplication MapSentenceEndpoints(this WebApplication app)
     {
-        app.MapGet($"/{BasePath}/sentences", async (IQueryDispatcher queryDispatcher, int limit) =>
+        app.MapGet($"/{BasePath}/sentences", async (HttpContext httpContext, IQueryDispatcher queryDispatcher, int limit) =>
         {
             var query = new GetSentencesRequest() { Limit = limit };
+            
+            var validationResult = await EndpointsExtensions.ValidateRequestAsync(query, httpContext);
+            if (!validationResult.IsValid)
+                return Results.ValidationProblem(EndpointsExtensions.FormatValidationErrors(validationResult));
+            
             var result = await queryDispatcher.QueryAsync<GetSentencesRequest, List<SentenceEntity>>(query);
             return Results.Ok(result);
         });

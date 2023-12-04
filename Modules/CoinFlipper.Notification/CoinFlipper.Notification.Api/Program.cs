@@ -22,7 +22,6 @@ builder.AddInfrastructure();
 
 var app = builder.Build();
 
-
 app.MapEndpoints();
 
 app.Run();
