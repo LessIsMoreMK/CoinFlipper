@@ -1,3 +1,29 @@
-﻿// See https://aka.ms/new-console-template for more information
+﻿using CoinFlipper.Access.Api;
+using CoinFlipper.Access.Application;
+using CoinFlipper.Access.Infrastructure;
+using CoinFlipper.ServiceDefaults;
+using CoinFlipper.ServiceDefaults.Swagger;
+using CoinFlipper.ServiceDefaults.Cors;
+using CoinFlipper.ServiceDefaults.Options;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Hosting;
 
-Console.WriteLine("Hello, World!");
+var builder = WebApplication.CreateBuilder(args);
+
+var appOptions = builder.Services.GetOptions<AppOptions>("App");
+builder.WebHost.ConfigureKestrel(serverOptions =>
+{
+    serverOptions.ListenAnyIP(appOptions.Port); 
+});
+
+builder.AddServiceDefaults()
+    .AddApplication()
+    .AddInfrastructure();
+
+
+var app = builder.Build();
+
+app.UseCustomCors()
+    .MapEndpoints()
+    .UseSwagger()
+    .Run();

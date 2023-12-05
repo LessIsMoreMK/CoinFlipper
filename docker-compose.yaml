@@ -24,7 +24,7 @@ services:
         - "6002:80"
     volumes:
         - pgadmin:/var/lib/pgadmin
-        - ./configs/registerServer.json:/registerServer.json
+        - ./Scripts/Configs/registerServer.json:/registerServer.json
     environment:
       PGADMIN_DEFAULT_EMAIL: "coinflipper8@gmail.com"
       PGADMIN_DEFAULT_PASSWORD: "coin"
@@ -36,7 +36,7 @@ services:
     image: postgres:16
     volumes:
       - postgres:/var/lib/postgresql/data:z
-      - ./configs/postgresql.conf:/etc/postgresql/postgresql.conf
+      - ./Scripts/Configs/postgresql.conf:/etc/postgresql/postgresql.conf
     environment:
       POSTGRES_DB: postgres
       POSTGRES_USER: coinflipper8
@@ -45,6 +45,27 @@ services:
       - "6003:5432"
     networks:
       coinflipper:    
+
+  keycloak:
+    image: jboss/keycloak:16.1.1
+    volumes:
+      - ./Scripts/Configs/coinFlipperKeycloakRealm.json:/tmp/coinFlipperKeycloakRealm.json
+    hostname: keycloak
+    environment:
+      JDBC_PARAMS: "useSSL=false"
+      KEYCLOAK_USER: "coinflipper8"
+      KEYCLOAK_PASSWORD: "coin"
+      DB_VENDOR: "postgres"
+      DB_ADDR: "postgres"
+      DB_USER: "coinflipper8"
+      DB_PASSWORD: "coin"
+      DB_DATABASE: "postgres"
+      DB_SCHEMA: "public"
+      KEYCLOAK_IMPORT: /tmp/coinFlipperKeycloakRealm.json
+    ports:
+      - 6004:8080
+    networks:
+      coinflipper:     
 
 
   tracer:
@@ -82,3 +103,15 @@ services:
       Postgres__ConnectionString: "Host=postgres;Port=5432;User Id=coinflipper8;Password=coin;Database=SwissArmy;Enlist=true;Include Error Detail=true;"
     networks:
       coinflipper:       
+
+  access:
+    image: coinflipper-access:latest
+    ports:
+      - "6013:80"
+    depends_on:
+      - postgres
+    environment:
+      App__Port: "80"
+      Logger__Seq__Url: "http://seq:80"
+    networks:
+      coinflipper:    

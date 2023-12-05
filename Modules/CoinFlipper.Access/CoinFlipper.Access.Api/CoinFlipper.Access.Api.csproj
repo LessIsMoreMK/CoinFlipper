@@ -11,4 +11,10 @@
       <ProjectReference Include="..\CoinFlipper.Access.Infrastructure\CoinFlipper.Access.Infrastructure.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <Content Include="appsettings.json">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </Content>
+    </ItemGroup>
+
 </Project>

@@ -1,6 +1,6 @@
 ﻿namespace CoinFlipper.ServiceDefaults.Options;
 
-public class PostgresOptions
+internal class PostgresOptions
 {
     public bool Enabled { get; set; }
     public bool MigrateOnStartup { get; set; }
