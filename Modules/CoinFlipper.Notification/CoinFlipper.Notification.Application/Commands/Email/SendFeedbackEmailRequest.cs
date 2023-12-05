@@ -1,4 +1,5 @@
 using CoinFlipper.ServiceDefaults.Application.Commands;
+using Microsoft.AspNetCore.Http;
 
 namespace CoinFlipper.Notification.Application.Commands.Email;
 

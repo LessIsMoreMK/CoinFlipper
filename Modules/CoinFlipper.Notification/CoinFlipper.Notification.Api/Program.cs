@@ -2,9 +2,11 @@
 using CoinFlipper.Notification.Application;
 using CoinFlipper.Notification.Infrastructure;
 using CoinFlipper.ServiceDefaults;
+using CoinFlipper.ServiceDefaults.Cors;
 using CoinFlipper.ServiceDefaults.Options;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -20,7 +22,10 @@ builder.AddApplication();
 
 builder.AddInfrastructure();
 
+
 var app = builder.Build();
+
+app.UseCustomCors();
 
 app.MapEndpoints();
 

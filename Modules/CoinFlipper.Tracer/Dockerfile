@@ -8,8 +8,15 @@ COPY ./Modules/CoinFlipper.Tracer/ /app/Modules/CoinFlipper.Tracer/
 RUN dotnet restore "./Modules/CoinFlipper.Tracer/CoinFlipper.Tracer.Api/CoinFlipper.Tracer.Api.csproj"
 RUN dotnet publish "./Modules/CoinFlipper.Tracer/CoinFlipper.Tracer.Api/CoinFlipper.Tracer.Api.csproj" -c Release -o /app/out
 
+FROM base AS final
+WORKDIR /app
+COPY --from=build /app/publish .
 
 FROM mcr.microsoft.com/dotnet/aspnet:8.0
 WORKDIR /app
 COPY --from=build-env /app/out ./
+
+RUN apt-get update
+RUN apt-get --assume-yes install curl
+
 ENTRYPOINT ["dotnet", "CoinFlipper.Tracer.Api.dll"]

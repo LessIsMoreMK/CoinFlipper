@@ -1,4 +1,5 @@
 ﻿using CoinFlipper.ServiceDefaults;
+using CoinFlipper.ServiceDefaults.Cors;
 using CoinFlipper.ServiceDefaults.Options;
 using CoinFlipper.SwissArmy.Api;
 using CoinFlipper.SwissArmy.Application;
@@ -24,6 +25,7 @@ builder.AddInfrastructure();
 
 var app = builder.Build();
 
+app.UseCustomCors();
 
 app.MapEndpoints();
 

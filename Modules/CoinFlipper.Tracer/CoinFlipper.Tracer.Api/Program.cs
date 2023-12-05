@@ -1,4 +1,5 @@
 ﻿using CoinFlipper.ServiceDefaults;
+using CoinFlipper.ServiceDefaults.Cors;
 using CoinFlipper.ServiceDefaults.Options;
 using CoinFlipper.Tracer.Api;
 using CoinFlipper.Tracer.Application;
@@ -21,7 +22,10 @@ builder.AddApplication();
 
 builder.AddInfrastructure();
 
+
 var app = builder.Build();
+
+app.UseCustomCors();
 
 app.MapEndpoints();
 
