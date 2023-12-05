@@ -9,14 +9,14 @@ namespace CoinFlipper.ServiceDefaults.Cors;
 
 public static class CorsExtensions
 {
-	private const string SettingsSectionName = "Cors";
+	private const string OptionsSectionName = "Cors";
 	private const string DefaultPolicyName = "Default";
 
 	#region Methods
 
 	public static IHostApplicationBuilder AddCustomCors(this IHostApplicationBuilder builder)
 	{
-		var corsOptions = builder.Services.GetOptions<CorsOptions>(SettingsSectionName);
+		var corsOptions = builder.Services.GetOptions<CorsOptions>(OptionsSectionName);
 
 		if (corsOptions?.Enabled == true && corsOptions.Policies?.Any() == true)
 			builder.Services.AddCors(options =>
@@ -33,7 +33,7 @@ public static class CorsExtensions
 	
 	public static WebApplication UseCustomCors(this WebApplication app)
 	{
-		var corsOptions = app.Services.GetOptions<CorsOptions>(SettingsSectionName);
+		var corsOptions = app.Services.GetOptions<CorsOptions>(OptionsSectionName);
 
 		if (corsOptions?.Enabled != true) 
 			return app;

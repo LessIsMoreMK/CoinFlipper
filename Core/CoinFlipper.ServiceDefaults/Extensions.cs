@@ -1,5 +1,6 @@
 using CoinFlipper.ServiceDefaults.Cors;
 using CoinFlipper.ServiceDefaults.Logging;
+using CoinFlipper.ServiceDefaults.Swagger;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Microsoft.Extensions.DependencyInjection;
@@ -21,6 +22,7 @@ public static class Extensions
         builder.ConfigureOpenTelemetry();
         builder.AddCustomLogging();
         builder.AddCustomCors();
+        builder.AddSwagger();
         
         builder.AddDefaultHealthChecks();
         builder.Services.AddServiceDiscovery();

@@ -2,6 +2,7 @@
 using CoinFlipper.Notification.Application;
 using CoinFlipper.Notification.Infrastructure;
 using CoinFlipper.ServiceDefaults;
+using CoinFlipper.ServiceDefaults.Swagger;
 using CoinFlipper.ServiceDefaults.Cors;
 using CoinFlipper.ServiceDefaults.Options;
 using Microsoft.AspNetCore.Builder;
@@ -16,17 +17,14 @@ builder.WebHost.ConfigureKestrel(serverOptions =>
     serverOptions.ListenAnyIP(appOptions.Port); 
 });
 
-builder.AddServiceDefaults();
-
-builder.AddApplication();
-
-builder.AddInfrastructure();
+builder.AddServiceDefaults()
+    .AddApplication()
+    .AddInfrastructure();
 
 
 var app = builder.Build();
 
-app.UseCustomCors();
-
-app.MapEndpoints();
-
-app.Run();
+app.UseCustomCors()
+    .MapEndpoints()
+    .UseSwagger()
+    .Run();
