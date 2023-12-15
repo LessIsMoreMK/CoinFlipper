@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Http.Resilience;
 using Microsoft.Extensions.Logging;
 using OpenTelemetry.Logs;
 using OpenTelemetry.Metrics;
@@ -28,10 +29,12 @@ public static class Extensions
         builder.Services.AddServiceDiscovery();
         builder.Services.ConfigureHttpClientDefaults(http =>
         {
-            http.AddStandardResilienceHandler();
+            // http.AddStandardResilienceHandler(options =>
+            // {
+            //     options.TotalRequestTimeout = new HttpTimeoutStrategyOptions(){ Timeout = TimeSpan.FromMinutes(2) }; 
+            // });
             http.UseServiceDiscovery();
         });
-        
         
         return builder;
     }

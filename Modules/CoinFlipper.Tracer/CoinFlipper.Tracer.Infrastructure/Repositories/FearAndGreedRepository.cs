@@ -9,11 +9,8 @@ namespace CoinFlipper.Tracer.Infrastructure.Repositories;
 
 public class FearAndGreedRepository(ApplicationDbContext dbContext) : IFearAndGreedRepository
 {
-    #region Methods
-    
     public async Task<List<FearAndGreed>> GetLastXFearAndGreedAsync(int limit)
     {
-        //TODO: Deal with performance when there are a lot of records. 
         var result = await dbContext.Set<FearAndGreedDb>()
             .AsNoTracking()
             .OrderByDescending(x => x.DateTime)
@@ -29,6 +26,4 @@ public class FearAndGreedRepository(ApplicationDbContext dbContext) : IFearAndGr
         dbContext.FearAndGreed.Add(fearAndGreedDb);
         await dbContext.SaveChangesAsync();
     }
-    
-    #endregion
 }

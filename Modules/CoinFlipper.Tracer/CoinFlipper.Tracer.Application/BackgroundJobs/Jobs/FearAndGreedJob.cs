@@ -1,7 +1,7 @@
 ﻿using CoinFlipper.Shared.DateTimeHelpers;
 using CoinFlipper.Tracer.Application.BackgroundJobs.Jobs.Interfaces;
 using CoinFlipper.Tracer.Application.Clients;
-using CoinFlipper.Tracer.Application.Responses;
+using CoinFlipper.Tracer.Application.ExternalResponses;
 using CoinFlipper.Tracer.Domain.Entities;
 using CoinFlipper.Tracer.Domain.Repositories;
 using Microsoft.Extensions.Logging;

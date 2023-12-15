@@ -2,6 +2,7 @@
 
 /// <summary>
 /// Http client for alternative.me
+/// Documentation: https://alternative.me/crypto/fear-and-greed-index
 /// </summary>
 public interface IFearAndGreedIndexClient
 {

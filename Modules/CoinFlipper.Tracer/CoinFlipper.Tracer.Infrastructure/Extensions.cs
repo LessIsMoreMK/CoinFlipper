@@ -20,12 +20,16 @@ public static class Extensions
     {
         builder.AddPostgresDatabase<ApplicationDbContext>();
         
-        
         builder.Services
             .AddScoped<IFearAndGreedIndexClient, FearAndGreedIndexClient>()
-            .AddScoped<IFearAndGreedRepository, FearAndGreedRepository>()
-            .AddSingleton<IFearAndGreedJob, FearAndGreedJob>()
+            .AddScoped<ICoinGeckoClient, CoinGeckoClient>()
             
+            .AddScoped<IFearAndGreedRepository, FearAndGreedRepository>()
+            .AddScoped<ICoinRepository, CoinRepository>()
+            .AddScoped<ICoinDataRepository, CoinDataRepository>()
+            
+            .AddSingleton<IFearAndGreedJob, FearAndGreedJob>()
+            .AddSingleton<ICoinGeckoTracerJob, CoinGeckoTracerJob>()
             .AddHangfireServer()
             .AddHostedService<CreateHangfireJobs>();
 

@@ -1,6 +1,6 @@
 ﻿using Newtonsoft.Json;
 
-namespace CoinFlipper.Tracer.Application.Responses;
+namespace CoinFlipper.Tracer.Application.ExternalResponses;
 
 public record FearAndGreedResponse(
     string Name,

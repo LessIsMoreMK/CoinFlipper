@@ -19,21 +19,18 @@ public class FearAndGreedIndexClient(
         if (csvFormat)
             query["format"] = "csv";
         
-        var requestUri = new UriBuilder("https://api.alternative.me/fng/")
+        var request = new UriBuilder("https://api.alternative.me/fng/")
         {
             Query = query.ToString()
         }.ToString();
         
-        var request = new HttpRequestMessage(HttpMethod.Get, requestUri);
-        request.Headers.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
         
-        var response = await httpClient.SendAsync(request);
+        var response = await httpClient.SendAsync(new HttpRequestMessage(HttpMethod.Get, request));
         var result = await logger.LogHttpResponseError(response, "FearAndGreedIndexClient", "GetFearAndGreedIndex");
         if (!result)
             return null;
         
-        var content = await response.Content.ReadAsStringAsync();
-        return content;
+        return await response.Content.ReadAsStringAsync();
     }
     
     #endregion

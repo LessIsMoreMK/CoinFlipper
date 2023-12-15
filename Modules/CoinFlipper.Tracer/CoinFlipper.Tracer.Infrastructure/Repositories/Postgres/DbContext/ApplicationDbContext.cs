@@ -9,7 +9,12 @@ public class ApplicationDbContext : Microsoft.EntityFrameworkCore.DbContext
 {
     #region Properties
     
+    public DbSet<CoinDb> Coin { get; set; } = null!;
+    
+    public DbSet<CoinDataDb> CoinData { get; set; } = null!;
+    
     public DbSet<FearAndGreedDb> FearAndGreed { get; set; } = null!;
+
 
     #endregion
     
@@ -30,6 +35,8 @@ public class ApplicationDbContext : Microsoft.EntityFrameworkCore.DbContext
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.ApplyConfiguration(new FearAndGreedConfiguration());
+        modelBuilder.ApplyConfiguration(new CoinConfiguration());
+        modelBuilder.ApplyConfiguration(new CoinDataConfiguration());
     }
     
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
