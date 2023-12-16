@@ -10,23 +10,23 @@ using Newtonsoft.Json;
 
 namespace CoinFlipper.Tracer.Application.BackgroundJobs.Jobs;
 
-public class CoinGeckoTracerJob(
+public class CoinGeckoJobs(
     ICoinGeckoClient coinGeckoClient,
     ICoinRepository coinRepository,
     ICoinDataRepository coinDataRepository,
-    ILogger<CoinGeckoTracerJob> logger,
+    ILogger<CoinGeckoJobs> logger,
     IRecurringJobManager jobManager
-    ) : ICoinGeckoTracerJob
+    ) : ICoinGeckoJobs
 {
     //TODO: CoinGeckoTracerJob Configuration
     private readonly List<Coin> Coins = new()
     {
         new Coin(new Guid("176de950-d825-4a94-95cc-311c567b92e0"), "Bitcoin", "BTC", "bitcoin"), 
-        new Coin(new Guid("c7c47ea0-8f9f-451d-8373-f0e1e6b1d651"), "Ethereum", "ETH", "ethereum"), 
-        new Coin(new Guid("4eb4bdc3-df4b-4917-8684-99f51094b982"), "Binance Coin", "BNB", "binancecoin"), 
-        new Coin(new Guid("2a5b1ff2-4c03-41d0-8fc9-179498b9b264"), "Solana", "SOL", "solana"), 
-        new Coin(new Guid("aa0b5a9a-63b4-4e4b-86f1-44a2362ace59"), "Polygon", "MATIC", "matic-network"), 
-        new Coin(new Guid("a56c2efb-c982-49cc-aa9f-d93896119e10"), "Injective", "INJ", "injective-protocol") 
+        new Coin(new Guid("c7c47ea0-8f9f-451d-8373-f0e1e6b1d651"), "Ethereum", "ETH", "ethereum"),
+        // new Coin(new Guid("4eb4bdc3-df4b-4917-8684-99f51094b982"), "Binance Coin", "BNB", "binancecoin"), 
+        // new Coin(new Guid("2a5b1ff2-4c03-41d0-8fc9-179498b9b264"), "Solana", "SOL", "solana"), 
+        // new Coin(new Guid("aa0b5a9a-63b4-4e4b-86f1-44a2362ace59"), "Polygon", "MATIC", "matic-network"), 
+        // new Coin(new Guid("a56c2efb-c982-49cc-aa9f-d93896119e10"), "Injective", "INJ", "injective-protocol") 
     };
     
     #region Methods
@@ -69,6 +69,8 @@ public class CoinGeckoTracerJob(
         {
             logger.LogError(ex, "Error occured while processing {CoinGeckoTracerJob}", JobsIdentifier.CoinGeckoTracerJob);
         }
+        
+        jobManager.Trigger(JobsIdentifier.IndicatorsJob); 
     }
 
     public async Task InitCoinsAsync()
@@ -127,7 +129,7 @@ public class CoinGeckoTracerJob(
             }
         }
         
-        jobManager.AddOrUpdate<ICoinGeckoTracerJob>(JobsIdentifier.CoinGeckoTracerJob, job => job.TrackCoinsAsync(), "*/5 * * * *");
+        jobManager.AddOrUpdate<ICoinGeckoJobs>(JobsIdentifier.CoinGeckoTracerJob, job => job.TrackCoinsAsync(), "*/5 * * * *");
     }
     
     #endregion

@@ -3,6 +3,8 @@ using CoinFlipper.Tracer.Application.BackgroundJobs;
 using CoinFlipper.Tracer.Application.BackgroundJobs.Jobs;
 using CoinFlipper.Tracer.Application.BackgroundJobs.Jobs.Interfaces;
 using CoinFlipper.Tracer.Application.Clients;
+using CoinFlipper.Tracer.Application.Indicators;
+using CoinFlipper.Tracer.Domain.Indicators;
 using CoinFlipper.Tracer.Domain.Repositories;
 using CoinFlipper.Tracer.Infrastructure.Clients;
 using CoinFlipper.Tracer.Infrastructure.Repositories;
@@ -24,12 +26,15 @@ public static class Extensions
             .AddScoped<IFearAndGreedIndexClient, FearAndGreedIndexClient>()
             .AddScoped<ICoinGeckoClient, CoinGeckoClient>()
             
+            .AddSingleton<IMovingAverageIndicatorService, MovingAverageIndicatorService>()
+            
             .AddScoped<IFearAndGreedRepository, FearAndGreedRepository>()
             .AddScoped<ICoinRepository, CoinRepository>()
             .AddScoped<ICoinDataRepository, CoinDataRepository>()
             
             .AddSingleton<IFearAndGreedJob, FearAndGreedJob>()
-            .AddSingleton<ICoinGeckoTracerJob, CoinGeckoTracerJob>()
+            .AddSingleton<ICoinGeckoJobs, CoinGeckoJobs>()
+            .AddSingleton<IIndicatorsJobs, IndicatorsJobs>()
             .AddHangfireServer()
             .AddHostedService<CreateHangfireJobs>();
 
