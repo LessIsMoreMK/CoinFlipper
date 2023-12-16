@@ -15,18 +15,24 @@ public class FearAndGreedJob(
     ILogger<FearAndGreedJob> logger
     ) : IFearAndGreedJob
 {
+    /// <summary>
+    /// Updates the FearAndGreed in database up to 100 days
+    /// </summary>
     public async Task GetFearAndGreedAsync()
     {
         try
         {
             var lastFearAndGreed = await fearAndGreedRepository.GetLastXFearAndGreedAsync(1);
-            if (lastFearAndGreed.Count != 0 && lastFearAndGreed[0].DateTime >= DateTime.Today) 
-                return;
+
+            var daysMissing = lastFearAndGreed.Count == 0 ? 100 : (DateTime.Today - lastFearAndGreed[0].DateTime).Days;
             
-            var fearAndGreedIndexes = await fearAndGreedIndexClient.GetFearAndGreedIndex(100);
+            var fearAndGreedIndexes = await fearAndGreedIndexClient.GetFearAndGreedIndex(daysMissing);
 
             if (string.IsNullOrEmpty(fearAndGreedIndexes))
-                return; //TODO: Log error?
+            {
+                logger.LogError("Unable to obtain FearAndGreedIndex");
+                return;
+            }
             
             var fearAndGreedResponse = JsonConvert.DeserializeObject<FearAndGreedResponse>(fearAndGreedIndexes);
             
@@ -44,6 +50,5 @@ public class FearAndGreedJob(
     }
     
     //TODO: Unit tests
-    //TODO: Base next iteration on received timeToUpdate from first record?
     //TODO: Check external source responsiveness at 00:00
 }
