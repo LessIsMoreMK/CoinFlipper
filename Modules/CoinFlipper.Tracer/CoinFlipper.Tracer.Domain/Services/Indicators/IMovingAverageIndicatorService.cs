@@ -1,4 +1,4 @@
-namespace CoinFlipper.Tracer.Domain.Indicators;
+namespace CoinFlipper.Tracer.Domain.Services.Indicators;
 
 public interface IMovingAverageIndicatorService
 {

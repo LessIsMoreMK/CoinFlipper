@@ -3,12 +3,14 @@ using CoinFlipper.Tracer.Application.BackgroundJobs;
 using CoinFlipper.Tracer.Application.BackgroundJobs.Jobs;
 using CoinFlipper.Tracer.Application.BackgroundJobs.Jobs.Interfaces;
 using CoinFlipper.Tracer.Application.Clients;
-using CoinFlipper.Tracer.Application.Indicators;
-using CoinFlipper.Tracer.Domain.Indicators;
+using CoinFlipper.Tracer.Application.Services.Indicators;
 using CoinFlipper.Tracer.Domain.Repositories;
+using CoinFlipper.Tracer.Domain.Services;
+using CoinFlipper.Tracer.Domain.Services.Indicators;
 using CoinFlipper.Tracer.Infrastructure.Clients;
 using CoinFlipper.Tracer.Infrastructure.Repositories;
 using CoinFlipper.Tracer.Infrastructure.Repositories.Postgres.DbContext;
+using CoinFlipper.Tracer.Infrastructure.Services;
 using Hangfire;
 using Hangfire.InMemory;
 using Microsoft.Extensions.DependencyInjection;
@@ -28,6 +30,8 @@ public static class Extensions
             .AddScoped<ICoinGeckoClient, CoinGeckoClient>()
             
             .AddSingleton<IMovingAverageIndicatorService, MovingAverageIndicatorService>()
+            
+            .AddSingleton<IRedisService, RedisService>()
             
             .AddScoped<IFearAndGreedRepository, FearAndGreedRepository>()
             .AddScoped<ICoinRepository, CoinRepository>()

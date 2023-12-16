@@ -25,6 +25,8 @@ public class FearAndGreedJob(
             var lastFearAndGreed = await fearAndGreedRepository.GetLastXFearAndGreedAsync(1);
 
             var daysMissing = lastFearAndGreed.Count == 0 ? 100 : (DateTime.Today - lastFearAndGreed[0].DateTime).Days;
+            if (daysMissing == 0)
+                return;
             
             var fearAndGreedIndexes = await fearAndGreedIndexClient.GetFearAndGreedIndex(daysMissing);
 

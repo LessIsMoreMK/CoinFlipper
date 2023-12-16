@@ -1,9 +1,9 @@
 using CoinFlipper.Tracer.Domain.Entities;
-using CoinFlipper.Tracer.Domain.Indicators;
 using CoinFlipper.Tracer.Domain.Repositories;
+using CoinFlipper.Tracer.Domain.Services.Indicators;
 using Microsoft.Extensions.Logging;
 
-namespace CoinFlipper.Tracer.Application.Indicators;
+namespace CoinFlipper.Tracer.Application.Services.Indicators;
 
 public class MovingAverageIndicatorService(
     ILogger<MovingAverageIndicatorService> logger,
@@ -21,7 +21,7 @@ public class MovingAverageIndicatorService(
 
         var result = coinDataRecords.Average(record => record.Price);
         
-        logger.LogInformation("#INFO {CoinSymbol} {Period} EMA: {Result}", coinSymbol, period, result);
+        logger.LogInformation("#INFO {Symbol} {Period} SMA: {Result}", coinSymbol, period, result);
         
         return result;
     }
@@ -42,13 +42,15 @@ public class MovingAverageIndicatorService(
                 ? prices[i]
                 : alpha*prices[i] + (1 - alpha) * result;
         
+        logger.LogInformation("#INFO {Symbol} {Period} EMA: {Result}", coinSymbol, period, result);
+        
         return result;
     }
     
     #endregion
     
     #region Private Helpers
-
+    
     /// <summary>
     /// Validates if the average is going to be calculated on correct data
     /// </summary>
@@ -61,18 +63,19 @@ public class MovingAverageIndicatorService(
     {
         if (coinDataRecords.Count != period)
         {
-            logger.LogError("Database does not contain valid coin: {CoinSymbol} prices. " +
+            logger.LogError("Database does not contain valid {Symbol} prices. " +
                             "Cannot calculate {AverageName} for expected period: {Period}; actual records {RecordsCount}",
                 coinSymbol, averageName, period, coinDataRecords.Count);
             return false;
         }
         
         //TODO: Improve
-        if (coinDataRecords.Last().DateTime > DateTime.UtcNow.AddMinutes(- period * 5 + 3))
+        var lastDate = DateTime.UtcNow.AddMinutes(-period * 5 + 3);
+        if (coinDataRecords.Last().DateTime > lastDate)
             return true;
         
-        logger.LogError("Database does not contain valid coin: {CoinSymbol} prices. " +
-                        "Cannot calculate {AverageName} for period: {Period}",
+        logger.LogError("Database does not contain valid {Symbol} prices. " +
+                        "Cannot calculate {MovingAverage} for period: {Period}",
             coinSymbol, averageName, period);
         return false;
     }
