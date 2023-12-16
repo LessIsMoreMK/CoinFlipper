@@ -4,7 +4,9 @@ namespace CoinFlipper.Tracer.Domain.Repositories;
 
 public interface ICoinDataRepository
 {
-    public Task<List<CoinData>> GetCoinDataXNewestRecords(Guid coinId, int x);
+    Task<List<CoinData>> GetCoinDataXNewestRecords(Guid coinId, int x);
     
-    public Task AddCoinDataAsync(CoinData coinData);
+    Task AddCoinDataAsync(CoinData coinData);
+    
+    Task AddCoinDataListAsync(List<CoinData> coinDataList);
 }

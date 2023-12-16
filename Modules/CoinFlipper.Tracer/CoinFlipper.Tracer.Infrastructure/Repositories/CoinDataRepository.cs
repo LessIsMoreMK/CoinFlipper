@@ -34,4 +34,14 @@ public class CoinDataRepository(ApplicationDbContext dbContext) : ICoinDataRepos
         await dbContext.CoinData.AddAsync(coinData.Adapt<CoinDataDb>());
         await dbContext.SaveChangesAsync();
     }
+    
+    public async Task AddCoinDataListAsync(List<CoinData> coinDataList)
+    {
+        if (coinDataList == null || coinDataList.Count == 0) 
+            throw new ArgumentNullException(nameof(coinDataList));
+    
+        var coinDataDbList = coinDataList.Select(coinData => coinData.Adapt<CoinDataDb>()).ToList();
+        await dbContext.CoinData.AddRangeAsync(coinDataDbList);
+        await dbContext.SaveChangesAsync();
+    }
 }
