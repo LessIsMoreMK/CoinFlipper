@@ -23,4 +23,20 @@ public static class InfrastructureExtensions
 
         return builder;
     }
+    
+    public static IHostApplicationBuilder AddDistributedCache(this IHostApplicationBuilder builder) 
+    {
+        var redisOptions = builder.Configuration.GetOptions<RedisOptions>("Redis");
+
+        if (!redisOptions.Enabled)
+            return builder;
+
+        builder.Services.AddStackExchangeRedisCache(options =>
+        {
+            options.Configuration = redisOptions.Address; 
+            options.InstanceName = redisOptions.ServicePrefix; 
+        });
+
+        return builder;
+    }
 }

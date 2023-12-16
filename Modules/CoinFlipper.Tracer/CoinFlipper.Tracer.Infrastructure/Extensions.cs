@@ -20,7 +20,8 @@ public static class Extensions
 {
     public static IHostApplicationBuilder AddInfrastructure(this IHostApplicationBuilder builder)
     {
-        builder.AddPostgresDatabase<ApplicationDbContext>();
+        builder.AddPostgresDatabase<ApplicationDbContext>()
+            .AddDistributedCache();
         
         builder.Services
             .AddScoped<IFearAndGreedIndexClient, FearAndGreedIndexClient>()
