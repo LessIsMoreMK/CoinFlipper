@@ -19,4 +19,13 @@ public interface IMovingAverageIndicatorService
     /// <param name="coinSymbol"></param>
     /// <returns>EMA value</returns>
     Task<decimal?> CalculateEMA(int period, Guid coinId, string coinSymbol);
+    
+    /// <summary>
+    /// Calculate Volume Weighted Average Price(VWAP)
+    /// </summary>
+    /// <param name="period">Period that VWAP should be calculated for</param>
+    /// <param name="coinId">Application inner coinId</param>
+    /// <param name="coinSymbol"></param>
+    /// <returns>VWAP value</returns>
+    Task<decimal?> CalculateVWAP(int period, Guid coinId, string coinSymbol);
 }

@@ -47,6 +47,29 @@ public class MovingAverageIndicatorService(
         return result;
     }
     
+    public async Task<decimal?> CalculateVWAP(int period, Guid coinId, string coinSymbol)
+    {
+        var coinDataRecords = await redisCacheService.GetCachedCoinDataListAsync(coinId, period);
+
+        if (!Validate(coinDataRecords, period, coinSymbol, "VWAP"))
+            return null;
+
+        decimal periodVolume = 0;
+        decimal cumulativeVWAP = 0;
+
+        foreach (var cryptoData in coinDataRecords)
+        {
+            periodVolume += cryptoData.Volume;
+            cumulativeVWAP += cryptoData.Price * cryptoData.Volume;
+        }
+        
+        var result = cumulativeVWAP / periodVolume;
+        
+        logger.LogInformation("#INFO {Symbol} {Period} VWAP: {Result}", coinSymbol, period, result);
+
+        return result;
+    }
+    
     #endregion
     
     #region Private Helpers

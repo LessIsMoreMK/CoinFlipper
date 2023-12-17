@@ -31,7 +31,7 @@ public class IndicatorsJobs(
     private async Task MovingAverages()
     {
         var periods = new List<int>() {21, 50, 100, 200};
-        var movingAverages = new List<MovingAverage> {MovingAverage.EMA, MovingAverage.SMA};
+        var movingAverages = new List<MovingAverage> {MovingAverage.EMA, MovingAverage.SMA, MovingAverage.VWAP};
         
         foreach (var coin in Coins)
             foreach (var period in periods)
@@ -43,6 +43,7 @@ public class IndicatorsJobs(
                         {
                             MovingAverage.SMA => await _movingAverageIndicatorService.CalculateSMA(period, coin.Id, coin.Symbol),
                             MovingAverage.EMA => await _movingAverageIndicatorService.CalculateEMA(period, coin.Id, coin.Symbol),
+                            MovingAverage.VWAP => await _movingAverageIndicatorService.CalculateVWAP(period, coin.Id, coin.Symbol),
                         };
                     }
                     catch (Exception ex)
