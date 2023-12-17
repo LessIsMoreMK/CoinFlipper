@@ -10,7 +10,7 @@ namespace CoinFlipper.Tracer.Application.BackgroundJobs.Jobs;
 public class IndicatorsJobs(
         ILogger<IndicatorsJobs> logger,
         IMovingAverageIndicatorService _movingAverageIndicatorService,
-        IRedisService redisService
+        IRedisCacheService redisCacheService
         ): IIndicatorsJobs
 {
     #region Methods
@@ -19,7 +19,7 @@ public class IndicatorsJobs(
 
     public async Task CalculateIndicatorsAsync()
     {
-        Coins = redisService.GetCoins();
+        Coins = redisCacheService.GetCoins();
         
         await MovingAverages();
     }

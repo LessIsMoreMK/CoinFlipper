@@ -31,7 +31,7 @@ public static class Extensions
             
             .AddSingleton<IMovingAverageIndicatorService, MovingAverageIndicatorService>()
             
-            .AddSingleton<IRedisService, RedisService>()
+            .AddSingleton<IRedisCacheService, RedisCacheService>()
             
             .AddScoped<IFearAndGreedRepository, FearAndGreedRepository>()
             .AddScoped<ICoinRepository, CoinRepository>()

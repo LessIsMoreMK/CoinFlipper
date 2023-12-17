@@ -1,5 +1,5 @@
 using CoinFlipper.Tracer.Domain.Entities;
-using CoinFlipper.Tracer.Domain.Repositories;
+using CoinFlipper.Tracer.Domain.Services;
 using CoinFlipper.Tracer.Domain.Services.Indicators;
 using Microsoft.Extensions.Logging;
 
@@ -7,14 +7,14 @@ namespace CoinFlipper.Tracer.Application.Services.Indicators;
 
 public class MovingAverageIndicatorService(
     ILogger<MovingAverageIndicatorService> logger,
-    ICoinDataRepository coinDataRepository
+    IRedisCacheService redisCacheService
     ) : IMovingAverageIndicatorService
 {
     #region Methods
     
     public async Task<decimal?> CalculateSMA(int period, Guid coinId, string coinSymbol)
     {
-        var coinDataRecords = await coinDataRepository.GetCoinDataXNewestRecords(coinId, period);
+        var coinDataRecords = await redisCacheService.GetCachedCoinDataListAsync(coinId, period);
 
         if (!Validate(coinDataRecords, period, coinSymbol, "SMA"))
             return null;
@@ -28,7 +28,7 @@ public class MovingAverageIndicatorService(
 
     public async Task<decimal?> CalculateEMA(int period, Guid coinId, string coinSymbol)
     {
-        var coinDataRecords = await coinDataRepository.GetCoinDataXNewestRecords(coinId, period);
+        var coinDataRecords = await redisCacheService.GetCachedCoinDataListAsync(coinId, period);
         
         if (!Validate(coinDataRecords, period, coinSymbol, "EMA"))
             return null;

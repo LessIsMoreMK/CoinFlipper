@@ -3,7 +3,6 @@ using CoinFlipper.Tracer.Application.BackgroundJobs.Jobs.Interfaces;
 using CoinFlipper.Tracer.Application.Clients;
 using CoinFlipper.Tracer.Application.ExternalResponses;
 using CoinFlipper.Tracer.Domain.Entities;
-using CoinFlipper.Tracer.Domain.Repositories;
 using CoinFlipper.Tracer.Domain.Services;
 using Hangfire;
 using Microsoft.Extensions.Logging;
@@ -13,10 +12,9 @@ namespace CoinFlipper.Tracer.Application.BackgroundJobs.Jobs;
 
 public class CoinGeckoJobs(
     ICoinGeckoClient coinGeckoClient,
-    ICoinDataRepository coinDataRepository,
     ILogger<CoinGeckoJobs> logger,
     IRecurringJobManager jobManager,
-    IRedisService redisService
+    IRedisCacheService redisCacheService
     ) : ICoinGeckoJobs
 {
     private IReadOnlyCollection<Coin> Coins = null!;
@@ -25,8 +23,8 @@ public class CoinGeckoJobs(
     
     public async Task InitCoinsAsync()
     {
-        await redisService.AddCoinsAsync();
-        Coins = redisService.GetCoins();
+        await redisCacheService.AddCoinsAsync();
+        Coins = redisCacheService.GetCoins();
         
         foreach (var coin in Coins)
             await InitCoinAsync(coin);
@@ -38,7 +36,7 @@ public class CoinGeckoJobs(
     {
         try
         {
-            var newestCoinDataRecord = await coinDataRepository.GetCoinDataXNewestRecords(coin.Id, 1);
+            var newestCoinDataRecord = await redisCacheService.GetCachedCoinDataListAsync(coin.Id, 1);
 
             var utcNow = DateTime.UtcNow;
             var fromDate = newestCoinDataRecord.Count == 0 || newestCoinDataRecord[0].DateTime < utcNow.Date.AddMinutes(-5)
@@ -81,7 +79,7 @@ public class CoinGeckoJobs(
             }
             
             if (coinDataList.Count != 0)
-                await coinDataRepository.AddCoinDataListAsync(coinDataList);
+                await redisCacheService.AddCoinDataToDbAndUpdateCacheAsync(coinDataList);
         }
         catch (Exception ex)
         {
@@ -107,7 +105,7 @@ public class CoinGeckoJobs(
             foreach (var coinPrice in coinsPrices.CoinsPrices)
             {
                 var coinId = Coins.First(c => c.CoinGeckoId == coinPrice.Key).Id;
-                var newestRecord = (await coinDataRepository.GetCoinDataXNewestRecords(coinId, 1))[0];
+                var newestRecord = (await redisCacheService.GetCachedCoinDataListAsync(coinId, 1))[0];
 
                 if (DateTimeExtensions.TimestampToDateTime(coinPrice.Value.LastUpdatedAt) == newestRecord.DateTime)
                     break;
@@ -122,8 +120,9 @@ public class CoinGeckoJobs(
                     coinPrice.Value.MarketCap                 
                 ));
             }
+            
             if (coinDataList.Count != 0)
-                await coinDataRepository.AddCoinDataListAsync(coinDataList);
+                await redisCacheService.AddCoinDataToDbAndUpdateCacheAsync(coinDataList);
         }
         catch (Exception ex)
         {
