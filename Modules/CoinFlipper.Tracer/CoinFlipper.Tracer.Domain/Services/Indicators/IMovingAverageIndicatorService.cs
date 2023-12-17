@@ -28,4 +28,31 @@ public interface IMovingAverageIndicatorService
     /// <param name="coinSymbol"></param>
     /// <returns>VWAP value</returns>
     Task<decimal?> CalculateVWAP(int period, Guid coinId, string coinSymbol);
+    
+    /// <summary>
+    /// Calculate Smoothed Moving Average(SMMA)
+    /// </summary>
+    /// <param name="period">Period that SMMA should be calculated for</param>
+    /// <param name="coinId">Application inner coinId</param>
+    /// <param name="coinSymbol"></param>
+    /// <returns>SMMA value</returns>
+    Task<decimal?> CalculateSMMA(int period, Guid coinId, string coinSymbol);
+    
+    /// <summary>
+    /// Calculate Weighted Moving Average(WMA)
+    /// </summary>
+    /// <param name="period">Period that WMA should be calculated for</param>
+    /// <param name="coinId">Application inner coinId</param>
+    /// <param name="coinSymbol"></param>
+    /// <returns>WMA value</returns>
+    Task<decimal?> CalculateWMA(int period, Guid coinId, string coinSymbol);
+    
+    /// <summary>
+    /// Calculate Hull Moving Average(HMA)
+    /// </summary>
+    /// <param name="period">Period that HMA should be calculated for</param>
+    /// <param name="coinId">Application inner coinId</param>
+    /// <param name="coinSymbol"></param>
+    /// <returns>HMA value</returns>
+    Task<decimal?> CalculateHMA(int period, Guid coinId, string coinSymbol);
 }
