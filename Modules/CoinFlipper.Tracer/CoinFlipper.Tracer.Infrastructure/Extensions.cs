@@ -1,4 +1,5 @@
 ﻿using CoinFlipper.ServiceDefaults;
+using CoinFlipper.ServiceDefaults.Options;
 using CoinFlipper.Tracer.Application.BackgroundJobs;
 using CoinFlipper.Tracer.Application.BackgroundJobs.Jobs;
 using CoinFlipper.Tracer.Application.BackgroundJobs.Jobs.Interfaces;
@@ -12,7 +13,7 @@ using CoinFlipper.Tracer.Infrastructure.Repositories;
 using CoinFlipper.Tracer.Infrastructure.Repositories.Postgres.DbContext;
 using CoinFlipper.Tracer.Infrastructure.Services;
 using Hangfire;
-using Hangfire.InMemory;
+using Hangfire.Redis.StackExchange;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 
@@ -58,11 +59,11 @@ public static class Extensions
                 "recurring"
             };
         });
+        
+        var redisOptions = services.GetOptions<RedisOptions>("Redis");
 
-        services.AddHangfire(config =>
-        {
-            config.UseInMemoryStorage(new InMemoryStorageOptions() { DisableJobSerialization = true });
-        });
+        services.AddHangfire(config => 
+            config.UseRedisStorage(redisOptions.Address));
 
         return services;
     }

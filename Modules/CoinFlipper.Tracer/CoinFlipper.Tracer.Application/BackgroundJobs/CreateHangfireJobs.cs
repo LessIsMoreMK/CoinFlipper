@@ -4,23 +4,32 @@ using Microsoft.Extensions.Hosting;
 
 namespace CoinFlipper.Tracer.Application.BackgroundJobs;
 
-public class CreateHangfireJobs(IRecurringJobManager jobManager) : BackgroundService
+public class CreateHangfireJobs(
+    IRecurringJobManager jobManager, 
+    ICoinGeckoJobs coinGeckoJobs
+    ) : BackgroundService
 {
-    protected override Task ExecuteAsync(CancellationToken stoppingToken)
+    protected override async Task ExecuteAsync(CancellationToken stoppingToken)
     {
         jobManager.AddOrUpdate<IFearAndGreedJob>(JobsIdentifier.FearAndGreedJob, job => job.GetFearAndGreedAsync(), "0 0 * * *");
-        
-        jobManager.AddOrUpdate<ICoinGeckoJobs>(JobsIdentifier.CoinGeckoInitJob, job => job.InitCoinsAsync(), "0 0 5 31 2 ?"); 
-        
-        jobManager.AddOrUpdate<IIndicatorsJobs>(JobsIdentifier.IndicatorsJob, job => job.CalculateIndicatorsAsync(), "0 0 5 31 2 ?");
-        
-        //"0 0 5 31 2 ?" - Never fires
-        //CoinGeckoInitJob>CoinGeckoTracerJob>IndicatorsJob
-        
-        //Jobs triggered at startup:
         jobManager.Trigger(JobsIdentifier.FearAndGreedJob);
-        jobManager.Trigger(JobsIdentifier.CoinGeckoInitJob); 
+
+        await ExecuteChainedJobsAsync();
+    }
+    
+    private async Task ExecuteChainedJobsAsync()
+    {
+        await coinGeckoJobs.InitCoinsAsync();
         
-        return Task.CompletedTask;
+        jobManager.AddOrUpdate<JobOrchestrator>(JobsIdentifier.ChainedJobs, job => job.ExecuteChainedJobsAsync(), "*/5 * * * *"); 
+    }
+}
+
+public class JobOrchestrator(ICoinGeckoJobs coinGeckoJobs, IIndicatorsJobs indicatorsJobs) 
+{
+    public async Task ExecuteChainedJobsAsync()
+    {
+        await coinGeckoJobs.TrackCoinsAsync();
+        await indicatorsJobs.CalculateIndicatorsAsync();
     }
 }

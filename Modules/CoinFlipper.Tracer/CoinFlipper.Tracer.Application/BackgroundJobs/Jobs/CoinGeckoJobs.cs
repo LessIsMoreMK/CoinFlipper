@@ -39,9 +39,12 @@ public class CoinGeckoJobs(
             var newestCoinDataRecord = await redisCacheService.GetCachedCoinDataListAsync(coin.Id, 1);
 
             var utcNow = DateTime.UtcNow;
-            var fromDate = newestCoinDataRecord.Count == 0 || newestCoinDataRecord[0].DateTime < utcNow.Date.AddMinutes(-5)
+            var fromDate = newestCoinDataRecord.Count == 0 || newestCoinDataRecord[0].DateTime < utcNow.Date.AddDays(-1)
                 ? utcNow.AddDays(-1)
                 : newestCoinDataRecord[0].DateTime.AddSeconds(1);
+
+            if (fromDate < utcNow.Date.AddMinutes(-4))
+                return;
             
             var priceHistoryResponse = await coinGeckoClient.GetCoinPriceHistory(coin.CoinGeckoId, 
                 DateTimeExtensions.DateTimeToTimestamp(fromDate), DateTimeExtensions.DateTimeToTimestamp(utcNow));
@@ -128,8 +131,6 @@ public class CoinGeckoJobs(
         {
             logger.LogError(ex, "Error occured while processing {CoinGeckoTracerJob}", JobsIdentifier.CoinGeckoTracerJob);
         }
-        
-        jobManager.Trigger(JobsIdentifier.IndicatorsJob); 
     }
     
     #endregion

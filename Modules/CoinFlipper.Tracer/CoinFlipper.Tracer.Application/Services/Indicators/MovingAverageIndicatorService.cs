@@ -191,7 +191,7 @@ public class MovingAverageIndicatorService(
         }
         
         //TODO: Improve 
-        var lastDate = DateTime.UtcNow.AddMinutes(-period * 5 + 8); //This setting allows for missing one record in this currently working 5 minutes interval
+        var lastDate = DateTime.UtcNow.AddMinutes(-period * 5 - 8); //This setting allows for missing one record in this currently working 5 minutes interval
         if (coinDataRecords.Last().DateTime > lastDate)
             return true;
         
