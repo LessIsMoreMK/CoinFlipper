@@ -28,9 +28,8 @@ public class CoinDataRepository(ApplicationDbContext dbContext) : ICoinDataRepos
     
     public async Task AddCoinDataAsync(CoinData coinData)
     {
-        if (coinData == null) 
-            throw new ArgumentNullException(nameof(coinData));
-        
+        ArgumentNullException.ThrowIfNull(coinData);
+
         await dbContext.CoinData.AddAsync(coinData.Adapt<CoinDataDb>());
         await dbContext.SaveChangesAsync();
     }

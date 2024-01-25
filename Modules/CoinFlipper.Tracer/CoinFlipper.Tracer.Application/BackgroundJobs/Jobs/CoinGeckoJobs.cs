@@ -4,7 +4,6 @@ using CoinFlipper.Tracer.Application.Clients;
 using CoinFlipper.Tracer.Application.ExternalResponses;
 using CoinFlipper.Tracer.Domain.Entities;
 using CoinFlipper.Tracer.Domain.Services;
-using Hangfire;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 
@@ -13,7 +12,6 @@ namespace CoinFlipper.Tracer.Application.BackgroundJobs.Jobs;
 public class CoinGeckoJobs(
     ICoinGeckoClient coinGeckoClient,
     ILogger<CoinGeckoJobs> logger,
-    IRecurringJobManager jobManager,
     IRedisCacheService redisCacheService
     ) : ICoinGeckoJobs
 {
@@ -28,23 +26,18 @@ public class CoinGeckoJobs(
         
         foreach (var coin in Coins)
             await InitCoinAsync(coin);
-        
-        jobManager.AddOrUpdate<ICoinGeckoJobs>(JobsIdentifier.CoinGeckoTracerJob, job => job.TrackCoinsAsync(), "*/5 * * * *");
     }
 
     private async Task InitCoinAsync(Coin coin)
     {
         try
         {
-            var newestCoinDataRecord = await redisCacheService.GetCachedCoinDataListAsync(coin.Id, 1);
+            var newestCoinDataRecord = await redisCacheService.GetCoinDataListAsync(coin.Id, 1);
 
             var utcNow = DateTime.UtcNow;
             var fromDate = newestCoinDataRecord.Count == 0 || newestCoinDataRecord[0].DateTime < utcNow.Date.AddDays(-1)
                 ? utcNow.AddDays(-1)
                 : newestCoinDataRecord[0].DateTime.AddSeconds(1);
-
-            if (fromDate < utcNow.Date.AddMinutes(-4))
-                return;
             
             var priceHistoryResponse = await coinGeckoClient.GetCoinPriceHistory(coin.CoinGeckoId, 
                 DateTimeExtensions.DateTimeToTimestamp(fromDate), DateTimeExtensions.DateTimeToTimestamp(utcNow));
@@ -66,8 +59,8 @@ public class CoinGeckoJobs(
                         : newestCoinDataRecord[0].Volume24h - coinGeckoPriceHistoryResponse.TotalVolumes[index][1];
                 else
                     volumeDifference = coinGeckoPriceHistoryResponse.TotalVolumes[index - 1][1] - coinGeckoPriceHistoryResponse.TotalVolumes[index][1];
+                
                 var periodVolume = Math.Abs(volumeDifference);
-
                 var timestamp = DateTimeExtensions.TimestampToDateTime((long) coinGeckoPriceHistoryResponse.Prices[index][0], true);
                 
                 coinDataList.Add(new CoinData(
@@ -108,7 +101,7 @@ public class CoinGeckoJobs(
             foreach (var coinPrice in coinsPrices.CoinsPrices)
             {
                 var coinId = Coins.First(c => c.CoinGeckoId == coinPrice.Key).Id;
-                var newestRecord = (await redisCacheService.GetCachedCoinDataListAsync(coinId, 1))[0];
+                var newestRecord = (await redisCacheService.GetCoinDataListAsync(coinId, 1))[0];
 
                 if (DateTimeExtensions.TimestampToDateTime(coinPrice.Value.LastUpdatedAt) == newestRecord.DateTime)
                     break;

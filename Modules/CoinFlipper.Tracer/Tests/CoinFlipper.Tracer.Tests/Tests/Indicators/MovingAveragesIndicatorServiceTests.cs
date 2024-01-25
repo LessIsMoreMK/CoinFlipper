@@ -59,13 +59,13 @@ public class MovingAveragesIndicatorServiceTests
     
     [Theory]
     [MemberData(nameof(SMAInvalidTestData))]
-    public async Task CalculateSMA_WithInValidData_ReturnNullValue(int period, decimal? expectedResult, List<CoinData> coinData)
+    public async Task CalculateSMA_WithInValidData_ReturnNullValue(int length, decimal? expectedResult, List<CoinData> coinData)
     {
         _redisCacheService
-            .Setup(x => x.GetCoinDataListAsync(CoinId, period))
+            .Setup(x => x.GetCoinDataListAsync(CoinId, length))
             .ReturnsAsync(coinData);
     
-        var result = await _movingAverageIndicatorService.CalculateSMA(period, CoinId, CoinSymbol);
+        var result = await _movingAverageIndicatorService.CalculateSMA(length, CoinId, CoinSymbol);
     
         result.ShouldBeNull();
         result.ShouldBe(expectedResult);
@@ -100,13 +100,13 @@ public class MovingAveragesIndicatorServiceTests
     
     [Theory]
     [MemberData(nameof(SMAValidTestData))]
-    public async Task CalculateSMA_WithValidData_ReturnCorrectValue(int period, decimal expectedResult, List<CoinData> coinData)
+    public async Task CalculateSMA_WithValidData_ReturnCorrectValue(int length, decimal expectedResult, List<CoinData> coinData)
     {
         _redisCacheService
-            .Setup(x => x.GetCoinDataListAsync(CoinId, period))
+            .Setup(x => x.GetCoinDataListAsync(CoinId, length))
             .ReturnsAsync(coinData);
         
-        var result = await _movingAverageIndicatorService.CalculateSMA(period, CoinId, CoinSymbol, false);
+        var result = await _movingAverageIndicatorService.CalculateSMA(length, CoinId, CoinSymbol, false);
         
         result.ShouldNotBeNull();
         result.ShouldBe(expectedResult);
@@ -145,13 +145,13 @@ public class MovingAveragesIndicatorServiceTests
     
     [Theory]
     [MemberData(nameof(EMAValidTestData))]
-    public async Task CalculateEMA_WithValidData_ReturnCorrectValue(int period, decimal expectedResult, List<CoinData> coinData)
+    public async Task CalculateEMA_WithValidData_ReturnCorrectValue(int length, decimal expectedResult, List<CoinData> coinData)
     {
         _redisCacheService
-            .Setup(x => x.GetCoinDataListAsync(CoinId, period))
+            .Setup(x => x.GetCoinDataListAsync(CoinId, length))
             .ReturnsAsync(coinData);
         
-        var result = await _movingAverageIndicatorService.CalculateEMA(period, CoinId, CoinSymbol, false);
+        var result = await _movingAverageIndicatorService.CalculateEMA(length, CoinId, CoinSymbol, false);
         
         result.ShouldNotBeNull();
         result.ShouldBe(expectedResult);
@@ -190,13 +190,13 @@ public class MovingAveragesIndicatorServiceTests
     
     [Theory]
     [MemberData(nameof(VWAPValidTestData))]
-    public async Task CalculateVWAP_WithValidData_ReturnCorrectValue(int period, decimal expectedResult, List<CoinData> coinData)
+    public async Task CalculateVWAP_WithValidData_ReturnCorrectValue(int length, decimal expectedResult, List<CoinData> coinData)
     {
         _redisCacheService
-            .Setup(x => x.GetCoinDataListAsync(CoinId, period))
+            .Setup(x => x.GetCoinDataListAsync(CoinId, length))
             .ReturnsAsync(coinData);
         
-        var result = await _movingAverageIndicatorService.CalculateVWAP(period, CoinId, CoinSymbol, false);
+        var result = await _movingAverageIndicatorService.CalculateVWAP(length, CoinId, CoinSymbol, false);
         
         result.ShouldNotBeNull();
         result.ShouldBe(expectedResult);
@@ -235,13 +235,13 @@ public class MovingAveragesIndicatorServiceTests
     
     [Theory]
     [MemberData(nameof(WMAValidTestData))]
-    public async Task CalculateWMA_WithValidData_ReturnCorrectValue(int period, decimal expectedResult, List<CoinData> coinData)
+    public async Task CalculateWMA_WithValidData_ReturnCorrectValue(int length, decimal expectedResult, List<CoinData> coinData)
     {
         _redisCacheService
-            .Setup(x => x.GetCoinDataListAsync(CoinId, period))
+            .Setup(x => x.GetCoinDataListAsync(CoinId, length))
             .ReturnsAsync(coinData);
         
-        var result = await _movingAverageIndicatorService.CalculateWMA(period, CoinId, CoinSymbol, false);
+        var result = await _movingAverageIndicatorService.CalculateWMA(length, CoinId, CoinSymbol, false);
         
         result.ShouldNotBeNull();
         result.ShouldBe(expectedResult);

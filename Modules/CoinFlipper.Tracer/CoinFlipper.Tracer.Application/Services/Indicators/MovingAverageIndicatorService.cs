@@ -12,89 +12,89 @@ public class MovingAverageIndicatorService(
 {
     #region Methods
     
-    public async Task<decimal?> CalculateSMA(int period, Guid coinId, string coinSymbol, bool validateDateTime = true)
+    public async Task<decimal?> CalculateSMA(int length, Guid coinId, string coinSymbol, bool validateDateTime = true)
     {
-        var coinDataRecords = await redisCacheService.GetCoinDataListAsync(coinId, period);
+        var coinDataRecords = await redisCacheService.GetCoinDataListAsync(coinId, length);
 
-        if (!Validate(coinDataRecords, period, coinSymbol, "SMA", validateDateTime))
+        if (!Validate(coinDataRecords, length, coinSymbol, "SMA", validateDateTime))
             return null;
 
         var sma = coinDataRecords.Average(record => record.Price);
         
-        logger.LogInformation("#INFO {Symbol} {Period} SMA: {SMA}", coinSymbol, period, sma);
+        logger.LogInformation("#INFO {Symbol} {Length} SMA: {SMA}", coinSymbol, length, sma);
         
         return sma;
     }
 
-    public async Task<decimal?> CalculateEMA(int period, Guid coinId, string coinSymbol, bool validateDateTime = true)
+    public async Task<decimal?> CalculateEMA(int length, Guid coinId, string coinSymbol, bool validateDateTime = true)
     {
-        var coinDataRecords = await redisCacheService.GetCoinDataListAsync(coinId, period);
+        var coinDataRecords = await redisCacheService.GetCoinDataListAsync(coinId, length);
         
-        if (!Validate(coinDataRecords, period, coinSymbol, "EMA", validateDateTime))
+        if (!Validate(coinDataRecords, length, coinSymbol, "EMA", validateDateTime))
             return null;
         
-        var alpha = 2 / (decimal)(period + 1);
+        var alpha = 2 / (decimal)(length + 1);
         var prices = coinDataRecords.Select(m => m.Price).ToArray();
         var ema = prices[0];
         
         for (var i = 1; i < prices.Length; i++)
             ema = alpha * prices[i] + (1 - alpha) * ema;
         
-        logger.LogInformation("#INFO {Symbol} {Period} EMA: {EMA}", coinSymbol, period, ema);
+        logger.LogInformation("#INFO {Symbol} {Length} EMA: {EMA}", coinSymbol, length, ema);
         
         return ema;
     }
     
-    public async Task<decimal?> CalculateVWAP(int period, Guid coinId, string coinSymbol, bool validateDateTime = true)
+    public async Task<decimal?> CalculateVWAP(int length, Guid coinId, string coinSymbol, bool validateDateTime = true)
     {
-        var coinDataRecords = await redisCacheService.GetCoinDataListAsync(coinId, period);
+        var coinDataRecords = await redisCacheService.GetCoinDataListAsync(coinId, length);
 
-        if (!Validate(coinDataRecords, period, coinSymbol, "VWAP", validateDateTime))
+        if (!Validate(coinDataRecords, length, coinSymbol, "VWAP", validateDateTime))
             return null;
 
-        decimal periodVolume = 0;
+        decimal LengthVolume = 0;
         decimal cumulativeVWAP = 0;
 
         foreach (var coinData in coinDataRecords)
         {
-            periodVolume += coinData.Volume;
+            LengthVolume += coinData.Volume;
             cumulativeVWAP += coinData.Price * coinData.Volume;
         }
         
-        var vwap = cumulativeVWAP / periodVolume;
+        var vwap = cumulativeVWAP / LengthVolume;
         
-        logger.LogInformation("#INFO {Symbol} {Period} VWAP: {VWAP}", coinSymbol, period, vwap);
+        logger.LogInformation("#INFO {Symbol} {Length} VWAP: {VWAP}", coinSymbol, length, vwap);
 
         return vwap;
     }
     
-    public async Task<decimal?> CalculateSMMA(int period, Guid coinId, string coinSymbol, bool validateDateTime = true)
+    public async Task<decimal?> CalculateSMMA(int length, Guid coinId, string coinSymbol, bool validateDateTime = true)
     {
-        var coinDataRecords = await redisCacheService.GetCoinDataListAsync(coinId, period*2);
+        var coinDataRecords = await redisCacheService.GetCoinDataListAsync(coinId, length*2);
 
-        if (!Validate(coinDataRecords, period*2, coinSymbol, "SMMA", validateDateTime))
+        if (!Validate(coinDataRecords, length*2, coinSymbol, "SMMA", validateDateTime))
             return null;
 
-        // Initial SMMA is a SMA from previous period records
-        decimal smma = coinDataRecords.Skip(period).Average(c => c.Price); 
+        // Initial SMMA is a SMA from previous length records
+        decimal smma = coinDataRecords.Skip(length).Average(c => c.Price); 
     
-        foreach (var coinData in coinDataRecords.Take(period))
-            smma = ((smma * (period - 1)) + coinData.Price) / period;
+        foreach (var coinData in coinDataRecords.Take(length))
+            smma = ((smma * (length - 1)) + coinData.Price) / length;
         
-        logger.LogInformation("#INFO {Symbol} {Period} SMMA: {SMMA}", coinSymbol, period, smma);
+        logger.LogInformation("#INFO {Symbol} {Length} SMMA: {SMMA}", coinSymbol, length, smma);
 
         return smma;
     }
     
-    public async Task<decimal?> CalculateWMA(int period, Guid coinId, string coinSymbol, bool validateDateTime = true)
+    public async Task<decimal?> CalculateWMA(int length, Guid coinId, string coinSymbol, bool validateDateTime = true)
     {
-        var coinDataRecords = await redisCacheService.GetCoinDataListAsync(coinId, period);
+        var coinDataRecords = await redisCacheService.GetCoinDataListAsync(coinId, length);
 
-        if (!Validate(coinDataRecords, period, coinSymbol, "WMA", validateDateTime))
+        if (!Validate(coinDataRecords, length, coinSymbol, "WMA", validateDateTime))
             return null;
 
-        decimal currentWeight = period;
-        decimal weighting = (decimal)period * (period + 1) / 2;
+        decimal currentWeight = length;
+        decimal weighting = (decimal)length * (length + 1) / 2;
         decimal wma = 0;
         
         foreach (var coinData in coinDataRecords)
@@ -103,28 +103,28 @@ public class MovingAverageIndicatorService(
             currentWeight--;
         }
         
-        logger.LogInformation("#INFO {Symbol} {Period} WMA: {WMA}", coinSymbol, period, wma);
+        logger.LogInformation("#INFO {Symbol} {Length} WMA: {WMA}", coinSymbol, length, wma);
 
         return wma;
     }
 
-    public async Task<decimal?> CalculateHMA(int period, Guid coinId, string coinSymbol, bool validateDateTime = true)
+    public async Task<decimal?> CalculateHMA(int length, Guid coinId, string coinSymbol, bool validateDateTime = true)
     {
-        var coinDataRecords = await redisCacheService.GetCoinDataListAsync(coinId, period);
+        var coinDataRecords = await redisCacheService.GetCoinDataListAsync(coinId, length);
 
-        if (!Validate(coinDataRecords, period, coinSymbol, "HMA", validateDateTime))
+        if (!Validate(coinDataRecords, length, coinSymbol, "HMA", validateDateTime))
             return null;
 
-        var halfPeriod = (int)Math.Round((double)period / 2);
-        var halfPeriodWMA = CalculateWMA(halfPeriod, coinDataRecords.Take(halfPeriod).ToList());
-        var fullPeriodWMA = CalculateWMA(period, coinDataRecords);
+        var halfLength = (int)Math.Round((double)length / 2);
+        var halfLengthWMA = CalculateWMA(halfLength, coinDataRecords.Take(halfLength).ToList());
+        var fullLengthWMA = CalculateWMA(length, coinDataRecords);
 
-        var rawHma = (2 * halfPeriodWMA) - fullPeriodWMA;
-        var sqrtPeriod = (int)Math.Sqrt(period);
+        var rawHma = (2 * halfLengthWMA) - fullLengthWMA;
+        var sqrtLength = (int)Math.Sqrt(length);
         
-        var hma = CalculateAdaptiveWeightHMA((double)rawHma!.Value, sqrtPeriod, coinDataRecords.Take(sqrtPeriod).ToList());
+        var hma = CalculateAdaptiveWeightHMA((double)rawHma!.Value, sqrtLength, coinDataRecords.Take(sqrtLength).ToList());
         
-        logger.LogInformation("#INFO {Symbol} {Period} HMA: {HMA}", coinSymbol, period, hma);
+        logger.LogInformation("#INFO {Symbol} {Length} HMA: {HMA}", coinSymbol, length, hma);
 
         return (decimal)hma;
     }
@@ -133,10 +133,10 @@ public class MovingAverageIndicatorService(
     
     #region Private Helpers
     
-    private static decimal? CalculateWMA(int period, List<CoinData> coinDataRecords)
+    private static decimal? CalculateWMA(int length, List<CoinData> coinDataRecords)
     {
-        decimal currentWeight = period;
-        decimal weighting = (decimal)period * (period + 1) / 2;
+        decimal currentWeight = length;
+        decimal weighting = (decimal)length * (length + 1) / 2;
         decimal wma = 0;
         
         foreach (var coinData in coinDataRecords)
@@ -149,12 +149,12 @@ public class MovingAverageIndicatorService(
     }
     
     //TODO: !(double)
-    private double CalculateAdaptiveWeightHMA(double rawHma, int sqrtPeriod, List<CoinData> coinDataRecords)
+    private double CalculateAdaptiveWeightHMA(double rawHma, int sqrtLength, List<CoinData> coinDataRecords)
     {
         var weightingFactors = new List<double>();
         foreach (var coinData in coinDataRecords)
         {
-            var weightingFactor = (2 * Math.Pow(2, sqrtPeriod)) / (2 * Math.Pow((double) coinData.Price, sqrtPeriod));
+            var weightingFactor = (2 * Math.Pow(2, sqrtLength)) / (2 * Math.Pow((double) coinData.Price, sqrtLength));
             weightingFactors.Add(weightingFactor);
         }
 
@@ -169,22 +169,23 @@ public class MovingAverageIndicatorService(
         
         return hma / weightingFactors.Sum();
     }
-    
+
     /// <summary>
     /// Validates if the average is going to be calculated on correct data
     /// </summary>
     /// <param name="coinDataRecords"></param>
-    /// <param name="period"></param>
+    /// <param name="length"></param>
     /// <param name="coinSymbol"></param>
     /// <param name="averageName"></param>
+    /// <param name="validateDateTime"></param>
     /// <returns></returns>
-    private bool Validate(IReadOnlyCollection<CoinData> coinDataRecords, int period, string coinSymbol, string averageName, bool validateDateTime)
+    private bool Validate(IReadOnlyCollection<CoinData> coinDataRecords, int length, string coinSymbol, string averageName, bool validateDateTime)
     {
-        if (coinDataRecords.Count != period)
+        if (coinDataRecords.Count != length)
         {
             logger.LogError("Database does not contain enough {Symbol} prices. " +
-                            "Cannot calculate {AverageName} for expected period: {Period}; actual records {RecordsCount}",
-                coinSymbol, averageName, period, coinDataRecords.Count);
+                            "Cannot calculate {AverageName} for expected length: {Length}; actual records {RecordsCount}",
+                coinSymbol, averageName, length, coinDataRecords.Count);
             return false;
         }
         
@@ -192,13 +193,13 @@ public class MovingAverageIndicatorService(
         if (!validateDateTime)
             return true;
         
-        var lastDate = DateTime.UtcNow.AddMinutes(-period * 5 - 8); //This setting allows for missing one record in this currently working 5 minutes interval
+        var lastDate = DateTime.UtcNow.AddMinutes(-length * 5 - 8); //This setting allows for missing one record in this currently working 5 minutes interval
         if (coinDataRecords.Last().DateTime > lastDate)
             return true;
         
         logger.LogError("Database does not contain valid {Symbol} prices. " +
-                        "Cannot calculate {AverageName} for period: {Period}",
-            coinSymbol, averageName, period);
+                        "Cannot calculate {AverageName} for length: {Length}",
+            coinSymbol, averageName, length);
         return false;
     }
     

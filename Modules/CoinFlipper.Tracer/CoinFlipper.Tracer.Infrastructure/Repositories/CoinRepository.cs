@@ -11,7 +11,7 @@ public class CoinRepository(ApplicationDbContext dbContext) : ICoinRepository
 {
     public async Task<Coin?> GetCoinBySymbol(string symbol)
     {
-        if (string.IsNullOrEmpty(symbol)) 
+        if (string.IsNullOrWhiteSpace(symbol)) 
             throw new ArgumentNullException(nameof(symbol));
 
         var coinDb = await dbContext.Coin

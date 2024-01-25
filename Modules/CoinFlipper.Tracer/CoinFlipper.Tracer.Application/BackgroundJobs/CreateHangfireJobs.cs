@@ -11,7 +11,7 @@ public class CreateHangfireJobs(
 {
     protected override async Task ExecuteAsync(CancellationToken stoppingToken)
     {
-        jobManager.AddOrUpdate<IFearAndGreedJob>(JobsIdentifier.FearAndGreedJob, job => job.GetFearAndGreedAsync(), "0 0 * * *");
+        jobManager.AddOrUpdate<IFearAndGreedJob>(JobsIdentifier.FearAndGreedJob, job => job.GetFearAndGreedAsync(), "0 1 * * *");
         jobManager.Trigger(JobsIdentifier.FearAndGreedJob);
 
         await ExecuteChainedJobsAsync();

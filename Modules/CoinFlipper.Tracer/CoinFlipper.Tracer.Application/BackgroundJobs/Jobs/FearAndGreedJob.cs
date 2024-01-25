@@ -24,13 +24,13 @@ public class FearAndGreedJob(
         {
             var lastFearAndGreed = await fearAndGreedRepository.GetLastXFearAndGreedAsync(1);
 
-            var daysMissing = lastFearAndGreed.Count == 0 ? 100 : (DateTime.Today - lastFearAndGreed[0].DateTime).Days;
+            var daysMissing = lastFearAndGreed.Count == 0 ? 100 : (DateTime.UtcNow - lastFearAndGreed[0].DateTime).Days;
             if (daysMissing == 0)
                 return;
             
             var fearAndGreedIndexes = await fearAndGreedIndexClient.GetFearAndGreedIndex(daysMissing);
 
-            if (string.IsNullOrEmpty(fearAndGreedIndexes))
+            if (string.IsNullOrWhiteSpace(fearAndGreedIndexes))
             {
                 logger.LogError("Unable to obtain FearAndGreedIndex");
                 return;
@@ -50,7 +50,4 @@ public class FearAndGreedJob(
             logger.LogError(ex, "Error occured while processing {FearAndGreedJob}", JobsIdentifier.FearAndGreedJob);
         }
     }
-    
-    //TODO: Unit tests
-    //TODO: Check external source responsiveness at 00:00
 }

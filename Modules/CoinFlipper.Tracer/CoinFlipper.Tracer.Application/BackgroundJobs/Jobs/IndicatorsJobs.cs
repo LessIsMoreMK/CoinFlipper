@@ -9,7 +9,7 @@ namespace CoinFlipper.Tracer.Application.BackgroundJobs.Jobs;
 
 public class IndicatorsJobs(
         ILogger<IndicatorsJobs> logger,
-        IMovingAverageIndicatorService _movingAverageIndicatorService,
+        IMovingAverageIndicatorService movingAverageIndicatorService,
         IRedisCacheService redisCacheService
         ): IIndicatorsJobs
 {
@@ -30,7 +30,7 @@ public class IndicatorsJobs(
     
     private async Task MovingAverages()
     {
-        var periods = new List<int>() {21, 50, 100, 200};
+        var lengths = new List<int>() {21, 50, 100, 200};
         var movingAverages = new List<MovingAverage>
         {
             MovingAverage.SMA, MovingAverage.EMA,  MovingAverage.VWAP,
@@ -38,25 +38,25 @@ public class IndicatorsJobs(
         };
         
         foreach (var coin in Coins)
-            foreach (var period in periods)
+            foreach (var length in lengths)
                 foreach (var movingAverage in movingAverages)
                 {
                     try
                     {
                         _ = movingAverage switch
                         {
-                            MovingAverage.SMA => await _movingAverageIndicatorService.CalculateSMA(period, coin.Id, coin.Symbol),
-                            MovingAverage.EMA => await _movingAverageIndicatorService.CalculateEMA(period, coin.Id, coin.Symbol),
-                            MovingAverage.VWAP => await _movingAverageIndicatorService.CalculateVWAP(period, coin.Id, coin.Symbol),
-                            MovingAverage.SMMA => await _movingAverageIndicatorService.CalculateSMMA(period, coin.Id, coin.Symbol),
-                            MovingAverage.WMA => await _movingAverageIndicatorService.CalculateWMA(period, coin.Id, coin.Symbol),
-                            MovingAverage.HMA => await _movingAverageIndicatorService.CalculateHMA(period, coin.Id, coin.Symbol),
+                            MovingAverage.SMA => await movingAverageIndicatorService.CalculateSMA(length, coin.Id, coin.Symbol),
+                            MovingAverage.EMA => await movingAverageIndicatorService.CalculateEMA(length, coin.Id, coin.Symbol),
+                            MovingAverage.VWAP => await movingAverageIndicatorService.CalculateVWAP(length, coin.Id, coin.Symbol),
+                            MovingAverage.SMMA => await movingAverageIndicatorService.CalculateSMMA(length, coin.Id, coin.Symbol),
+                            MovingAverage.WMA => await movingAverageIndicatorService.CalculateWMA(length, coin.Id, coin.Symbol),
+                            MovingAverage.HMA => await movingAverageIndicatorService.CalculateHMA(length, coin.Id, coin.Symbol),
                             _ => throw new ArgumentOutOfRangeException(nameof(movingAverage))
                         };
                     }
                     catch (Exception ex)
                     {
-                        logger.LogError(ex, "Error occured while calculating {Period} {MovingAverage} for {Symbol}", period, movingAverage, coin.Symbol);
+                        logger.LogError(ex, "Error occured while calculating {Length} {MovingAverage} for {Symbol}", length, movingAverage, coin.Symbol);
                     }
                 }
     }
