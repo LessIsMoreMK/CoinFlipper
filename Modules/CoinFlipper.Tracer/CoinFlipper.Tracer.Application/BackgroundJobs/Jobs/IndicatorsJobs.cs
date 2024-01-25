@@ -56,7 +56,7 @@ public class IndicatorsJobs(
                     }
                     catch (Exception ex)
                     {
-                        logger.LogError(ex, "Error when calculating {Period} {MovingAverage} for {Symbol}", period, movingAverage, coin.Symbol);
+                        logger.LogError(ex, "Error occured while calculating {Period} {MovingAverage} for {Symbol}", period, movingAverage, coin.Symbol);
                     }
                 }
     }

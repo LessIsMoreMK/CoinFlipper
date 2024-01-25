@@ -12,11 +12,11 @@ public class MovingAverageIndicatorService(
 {
     #region Methods
     
-    public async Task<decimal?> CalculateSMA(int period, Guid coinId, string coinSymbol)
+    public async Task<decimal?> CalculateSMA(int period, Guid coinId, string coinSymbol, bool validateDateTime = true)
     {
-        var coinDataRecords = await redisCacheService.GetCachedCoinDataListAsync(coinId, period);
+        var coinDataRecords = await redisCacheService.GetCoinDataListAsync(coinId, period);
 
-        if (!Validate(coinDataRecords, period, coinSymbol, "SMA"))
+        if (!Validate(coinDataRecords, period, coinSymbol, "SMA", validateDateTime))
             return null;
 
         var sma = coinDataRecords.Average(record => record.Price);
@@ -26,32 +26,30 @@ public class MovingAverageIndicatorService(
         return sma;
     }
 
-    public async Task<decimal?> CalculateEMA(int period, Guid coinId, string coinSymbol)
+    public async Task<decimal?> CalculateEMA(int period, Guid coinId, string coinSymbol, bool validateDateTime = true)
     {
-        var coinDataRecords = await redisCacheService.GetCachedCoinDataListAsync(coinId, period);
+        var coinDataRecords = await redisCacheService.GetCoinDataListAsync(coinId, period);
         
-        if (!Validate(coinDataRecords, period, coinSymbol, "EMA"))
+        if (!Validate(coinDataRecords, period, coinSymbol, "EMA", validateDateTime))
             return null;
         
         var alpha = 2 / (decimal)(period + 1);
         var prices = coinDataRecords.Select(m => m.Price).ToArray();
         var ema = prices[0];
         
-        for (var i = 0; i < prices.Length; i++)
-            ema = i == 0
-                ? prices[i]
-                : alpha*prices[i] + (1 - alpha) * ema;
+        for (var i = 1; i < prices.Length; i++)
+            ema = alpha * prices[i] + (1 - alpha) * ema;
         
         logger.LogInformation("#INFO {Symbol} {Period} EMA: {EMA}", coinSymbol, period, ema);
         
         return ema;
     }
     
-    public async Task<decimal?> CalculateVWAP(int period, Guid coinId, string coinSymbol)
+    public async Task<decimal?> CalculateVWAP(int period, Guid coinId, string coinSymbol, bool validateDateTime = true)
     {
-        var coinDataRecords = await redisCacheService.GetCachedCoinDataListAsync(coinId, period);
+        var coinDataRecords = await redisCacheService.GetCoinDataListAsync(coinId, period);
 
-        if (!Validate(coinDataRecords, period, coinSymbol, "VWAP"))
+        if (!Validate(coinDataRecords, period, coinSymbol, "VWAP", validateDateTime))
             return null;
 
         decimal periodVolume = 0;
@@ -70,11 +68,11 @@ public class MovingAverageIndicatorService(
         return vwap;
     }
     
-    public async Task<decimal?> CalculateSMMA(int period, Guid coinId, string coinSymbol)
+    public async Task<decimal?> CalculateSMMA(int period, Guid coinId, string coinSymbol, bool validateDateTime = true)
     {
-        var coinDataRecords = await redisCacheService.GetCachedCoinDataListAsync(coinId, period*2);
+        var coinDataRecords = await redisCacheService.GetCoinDataListAsync(coinId, period*2);
 
-        if (!Validate(coinDataRecords, period*2, coinSymbol, "SMMA"))
+        if (!Validate(coinDataRecords, period*2, coinSymbol, "SMMA", validateDateTime))
             return null;
 
         // Initial SMMA is a SMA from previous period records
@@ -88,11 +86,11 @@ public class MovingAverageIndicatorService(
         return smma;
     }
     
-    public async Task<decimal?> CalculateWMA(int period, Guid coinId, string coinSymbol)
+    public async Task<decimal?> CalculateWMA(int period, Guid coinId, string coinSymbol, bool validateDateTime = true)
     {
-        var coinDataRecords = await redisCacheService.GetCachedCoinDataListAsync(coinId, period);
+        var coinDataRecords = await redisCacheService.GetCoinDataListAsync(coinId, period);
 
-        if (!Validate(coinDataRecords, period, coinSymbol, "WMA"))
+        if (!Validate(coinDataRecords, period, coinSymbol, "WMA", validateDateTime))
             return null;
 
         decimal currentWeight = period;
@@ -110,11 +108,11 @@ public class MovingAverageIndicatorService(
         return wma;
     }
 
-    public async Task<decimal?> CalculateHMA(int period, Guid coinId, string coinSymbol)
+    public async Task<decimal?> CalculateHMA(int period, Guid coinId, string coinSymbol, bool validateDateTime = true)
     {
-        var coinDataRecords = await redisCacheService.GetCachedCoinDataListAsync(coinId, period);
+        var coinDataRecords = await redisCacheService.GetCoinDataListAsync(coinId, period);
 
-        if (!Validate(coinDataRecords, period, coinSymbol, "HMA"))
+        if (!Validate(coinDataRecords, period, coinSymbol, "HMA", validateDateTime))
             return null;
 
         var halfPeriod = (int)Math.Round((double)period / 2);
@@ -180,7 +178,7 @@ public class MovingAverageIndicatorService(
     /// <param name="coinSymbol"></param>
     /// <param name="averageName"></param>
     /// <returns></returns>
-    private bool Validate(IReadOnlyCollection<CoinData> coinDataRecords, int period, string coinSymbol, string averageName)
+    private bool Validate(IReadOnlyCollection<CoinData> coinDataRecords, int period, string coinSymbol, string averageName, bool validateDateTime)
     {
         if (coinDataRecords.Count != period)
         {
@@ -191,12 +189,15 @@ public class MovingAverageIndicatorService(
         }
         
         //TODO: Improve 
+        if (!validateDateTime)
+            return true;
+        
         var lastDate = DateTime.UtcNow.AddMinutes(-period * 5 - 8); //This setting allows for missing one record in this currently working 5 minutes interval
         if (coinDataRecords.Last().DateTime > lastDate)
             return true;
         
         logger.LogError("Database does not contain valid {Symbol} prices. " +
-                        "Cannot calculate {MovingAverage} for period: {Period}",
+                        "Cannot calculate {AverageName} for period: {Period}",
             coinSymbol, averageName, period);
         return false;
     }
