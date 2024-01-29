@@ -33,4 +33,11 @@
       <Folder Include="Tests\Analyzers\" />
     </ItemGroup>
 
+    <ItemGroup>
+      <None Remove="Setup\appsettings.test.json" />
+      <Content Include="Setup\appsettings.test.json">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </Content>
+    </ItemGroup>
+
 </Project>

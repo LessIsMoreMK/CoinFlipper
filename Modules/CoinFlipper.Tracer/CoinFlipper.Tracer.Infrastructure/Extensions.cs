@@ -38,9 +38,9 @@ public static class Extensions
             .AddScoped<ICoinRepository, CoinRepository>()
             .AddScoped<ICoinDataRepository, CoinDataRepository>()
             
-            .AddSingleton<IFearAndGreedJob, FearAndGreedJob>()
-            .AddSingleton<ICoinGeckoJobs, CoinGeckoJobs>()
-            .AddSingleton<IIndicatorsJobs, IndicatorsJobs>()
+            .AddScoped<IFearAndGreedJob, FearAndGreedJob>()
+            .AddScoped<ICoinGeckoJobs, CoinGeckoJobs>()
+            .AddScoped<IIndicatorsJobs, IndicatorsJobs>()
             .AddHangfireServer()
             .AddHostedService<CreateHangfireJobs>();
 

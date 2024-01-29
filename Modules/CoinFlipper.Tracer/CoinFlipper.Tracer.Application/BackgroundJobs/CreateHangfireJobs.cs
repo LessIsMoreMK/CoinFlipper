@@ -27,6 +27,7 @@ public class CreateHangfireJobs(
 
 public class JobOrchestrator(ICoinGeckoJobs coinGeckoJobs, IIndicatorsJobs indicatorsJobs) 
 {
+    [AutomaticRetry(OnAttemptsExceeded = AttemptsExceededAction.Fail, Attempts = 5, DelaysInSeconds = new [] {20})]
     public async Task ExecuteChainedJobsAsync()
     {
         await coinGeckoJobs.TrackCoinsAsync();

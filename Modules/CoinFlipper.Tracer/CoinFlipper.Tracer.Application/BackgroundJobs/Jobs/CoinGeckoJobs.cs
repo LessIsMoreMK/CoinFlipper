@@ -1,4 +1,5 @@
 using CoinFlipper.Shared.DateTimeHelpers;
+using CoinFlipper.Shared.Exceptions;
 using CoinFlipper.Tracer.Application.BackgroundJobs.Jobs.Interfaces;
 using CoinFlipper.Tracer.Application.Clients;
 using CoinFlipper.Tracer.Application.ExternalResponses;
@@ -85,6 +86,8 @@ public class CoinGeckoJobs(
     
     public async Task TrackCoinsAsync()
     {
+        Coins = redisCacheService.GetCoins();
+
         try
         {
             var coinIds = string.Join(",", Coins.Select(c => c.CoinGeckoId));
@@ -94,7 +97,7 @@ public class CoinGeckoJobs(
                 logger.LogError("Unable to obtain current prices");
                 return;
             }
-            
+
             var coinsPrices = JsonHelpers.JsonHelpers.DeserializeCoinGeckoCoinPrices(coinsPricesResponse);
 
             var coinDataList = new List<CoinData>();
@@ -103,28 +106,34 @@ public class CoinGeckoJobs(
                 var coinId = Coins.First(c => c.CoinGeckoId == coinPrice.Key).Id;
                 var newestRecord = (await redisCacheService.GetCoinDataListAsync(coinId, 1))[0];
 
+                if (newestRecord.Price == coinPrice.Value.Usd)
+                    throw new RetryException("CoinGecko prices not yet updated.");
+
                 if (DateTimeExtensions.TimestampToDateTime(coinPrice.Value.LastUpdatedAt) == newestRecord.DateTime)
                     break;
-                
+
                 coinDataList.Add(new CoinData(
-                    Guid.NewGuid(),       
-                    coinId,              
-                    DateTimeExtensions.TimestampToDateTime(coinPrice.Value.LastUpdatedAt),             
-                    coinPrice.Value.Usd,       
+                    Guid.NewGuid(),
+                    coinId,
+                    DateTimeExtensions.TimestampToDateTime(coinPrice.Value.LastUpdatedAt),
+                    coinPrice.Value.Usd,
                     coinPrice.Value.Volume24h,
                     Math.Abs(newestRecord.Volume24h - coinPrice.Value.Volume24h),
-                    coinPrice.Value.MarketCap                 
+                    coinPrice.Value.MarketCap
                 ));
             }
-            
+
             if (coinDataList.Count != 0)
                 await redisCacheService.AddCoinDataToDbAndUpdateCacheAsync(coinDataList);
         }
         catch (Exception ex)
         {
-            logger.LogError(ex, "Error occured while processing {CoinGeckoTracerJob}", JobsIdentifier.CoinGeckoTracerJob);
+            if (ex is not RetryException)
+                logger.LogError(ex, "Error occured while processing {CoinGeckoTracerJob}", JobsIdentifier.CoinGeckoTracerJob);
+            
+            throw;
         }
     }
-    
+
     #endregion
 }
