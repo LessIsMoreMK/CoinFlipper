@@ -31,6 +31,7 @@ public static class Extensions
             .AddScoped<ICoinGeckoClient, CoinGeckoClient>()
             
             .AddSingleton<IMovingAverageIndicatorService, MovingAverageIndicatorService>()
+            .AddSingleton<IRsiIndicatorService, RsiIndicatorService>()
             
             .AddSingleton<IRedisCacheService, RedisCacheService>()
             

@@ -1,3 +1,4 @@
+using System.Globalization;
 using CoinFlipper.Tracer.Application.BackgroundJobs.Jobs.Interfaces;
 using CoinFlipper.Tracer.Domain.Entities;
 using CoinFlipper.Tracer.Domain.Services;
@@ -10,8 +11,9 @@ namespace CoinFlipper.Tracer.Application.BackgroundJobs.Jobs;
 public class IndicatorsJobs(
         ILogger<IndicatorsJobs> logger,
         IMovingAverageIndicatorService movingAverageIndicatorService,
+        IRsiIndicatorService rsiIndicatorService,
         IRedisCacheService redisCacheService
-        ): IIndicatorsJobs
+        ) : IIndicatorsJobs
 {
     #region Methods
     
@@ -22,6 +24,7 @@ public class IndicatorsJobs(
         Coins = redisCacheService.GetCoins();
         
         await MovingAverages();
+        await Rsi();
     }
     
     #endregion
@@ -59,6 +62,21 @@ public class IndicatorsJobs(
                         logger.LogError(ex, "Error occured while calculating {Length} {MovingAverage} for {Symbol}", length, movingAverage, coin.Symbol);
                     }
                 }
+    }
+
+    private async Task Rsi()
+    {
+        foreach (var coin in Coins)
+        {
+            try
+            {
+                var result = await rsiIndicatorService.CalculateRSI(coin.Id, coin.Symbol);
+            }
+            catch (Exception ex)
+            {
+                logger.LogError(ex, "Error occured while calculating RSI for {Symbol}", coin.Symbol);
+            }
+        }
     }
     
     #endregion
