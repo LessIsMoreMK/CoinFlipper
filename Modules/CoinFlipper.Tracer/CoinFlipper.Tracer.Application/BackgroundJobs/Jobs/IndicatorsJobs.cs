@@ -46,7 +46,7 @@ public class IndicatorsJobs(
                 {
                     try
                     {
-                        _ = movingAverage switch
+                        var result  = movingAverage switch
                         {
                             MovingAverage.SMA => await movingAverageIndicatorService.CalculateSMA(length, coin.Id, coin.Symbol),
                             MovingAverage.EMA => await movingAverageIndicatorService.CalculateEMA(length, coin.Id, coin.Symbol),
@@ -56,6 +56,9 @@ public class IndicatorsJobs(
                             MovingAverage.HMA => await movingAverageIndicatorService.CalculateHMA(length, coin.Id, coin.Symbol),
                             _ => throw new ArgumentOutOfRangeException(nameof(movingAverage))
                         };
+                        
+                        var cacheKey = $"{coin.Id}_5m_{length}_{Enum.GetName(movingAverage)}";
+                        await redisCacheService.StackValueAsync(cacheKey, result == null ? "null" : result.Value.ToString(CultureInfo.InvariantCulture));
                     }
                     catch (Exception ex)
                     {

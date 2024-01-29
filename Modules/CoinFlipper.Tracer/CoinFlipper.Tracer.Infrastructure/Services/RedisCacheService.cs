@@ -1,3 +1,4 @@
+using System.Globalization;
 using CoinFlipper.Tracer.Domain.Entities;
 using CoinFlipper.Tracer.Domain.Repositories;
 using CoinFlipper.Tracer.Domain.Services;
@@ -7,6 +8,7 @@ using Newtonsoft.Json;
 
 namespace CoinFlipper.Tracer.Infrastructure.Services;
 
+//TODO: Unit tests
 public class RedisCacheService(
     ICoinRepository coinRepository,
     ICoinDataRepository coinDataRepository,
@@ -41,18 +43,17 @@ public class RedisCacheService(
     
     #endregion
     
-    //TODO: Unit tests
     #region CoinsData
 
-    private const string CoinDataCacheKeyPrefix = "coindata_";
+    private const string CoinDataCacheKeySuffix = "_coindata";
 
-    public async Task<List<CoinData>> GetCachedCoinDataListAsync(Guid coinId, int count)
+    public async Task<List<CoinData>> GetCoinDataListAsync(Guid coinId, int count)
     {
-        var cacheKey = $"{CoinDataCacheKeyPrefix}{coinId}";
+        var cacheKey = $"{coinId}{CoinDataCacheKeySuffix}";
         var cachedCoinData = await distributedCache.GetStringAsync(cacheKey);
 
         List<CoinData> coinDataList;
-        if (!string.IsNullOrEmpty(cachedCoinData))
+        if (!string.IsNullOrWhiteSpace(cachedCoinData))
         {
             coinDataList = JsonConvert.DeserializeObject<List<CoinData>>(cachedCoinData);
             
@@ -83,13 +84,13 @@ public class RedisCacheService(
         foreach (var group in coinDataList.GroupBy(cd => cd.CoinId))
             await UpdateCacheForCoinAsync(group.Key, group.ToList());
     }
-    
+
     private async Task UpdateCacheForCoinAsync(Guid coinId, List<CoinData> newCoinDataList)
     {
-        var cacheKey = $"{CoinDataCacheKeyPrefix}{coinId}";
+        var cacheKey = $"{coinId}{CoinDataCacheKeySuffix}";
         var cachedCoinData = await distributedCache.GetStringAsync(cacheKey);
 
-        var currentCachedCoinData = string.IsNullOrEmpty(cachedCoinData) 
+        var currentCachedCoinData = string.IsNullOrWhiteSpace(cachedCoinData) 
             ? new List<CoinData>() 
             : JsonConvert.DeserializeObject<List<CoinData>>(cachedCoinData);
 
@@ -105,5 +106,54 @@ public class RedisCacheService(
             });
     }
 
+    #endregion
+    
+    #region Methods
+
+    private const int MaxElements = 288;
+    private const char Separator = ';';
+    
+    public async Task StackValueAsync(string cacheKey, string value, TimeSpan? expiry = null)
+    {
+        try
+        {
+            var existingValue = await distributedCache.GetStringAsync(cacheKey);
+
+            existingValue = existingValue == null ? value : value + Separator + existingValue;
+
+            var elementsArray = existingValue.Split(Separator);
+            if (elementsArray.Length > MaxElements)
+                existingValue = string.Join(Separator, elementsArray.Take(MaxElements));
+            
+            await distributedCache.SetStringAsync(cacheKey, existingValue,
+                new DistributedCacheEntryOptions
+                {
+                    AbsoluteExpirationRelativeToNow = expiry ?? TimeSpan.FromDays(7) 
+                });
+        }
+        catch (Exception ex)
+        {
+            logger.LogError(ex, "Error occured while stacking value to redis cache for key: {CacheKey}", cacheKey);
+            throw;
+        }
+    }
+    
+    public async Task<string?> GetStringAsync(string cacheKey)
+        => await distributedCache.GetStringAsync(cacheKey);
+
+    public async Task<string[]> GetStringArrayAsync(string cacheKey)
+    {
+        var existingValue = await distributedCache.GetStringAsync(cacheKey);
+        var stringArray = existingValue?.Split(Separator);
+        return stringArray ?? Array.Empty<string>();
+    }
+    
+    public async Task<decimal[]> GetDecimalArrayAsync(string cacheKey)
+    {
+        var stringArray = await GetStringArrayAsync(cacheKey);
+        var decimalArray = stringArray.Select(element => decimal.Parse(element, CultureInfo.InvariantCulture)).ToArray();
+        return decimalArray;
+    }
+    
     #endregion
 }
