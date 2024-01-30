@@ -138,6 +138,15 @@ public class RedisCacheService(
         }
     }
     
+    public async Task ReplaceValueAsync(string cacheKey, string value, TimeSpan? expiry = null)
+    {
+        await distributedCache.SetStringAsync(cacheKey, value,
+            new DistributedCacheEntryOptions
+            {
+                AbsoluteExpirationRelativeToNow = expiry ?? TimeSpan.FromDays(7) 
+            });
+    }
+
     public async Task<string?> GetStringAsync(string cacheKey)
         => await distributedCache.GetStringAsync(cacheKey);
 

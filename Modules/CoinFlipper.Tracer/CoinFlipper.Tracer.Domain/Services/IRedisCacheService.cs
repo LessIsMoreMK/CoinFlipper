@@ -13,6 +13,7 @@ public interface IRedisCacheService
     
 
     Task StackValueAsync(string cacheKey, string value, TimeSpan? expiry = null);
+    Task ReplaceValueAsync(string cacheKey, string value, TimeSpan? expiry = null);
     
     Task<string?> GetStringAsync(string cacheKey);
     Task<string[]> GetStringArrayAsync(string cacheKey);

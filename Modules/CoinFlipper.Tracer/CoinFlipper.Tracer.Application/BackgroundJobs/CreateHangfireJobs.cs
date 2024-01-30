@@ -25,12 +25,13 @@ public class CreateHangfireJobs(
     }
 }
 
-public class JobOrchestrator(ICoinGeckoJobs coinGeckoJobs, IIndicatorsJobs indicatorsJobs) 
+public class JobOrchestrator(ICoinGeckoJobs coinGeckoJobs, IIndicatorsJobs indicatorsJobs, IAnalyzersJobs analyzersJobs) 
 {
     [AutomaticRetry(OnAttemptsExceeded = AttemptsExceededAction.Fail, Attempts = 5, DelaysInSeconds = new [] {20})]
     public async Task ExecuteChainedJobsAsync()
     {
         await coinGeckoJobs.TrackCoinsAsync();
         await indicatorsJobs.CalculateIndicatorsAsync();
+        await analyzersJobs.AnalyzeIndicatorsAsync();
     }
 }
