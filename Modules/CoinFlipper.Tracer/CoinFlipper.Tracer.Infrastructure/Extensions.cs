@@ -42,6 +42,7 @@ public static class Extensions
             .AddScoped<IFearAndGreedJob, FearAndGreedJob>()
             .AddScoped<ICoinGeckoJobs, CoinGeckoJobs>()
             .AddScoped<IIndicatorsJobs, IndicatorsJobs>()
+            .AddScoped<IAnalyzersJobs, AnalyzersJobs>()
             .AddHangfireServer()
             .AddHostedService<CreateHangfireJobs>();
 
